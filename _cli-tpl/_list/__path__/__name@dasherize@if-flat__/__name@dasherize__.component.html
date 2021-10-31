@@ -1,0 +1,15 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary">新建</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <sf #sf mode="search" [schema]="searchSchema" (formValueChange)="searchValueChange($event)"></sf>
+  <st #st [data]="url" [columns]="columns">
+    <ng-template st-row="sysRole" let-item let-index="index">
+      <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.sysRole">
+        {{ i.name }}
+      </nz-tag>
+    </ng-template>
+  </st>
+</nz-card>

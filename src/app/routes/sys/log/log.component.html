@@ -1,0 +1,20 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!--    <button nz-button nzType="primary" (click)="add()">新建通知</button>-->
+  </ng-template>
+</page-header>
+
+<sf #sf mode="search" [schema]="searchSchema"></sf>
+<st
+  #st
+  [columns]="columns"
+  [data]="url"
+  [page]="{}"
+  [scroll]="{y: '800px'}"
+  [rowClassName]="rowClassName"
+  [widthMode]="{ type: 'strict', strictBehavior: 'truncate' }"
+>
+  <ng-template #extra st-row="extra" let-item let-index="index">
+    <span nz-tooltip nzTooltipTitle="{{ item.extra | json }}">{{ item.extra | json }}</span>
+  </ng-template>
+</st>

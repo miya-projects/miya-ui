@@ -1,0 +1,42 @@
+<nz-table #table [nzData]="nzData" nzTableLayout="fixed"
+          nzShowSizeChanger
+          [nzFrontPagination]="nzFrontPagination"
+          [nzTotal]="page.total"
+          [nzPageSize]="page.pageSize"
+          [nzPageIndex]="page.page">
+  <thead>
+  <tr>
+    <th *ngFor="let item of columns">{{item.title}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let item of expandedData let i1=index">
+    <tr *ngIf="(item.parent && item.parent._expand) || !item.parent">
+      <td
+        [nzIndentSize]="item.level! * 20"
+        [nzShowExpand]="!!item.children && item.children.length > 0"
+        [(nzExpand)]="item._expand"
+        (nzExpandChange)="collapse(expandedData, item, $event)"
+      >
+        {{ item[columns[0].index] }}
+      </td>
+      <ng-container *ngFor="let col of columns let i=index">
+        <ng-container *ngIf="i!==0">
+          <td>
+            <!--有render就先用render渲染-->
+            <ng-container *ngIf="!!col.render">
+              <ng-container *ngTemplateOutlet="col.__render; context: {$implicit: item, index: i1}"></ng-container>
+            </ng-container>
+            <!--没有render直接取index-->
+            <ng-container *ngIf="!col.render">
+              {{ item[col.index] }}
+            </ng-container>
+          </td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </ng-container>
+  </tbody>
+</nz-table>
+
+

@@ -1,0 +1,15 @@
+<div class="main">
+  <div class="left">
+    <form nz-form nzLayout="vertical" #f="ngForm" (submit)="save()" se-container="1">
+      <se label="旧密码" error="请输入旧密码">
+        <app-com-password [(ngModel)]="formData.password" name="password" required></app-com-password>
+      </se>
+      <se label="新密码" error="请输入新密码">
+        <app-com-password [(ngModel)]="formData.newPassword" name="newPassword" required></app-com-password>
+      </se>
+      <se>
+        <button nz-button nzType="primary" [disabled]="f.invalid">确认修改</button>
+      </se>
+    </form>
+  </div>
+</div>

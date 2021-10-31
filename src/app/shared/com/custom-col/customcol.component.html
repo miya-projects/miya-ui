@@ -1,0 +1,16 @@
+
+<button nz-button class="customcol" (click)="openSetting()"><i nz-icon nzType="setting" title="设置显示列"></i></button>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="自定义列表字段" (nzOnCancel)="isVisible = false" [nzMaskClosable]="false" [nzStyle]="{ top: '22%' }">
+  <ng-container *nzModalContent>
+    <nz-checkbox-group
+      [(ngModel)]="customColumns"
+      name="customColumns"
+    ></nz-checkbox-group>
+  </ng-container>
+
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="resetDefault()">恢复默认</button>
+    <button nz-button nzType="primary" (click)="handleOk()">确定</button>
+  </div>
+</nz-modal>

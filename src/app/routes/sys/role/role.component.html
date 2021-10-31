@@ -1,0 +1,14 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary" acl="sys:role:add" >新建角色</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <nz-tabset style="max-height: 1200px" nzTabPosition="left" nzType="line">
+    <nz-tab *ngFor="let role of roles" [nzTitle]="role.label">
+      <ng-template nz-tab>
+        <app-sys-role-permission [id]="role.value" [business]="business" (onDelete)="delete($event)"></app-sys-role-permission>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>

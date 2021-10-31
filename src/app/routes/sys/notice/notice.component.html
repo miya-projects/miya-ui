@@ -1,0 +1,14 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button nz-button nzType="primary" (click)="add()">新建通知</button>
+  </ng-template>
+</page-header>
+
+<st
+  #st
+  [columns]="columns"
+  [data]="url"
+  [page]="{}"
+  [rowClassName]="rowClassName"
+  [widthMode]="{ type: 'strict', strictBehavior: 'truncate' }"
+></st>

@@ -1,0 +1,36 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary" acl="sys:user:add">新建</button>
+  </ng-template>
+</page-header>
+<nz-card>
+
+  <div nz-row>
+    <div nz-col nzSpan="4">
+      <app-sys-department-select #sysDepartmentSelectComponent></app-sys-department-select>
+    </div>
+    <div nz-col nzSpan="20">
+      <sf #sf mode="search" [schema]="searchSchema" [button]="'none'">
+        <app-custom-col #cc [originColumns]="columns" [alwaysShow]="['登录名', '']"></app-custom-col>
+      </sf>
+      <st #st [data]="'/sys/user'" [columns]="cc.columns" [scroll]="{y: 'fixed'}">
+        <ng-template st-row="roles" let-item let-index="index">
+          <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.roles">
+            {{ i.name }}
+          </nz-tag>
+        </ng-template>
+        <ng-template st-row="departments" let-item let-index="index">
+          <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.departments">
+            {{ i.name }}
+          </nz-tag>
+        </ng-template>
+        <ng-template st-row="accountStatus" let-item let-index="index">
+          <nz-tag nzColor="{{item.accountStatus.value === 'NORMAL'?'#108ee9': '#ed5f5f'}}">
+            {{ item.accountStatus.value }}
+          </nz-tag>
+        </ng-template>
+      </st>
+    </div>
+  </div>
+
+</nz-card>

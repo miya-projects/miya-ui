@@ -1,0 +1,19 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button nz-button nzType="primary" (click)="addDepartment()" style="margin-bottom: 3px">新建部门</button>
+  </ng-template>
+</page-header>
+
+<app-treetable #treetable [data]="'/sys/department'" [columns]="columns">
+  <ng-template tree-row="action" let-item>
+    <a nz-button nzType="link">添加下级部门</a>
+    <a nz-button nzType="link" (click)="modify(item)">编辑</a>
+    <a nz-button nzType="link" nzDanger (click)="delete(item.id)">删除</a>
+  </ng-template>
+</app-treetable>
+
+
+<ng-template #addDepartmentTemplate let-item>
+  <sf #sf mode="default" [schema]="schema" [ui]="ui" [formData]="item" [cleanValue]="true" button="none" compact class="m-lg">
+  </sf>
+</ng-template>

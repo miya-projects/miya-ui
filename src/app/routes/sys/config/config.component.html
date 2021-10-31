@@ -1,0 +1,60 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+  </ng-template>
+</page-header>
+
+<st
+  #st
+  [columns]="columns"
+  [data]="data"
+  [page]="{show: false, front: false}"
+  [res]="{ process: undefined }"
+  [rowClassName]="rowClassName"
+  [widthMode]="{ type: 'strict', strictBehavior: 'truncate' }"
+>
+  <ng-template st-row="name" let-item let-index="index">
+    <div nz-col [nzSpan]="6">
+      {{ item.name }}
+    </div>
+  </ng-template>
+  <ng-template st-row="code" let-item let-index="index">
+    <div nz-col [nzSpan]="6">
+      {{ item.code }}
+    </div>
+  </ng-template>
+  <ng-template st-row="value" let-item let-index="index">
+    <div nz-col [nzSpan]="12">
+      <div nz-row nzAlign="middle">
+        <div nz-col [nzSpan]="20">
+          <input
+            nz-input
+            [(ngModel)]="item.value"
+          />
+        </div>
+        <div nz-col [nzSpan]="3" [nzOffset]="0.5">
+          <a
+            nz-button
+            nzType="link"
+            (click)="saveValue(item.code, item.value)"
+          >保存</a
+          >
+          <a
+            nz-button
+            nzDanger
+            nzType="link"
+            nz-popconfirm
+            nzPopconfirmTitle="确认将该参数置空?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="saveValue(item.code, null)"
+            >置空</a
+          >
+        </div>
+      </div>
+<!--      <ng-container>-->
+<!--        <span class="hide-hover">-->
+<!--          {{ item.value }}-->
+<!--        </span>-->
+<!--      </ng-container>-->
+    </div>
+  </ng-template>
+</st>
