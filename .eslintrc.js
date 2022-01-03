@@ -16,10 +16,8 @@ module.exports = {
       extends: [
         'plugin:@angular-eslint/recommended',
         'plugin:@angular-eslint/template/process-inline-templates',
-        'plugin:prettier/recommended'
       ],
       rules: {
-        'prettier/prettier': ['error', prettierConfig],
         'jsdoc/newline-after-description': 1,
         '@angular-eslint/component-class-suffix': [
           'error',
@@ -87,16 +85,6 @@ module.exports = {
         'import/no-duplicates': 'error',
         'import/no-unused-modules': 'error',
         'import/no-unassigned-import': 'error',
-        'import/order': [
-          'error',
-          {
-            alphabetize: { order: 'asc', caseInsensitive: false },
-            'newlines-between': 'always',
-            groups: ['external', 'internal', ['parent', 'sibling', 'index']],
-            pathGroups: [],
-            pathGroupsExcludedImportTypes: []
-          }
-        ],
         '@typescript-eslint/no-this-alias': 'error',
         '@typescript-eslint/member-ordering': 'off',
         'no-irregular-whitespace': 'error',

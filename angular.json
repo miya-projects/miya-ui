@@ -85,7 +85,12 @@
               "file-saver",
               "hammerjs",
               "ajv"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -184,5 +189,8 @@
       }
     }
   },
-  "defaultProject": "miya-ui"
+  "defaultProject": "miya-ui",
+  "cli": {
+    "packageManager": "yarn"
+  }
 }

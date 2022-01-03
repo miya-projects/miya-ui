@@ -1,5 +1,5 @@
 // tslint:disable: no-duplicate-imports
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_INITIALIZER, Injector, LOCALE_ID, NgModule, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,13 +32,12 @@ const LANG_PROVIDES = [
 // #endregion
 
 // #region JSON Schema form (using @delon/form)
-import { JsonSchemaModule } from '@shared';
+import { JsonSchemaModule, SharedModule } from '@shared';
 const FORM_MODULES = [JsonSchemaModule];
 // #endregion
 
 // #region Http Interceptors
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { DefaultInterceptor } from '@core';
+import { DefaultInterceptor, StartupService } from '@core';
 import { JWTInterceptor } from '@delon/auth';
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
@@ -52,7 +51,6 @@ const GLOBAL_THIRD_MODULES: Type<any>[] = [];
 // #endregion
 
 // #region Startup Service
-import { StartupService } from '@core';
 export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
 }
@@ -67,7 +65,6 @@ const APPINIT_PROVIDES = [
 ];
 // #endregion
 
-import { SharedModule } from '@shared';
 import { Observable } from 'rxjs';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
