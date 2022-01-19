@@ -46,6 +46,7 @@ module.exports = {
             prefix: ['app']
           }
         ],
+        '@angular-eslint/no-empty-lifecycle-method': 'off',
         '@angular-eslint/no-attribute-decorator': 'error',
         '@angular-eslint/no-conflicting-lifecycle': 'off',
         '@angular-eslint/no-forward-ref': 'off',
@@ -101,13 +102,13 @@ module.exports = {
       extends: ['plugin:@angular-eslint/template/recommended'],
       rules: {}
     },
-    {
-      files: ['*.html'],
-      excludedFiles: ['*inline-template-*.component.html'],
-      extends: ['plugin:prettier/recommended'],
-      rules: {
-        'prettier/prettier': ['error', { parser: 'angular' }]
-      }
-    }
+    // {
+    //   files: ['*.html'],
+    //   excludedFiles: ['*inline-template-*.component.html'],
+    //   // extends: ['plugin:prettier/recommended'],
+    //   rules: {
+    //     'prettier/prettier': ['error', { parser: 'angular' }]
+    //   }
+    // }
   ]
 };
