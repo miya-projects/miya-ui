@@ -1,0 +1,29 @@
+<% if(modal) { %>
+
+<div class="modal-header">
+  <div class="modal-title">{{ formData?.id ? '编辑' : '新增' }}</div>
+</div>
+<nz-spin [ngClass]="{'d-none': formData}" class="modal-spin"></nz-spin>
+<sf [ngClass]="{'d-none' : !formData}" #sf mode="default" [schema]="schema" [formData]="formData" [ui]="ui" [cleanValue]="true" button="none">
+  <div class="modal-footer">
+    <button nz-button type="button" (click)="close()">关闭</button>
+    <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">
+      保存
+    </button>
+  </div>
+</sf>
+
+<% } else { %>
+
+<page-header [title]="'编辑 ' + id"></page-header>
+<nz-card>
+  <nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+  <sf *ngIf="formData" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="formData" button="none">
+    <footer-toolbar errorCollect>
+      <button nz-button type="button" (click)="location.back()" [nzLoading]="http.loading">返回</button>
+      <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">保存</button>
+    </footer-toolbar>
+  </sf>
+</nz-card>
+
+<% } %>

@@ -143,7 +143,7 @@ export class SysRolePermissionComponent implements OnInit {
         codes.push(checkedNodeListFlat[i][j]);
       }
     }
-    this.http.put('/sys/role/' + this.id + '/business', {
+    this.http.put(`/sys/role/${this.id}/business`, {
       codes: codes.map(i => i.key)
     }).subscribe(res => {
       this.messageSrv.success('操作成功');

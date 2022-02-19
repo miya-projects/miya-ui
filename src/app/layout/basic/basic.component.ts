@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SettingsService, User } from '@delon/theme';
 import { LayoutDefaultOptions } from '@delon/theme/layout-default';
 import { environment } from '@env/environment';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'layout-basic',
@@ -30,6 +31,13 @@ import { environment } from '@env/environment';
           </div>
         </nz-dropdown-menu>
       </layout-default-header-item>
+
+      <layout-default-header-item direction="right" hidden="mobile">
+        <div layout-default-header-item-trigger (click)="toDown()" title="下载中心">
+          <i nz-icon nzType="download" nzTheme="outline"></i>
+        </div>
+      </layout-default-header-item>
+
       <layout-default-header-item direction="right">
         <header-notify></header-notify>
       </layout-default-header-item>
@@ -91,5 +99,10 @@ export class LayoutBasicComponent {
     return this.settings.app.version;
   }
 
-  constructor(private settings: SettingsService) {}
+  constructor(private settings: SettingsService, private router: Router) {}
+
+  toDown(){
+    this.router.navigateByUrl('/sys/down');
+  }
+
 }

@@ -10,6 +10,7 @@ import {SysConfigComponent} from './config/config.component';
 import {BasicSettingsComponent} from './usersettings/basic/basic.component';
 import {SecuritySettingsComponent} from './usersettings/security/security.component';
 import {UserSettingsComponent} from './usersettings/usersettings.component';
+import {SysDownComponent} from "./down/down.component";
 
 const routes: Routes = [
   // 离开路由监听 canDeactivate: [CanLeaveProvide]
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'config', component: SysConfigComponent},
   {path: 'notice', component: SysNoticeComponent},
   {path: 'log', component: SysLogComponent},
+  {path: 'down', component: SysDownComponent},
   {
     path: 'user-settings', component: UserSettingsComponent,
     children: [

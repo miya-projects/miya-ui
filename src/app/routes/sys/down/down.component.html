@@ -1,0 +1,21 @@
+<page-header>
+  <nz-breadcrumb>
+    <nz-breadcrumb-item>home</nz-breadcrumb-item>
+    <nz-breadcrumb-item>下载中心</nz-breadcrumb-item>
+  </nz-breadcrumb>
+</page-header>
+
+<sf #sf mode="search" [schema]="searchSchema"></sf>
+<st
+  #st
+  [columns]="columns"
+  [data]="url"
+  [page]="{}"
+  [scroll]="{y: '800px'}"
+  [rowClassName]="rowClassName"
+  [widthMode]="{ type: 'strict', strictBehavior: 'truncate' }"
+>
+  <ng-template #extra st-row="extra" let-item let-index="index">
+    <span nz-tooltip nzTooltipTitle="{{ item.extra | json }}">{{ item.extra | json }}</span>
+  </ng-template>
+</st>

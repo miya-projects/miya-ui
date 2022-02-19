@@ -25,6 +25,8 @@ import {SecuritySettingsComponent} from './usersettings/security/security.compon
 import {UserSettingsComponent} from './usersettings/usersettings.component';
 import { SysDepartmentSelectComponent } from './department/select/select.component';
 import { SysDepartmentComponent } from './department/department.component';
+import {SysDownComponent} from "./down/down.component";
+import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
 
 const COMPONENTS: Type<void>[] = [
   SysDictComponent,
@@ -45,6 +47,7 @@ const COMPONENTS: Type<void>[] = [
   SysNoticeEditComponent,
 
   SysLogComponent,
+  SysDownComponent,
 
   UserSettingsComponent,
   BasicSettingsComponent,
@@ -53,7 +56,7 @@ const COMPONENTS: Type<void>[] = [
   SysDepartmentComponent];
 
 @NgModule({
-    imports: [SharedModule, SysRoutingModule, NzTreeModule, NzEmptyModule, NzUploadModule, ComModule],
+  imports: [SharedModule, SysRoutingModule, NzTreeModule, NzEmptyModule, NzUploadModule, ComModule, NzBreadCrumbModule],
   declarations: COMPONENTS,
   providers: [CanLeaveProvide],
 })

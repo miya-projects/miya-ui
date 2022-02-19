@@ -5,11 +5,5 @@
 </page-header>
 <nz-card>
   <sf #sf mode="search" [schema]="searchSchema" (formValueChange)="searchValueChange($event)"></sf>
-  <st #st [data]="url" [columns]="columns">
-    <ng-template st-row="sysRole" let-item let-index="index">
-      <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.sysRole">
-        {{ i.name }}
-      </nz-tag>
-    </ng-template>
-  </st>
+  <st #st [data]="url" [columns]="columns"></st>
 </nz-card>

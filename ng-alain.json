@@ -9,5 +9,11 @@
         "theme": "compact"
       }
     ]
+  },
+  "_comment": "配置生成文件的默认路径",
+  "projects": {
+    "miya-ui": {
+      "routesRoot": "app/routes"
+    }
   }
 }
