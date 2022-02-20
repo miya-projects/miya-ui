@@ -51,7 +51,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": false,
+            "aot": true,
             "outputPath": "dist/",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -104,8 +104,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "3mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -191,6 +191,6 @@
   },
   "defaultProject": "miya-ui",
   "cli": {
-    "packageManager": "yarn"
+    "packageManager": "pnpm"
   }
 }
