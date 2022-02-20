@@ -1,5 +1,5 @@
 
-<button nz-button class="customcol" (click)="openSetting()"><i nz-icon nzType="setting" title="设置显示列"></i></button>
+<button nz-button (click)="openSetting()"><i nz-icon nzType="setting" title="设置显示列"></i></button>
 
 <nz-modal [(nzVisible)]="isVisible" nzTitle="自定义列表字段" (nzOnCancel)="isVisible = false" [nzMaskClosable]="false" [nzStyle]="{ top: '22%' }">
   <ng-container *nzModalContent>

@@ -11,7 +11,7 @@ import {SysUserEditComponent} from './edit/edit.component';
 
 @Component({
   selector: 'app-sys-user',
-  templateUrl: './user.component.html',
+  templateUrl: './user.component.html'
 })
 export class SysUserComponent implements OnInit, AfterViewInit {
 
@@ -150,5 +150,23 @@ export class SysUserComponent implements OnInit, AfterViewInit {
     this.sf.formValueChange.pipe(debounceTime(500), map(i => i.value)).subscribe((value) => this.st.reset(value));
     this.sysDepartmentSelectComponent.onSelect.subscribe((value) => this.sf.setValue('/departments', value));
     this.sf.reset(true);
+  }
+
+
+  /**
+   * 导出用户
+   */
+  down() {
+    this.http.get("/sys/user/export", this.sf.value,{responseType: 'blob', observe: 'response'})
+      .subscribe(res => {
+        const a = document.createElement("a");
+        let reg = new RegExp('filename=(.+)');
+        let exec = reg.exec(res.headers.get('content-disposition') as string);
+        if (exec != null){
+          a.download = decodeURI(exec[1]) || 'export.xlsx';
+        }
+        a.href = window.URL.createObjectURL(res.body as Blob);
+        a.click();
+    });
   }
 }

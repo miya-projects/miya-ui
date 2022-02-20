@@ -11,7 +11,10 @@
     </div>
     <div nz-col nzSpan="20">
       <sf #sf mode="search" [schema]="searchSchema" [button]="'none'">
-        <app-custom-col #cc [originColumns]="columns" [alwaysShow]="['登录名', '']"></app-custom-col>
+        <div class="small-tool">
+          <button nz-button class="" (click)="down()"><i nz-icon nzType="download" title="导出"></i></button>
+          <app-custom-col #cc [originColumns]="columns" [alwaysShow]="['登录名', '']"></app-custom-col>
+        </div>
       </sf>
       <st #st [data]="'/sys/user'" [columns]="cc.columns" [scroll]="{y: 'fixed'}">
         <ng-template st-row="roles" let-item let-index="index">

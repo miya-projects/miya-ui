@@ -170,29 +170,31 @@ export class DefaultInterceptor implements HttpInterceptor {
    */
   private handleData(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     // 业务层级错误处理
-    if (ev instanceof HttpResponse) {
-      const body = ev.body;
-      if (!body) {
-        // 预期外
-        return throwError({});
-      }
-      if (!body.success) {
-        if (body.code === -2147483648) {
-          // 未定义标准code，需要打提示
-          this.injector.get(NzMessageService).error(body.msg);
-        } else {
-          // 业务级别的错误处理，都在预期内，落到具体调用方处理
-          // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
-          // 还没发现有不需要打提示特殊处理的地方，有的话就加个参数
-          this.injector.get(NzMessageService).error(body.msg);
-        }
-        return throwError(body);
-      }
-      // @ts-ignore
-      return of(new HttpResponse(Object.assign(ev.clone(), { body: body.data })));
-    } else {
+    if (!(ev instanceof HttpResponse)) {
+      return of(ev);
     }
-    return of(ev);
+    const body = (ev as HttpResponse<any>).body;
+    if (!body) {
+      // 预期外
+      return throwError(ev);
+    }
+    if (req.responseType === 'blob'){
+      return of(ev);
+    }
+    if (!body.success) {
+      if (body.code === -2147483648) {
+        // 未定义标准code，需要打提示
+        this.injector.get(NzMessageService).error(body.msg);
+      } else {
+        // 业务级别的错误处理，都在预期内，落到具体调用方处理
+        // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
+        // 还没发现有不需要打提示特殊处理的地方，有的话就加个参数
+        this.injector.get(NzMessageService).error(body.msg);
+      }
+      return throwError(body);
+    }
+    // @ts-ignore
+    return of(new HttpResponse(Object.assign(ev.clone(), { body: body.data })));
   }
 
   /**

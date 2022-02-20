@@ -6,15 +6,7 @@ import {NzCheckBoxOptionInterface} from 'ng-zorro-antd/checkbox/checkbox-group.c
 // 自定义table显示列
 @Component({
   selector: 'app-custom-col',
-  templateUrl: './customcol.component.html',
-  styles: [
-    `
-        .customcol{
-          position: absolute;
-          right: 10px;
-        }
-    `
-  ]
+  templateUrl: './customcol.component.html'
 })
 export class CustomColComponent implements OnInit {
   isVisible: boolean = false;
@@ -22,7 +14,7 @@ export class CustomColComponent implements OnInit {
 
   @Input()
   originColumns: STColumn[] = [];
-  // 默认展示的
+  // 未设置时默认展示的字段，不传显示所有
   @Input()
   defaultColumns: string[] = [];
   // 一直显示的，不参与自定义设置

@@ -7,6 +7,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import {SFComponent, SFDateWidgetSchema, SFSchema, SFSelectWidgetSchema} from '@delon/form';
 import {debounceTime, map} from 'rxjs/operators';
 import {DATE_RANGES} from '../../../shared/utils';
+import {CACHE_ENABLE} from "../../../core/net/cache.interceptors";
 
 @Component({
   selector: 'app-sys-down',
@@ -26,9 +27,14 @@ export class SysDownComponent implements OnInit, AfterViewInit {
           ranges: {...DATE_RANGES.TODAY, ...DATE_RANGES.YESTERDAY, ...DATE_RANGES.DAYS7, ...DATE_RANGES.DAYS30},
         } as SFDateWidgetSchema,
       },
-      operatorName: {
+      user: {
         type: 'string',
         title: '操作人',
+        ui: {
+          widget: 'select',
+          mode: 'multiple',
+          asyncData: () => this.http.get('/sys/dp/users', null, CACHE_ENABLE),
+        } as SFSelectWidgetSchema,
       }
     },
   };

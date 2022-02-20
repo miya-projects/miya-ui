@@ -3,8 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  SERVER_URL: `https://miya.rxxy.icu/backend/api`,
-  // SERVER_URL: `http://localhost:8083/api`,
+  SERVER_URL: `/api`,
   production: false,
   useHash: false,
   // iconfont symbol项目地址
