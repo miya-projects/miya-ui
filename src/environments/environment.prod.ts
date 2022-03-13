@@ -3,5 +3,5 @@ export const environment = {
   production: true,
   useHash: true,
   // iconfont symbol项目地址
-  iconfont: '//at.alicdn.com/t/font_2463422_urh98usxzgb.js',
+  iconfont: '//at.alicdn.com/t/font_2463422_dx9oyvqdonv.js',
 };

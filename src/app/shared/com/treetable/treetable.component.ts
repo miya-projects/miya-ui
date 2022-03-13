@@ -59,6 +59,14 @@ export class TreetableComponent implements OnInit {
       }
     }
   }
+  // expandedData
+
+  // public collapseAll(){
+  //   for (let i = 0; i < this.expandedData.length; i++) {
+  //     this.expandedData[i]._expand = true;
+  //
+  //   }
+  // }
 
   ngOnInit(): void {
     this.reload();

@@ -1,6 +1,8 @@
 <page-header [action]="phActionTpl">
   <ng-template #phActionTpl>
-    <button nz-button nzType="primary" (click)="addDepartment()" style="margin-bottom: 3px">新建部门</button>
+    <button nz-button nzType="primary">全部收缩</button>
+    <button nz-button nzType="primary">全部展开</button>
+    <button nz-button nzType="primary" (click)="addDepartment()">新建部门</button>
   </ng-template>
 </page-header>
 
@@ -9,6 +11,10 @@
     <a nz-button nzType="link">添加下级部门</a>
     <a nz-button nzType="link" (click)="modify(item)">编辑</a>
     <a nz-button nzType="link" nzDanger (click)="delete(item.id)">删除</a>
+  </ng-template>
+  <ng-template tree-row="name" let-item let-index="index">
+    {{item.name}}
+    <i *ngIf="item?.extra?.dingDepId" nz-icon nzType="dingtalk" nzTheme="outline" style="font-size: 15px;color: #0a77ff;"></i>
   </ng-template>
 </app-treetable>
 

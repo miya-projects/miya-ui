@@ -18,7 +18,14 @@
         [(nzExpand)]="item._expand"
         (nzExpandChange)="collapse(expandedData, item, $event)"
       >
-        {{ item[columns[0].index] }}
+        <ng-container *ngIf="!!columns[0].render">
+          <ng-container *ngTemplateOutlet="columns[0].__render; context: {$implicit: item, index: i1}"></ng-container>
+        </ng-container>
+        <!--没有render直接取index-->
+        <ng-container *ngIf="!columns[0].render">
+          {{item[columns[0].index]}}
+        </ng-container>
+
       </td>
       <ng-container *ngFor="let col of columns let i=index">
         <ng-container *ngIf="i!==0">

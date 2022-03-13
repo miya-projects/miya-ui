@@ -68,46 +68,10 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
       })),
     } as unknown as SFTreeSelectWidgetSchema,
   }
-  departments: TreeNodeInterface[] = [
-    {
-      id: `1`,
-      name: 'John Brown sr.',
-      children: [
-        {
-          id: `1-1`,
-          name: 'John Brown',
-        },
-        {
-          id: `1-2`,
-          name: 'John Brown jr.',
-          children: [
-            {
-              id: `1-2-1`,
-              name: 'Jimmy Brown',
-              children: [
-                {
-                  id: `1-2-1-1`,
-                  name: 'John Brown hah.',
-                }
-              ]
-
-            }
-          ]
-        },
-        {
-          id: `1-3`,
-          name: 'John make',
-        },
-      ]
-    }, {
-      id: '2',
-      name: 'haha',
-      children: []
-    }
-  ];
+  departments: TreeNodeInterface[] = [];
   columns: STColumn[] = [
     {
-      title: '部门名称', index: 'name'
+      title: '部门名称', index: 'name', render: 'name'
     }, {
       title: '描述', index: 'description'
     }, {
