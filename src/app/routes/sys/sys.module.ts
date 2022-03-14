@@ -27,6 +27,7 @@ import { SysDepartmentSelectComponent } from './department/select/select.compone
 import { SysDepartmentComponent } from './department/department.component';
 import {SysDownComponent} from "./down/down.component";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
+import {SysLogModalComponent} from "./log/modal/log-modal.component";
 
 const COMPONENTS: Type<void>[] = [
   SysDictComponent,
@@ -47,6 +48,8 @@ const COMPONENTS: Type<void>[] = [
   SysNoticeEditComponent,
 
   SysLogComponent,
+  SysLogModalComponent,
+
   SysDownComponent,
 
   UserSettingsComponent,

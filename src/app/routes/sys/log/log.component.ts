@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { STColumn, STComponent, STData, STPage, STReq, STRes } from '@delon/abc/st';
-import { STRowClassName } from '@delon/abc/st/st.interfaces';
-import { ModalHelper, _HttpClient } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import {SFComponent, SFDateWidgetSchema, SFSchema, SFSelectWidgetSchema} from '@delon/form';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {STColumn, STComponent} from '@delon/abc/st';
+import {STRowClassName} from '@delon/abc/st/st.interfaces';
+import {_HttpClient, ModalHelper} from '@delon/theme';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {SFComponent, SFDateWidgetSchema, SFSchema} from '@delon/form';
 import {debounceTime, map} from 'rxjs/operators';
 import {DATE_RANGES} from '../../../shared/utils';
 
 @Component({
-  selector: 'app-sys-notice',
+  selector: 'app-sys-log',
   templateUrl: './log.component.html',
 })
 export class SysLogComponent implements OnInit, AfterViewInit {

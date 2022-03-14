@@ -8,6 +8,7 @@ import {debounceTime, map} from 'rxjs/operators';
 import {CACHE_ENABLE} from '../../../core/net/cache.interceptors';
 import {SysDepartmentSelectComponent} from '../department/select/select.component';
 import {SysUserEditComponent} from './edit/edit.component';
+import {SysLogModalComponent} from "../log/modal/log-modal.component";
 
 @Component({
   selector: 'app-sys-user',
@@ -122,6 +123,10 @@ export class SysUserComponent implements OnInit, AfterViewInit {
                   this.msgSrv.success('已重置密码为123456');
                   this.st.reload();
                 }),
+            }, {
+              text: '操作日志',
+              click: (record) =>
+                this.modal.createStatic(SysLogModalComponent, {businessId: record.id}, {size: 'xl'}).subscribe(() => this.st.reload())
             },
             // {
             //   text: `权限配置(待开发)`,

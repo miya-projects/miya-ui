@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <div class="modal-title">操作日志</div>
+</div>
+<st
+  #st
+  [columns]="columns"
+  [data]="url"
+  [page]="{}"
+  [scroll]="{y: '600px'}"
+  [rowClassName]="rowClassName"
+  [widthMode]="{ type: 'strict', strictBehavior: 'truncate' }"
+>
+  <ng-template #extra st-row="extra" let-item let-index="index">
+    <span nz-tooltip nzTooltipTitle="{{ item.extra | json }}">{{ item.extra | json }}</span>
+  </ng-template>
+</st>

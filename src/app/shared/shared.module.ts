@@ -9,6 +9,7 @@ import { UEditorModule } from 'ngx-ueditor';
 
 import { SHARED_DELON_MODULES } from './shared-delon.module';
 import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
+import {PipeModule} from "./pipe/pipe.module";
 
 // #region third libs
 
@@ -32,6 +33,7 @@ const DIRECTIVES: Type<any>[] = [];
     AlainThemeModule.forChild(),
     DelonACLModule,
     DelonFormModule,
+    PipeModule,
     ...SHARED_DELON_MODULES,
     ...SHARED_ZORRO_MODULES,
     // third libs
@@ -50,6 +52,7 @@ const DIRECTIVES: Type<any>[] = [];
     AlainThemeModule,
     DelonACLModule,
     DelonFormModule,
+    PipeModule,
     ...SHARED_DELON_MODULES,
     ...SHARED_ZORRO_MODULES,
     // third libs
