@@ -25,6 +25,6 @@ export class LayoutPassportComponent implements OnInit {
   constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {}
 
   ngOnInit(): void {
-    this.tokenService.clear();
+    // this.tokenService.clear();
   }
 }

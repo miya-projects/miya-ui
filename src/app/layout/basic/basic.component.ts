@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { SettingsService, User } from '@delon/theme';
 import { LayoutDefaultOptions } from '@delon/theme/layout-default';
 import { environment } from '@env/environment';
 import {Router} from "@angular/router";
+import {StartupService} from "@core";
 
 @Component({
   selector: 'layout-basic',
@@ -82,7 +83,7 @@ import {Router} from "@angular/router";
     <theme-btn></theme-btn>
   `,
 })
-export class LayoutBasicComponent {
+export class LayoutBasicComponent implements OnInit{
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
     logoCollapsed: `./assets/logo.svg`,
@@ -99,10 +100,15 @@ export class LayoutBasicComponent {
     return this.settings.app.version;
   }
 
-  constructor(private settings: SettingsService, private router: Router) {}
+  constructor(private settings: SettingsService, private router: Router,
+              private startupService: StartupService) {}
 
   toDown(){
     this.router.navigateByUrl('/sys/down');
+  }
+
+  ngOnInit(): void {
+    this.startupService.load();
   }
 
 }

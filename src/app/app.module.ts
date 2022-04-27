@@ -56,12 +56,12 @@ export function StartupServiceFactory(startupService: StartupService): () => Pro
 }
 const APPINIT_PROVIDES = [
   StartupService,
-  {
-    provide: APP_INITIALIZER,
-    useFactory: StartupServiceFactory,
-    deps: [StartupService],
-    multi: true,
-  },
+  // {
+  //   provide: APP_INITIALIZER,
+  //   useFactory: StartupServiceFactory,
+  //   deps: [StartupService],
+  //   multi: true,
+  // },
 ];
 // #endregion
 

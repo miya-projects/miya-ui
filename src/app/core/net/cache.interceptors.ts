@@ -40,10 +40,8 @@ export class CacheInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let hashCode = '';
     if (req.context.get(IS_CACHE_ENABLED)) {
-      hashCode = hash.sha256().update(JSON.stringify(req)).digest('hex');
-      let res = this.cacheSrv.get(hashCode, {mode: 'none', type: 'm'});
+      let res = this.cacheSrv.get(CacheInterceptor.getKey(req), {mode: 'none', type: 'm'});
       if (res) {
         return of(res);
       }
@@ -51,10 +49,15 @@ export class CacheInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(tap(res => {
       if (req.context.get(IS_CACHE_ENABLED)) {
         if (res instanceof HttpResponse) {
-          this.cacheSrv.set(hashCode, res, {type: 'm'});
+          this.cacheSrv.set(CacheInterceptor.getKey(req), res, {type: 'm'});
         }
       }
       return res;
     }));
   }
+
+  private static getKey(req: HttpRequest<any>): string{
+    return hash.sha256().update(JSON.stringify(req)).digest('hex');
+  }
+
 }
