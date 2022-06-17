@@ -46,7 +46,7 @@
     "ajv-formats": "^2.1.1",
     "core-js": "^3.20.2",
     "date-fns": "^2.28.0",
-    "ng-alain": "^13.2.0",
+    "ng-alain": "^13.5.1",
     "ng-zorro-antd": "^13.3.0",
     "ngx-tinymce": "^13.0.0",
     "ngx-ueditor": "^13.0.0",
