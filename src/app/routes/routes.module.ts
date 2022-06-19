@@ -12,7 +12,7 @@ import { UserRegisterComponent } from './passport/register/register.component';
 import { RouteRoutingModule } from './routes-routing.module';
 import {StartupService} from "@core";
 
-const COMPONENTS: Type<void>[] = [
+const COMPONENTS: Array<Type<void>> = [
   DashboardComponent,
   // passport pages
   UserLoginComponent,

@@ -26,6 +26,7 @@ export class SysRoleComponent implements OnInit {
 
   /**
    * 加载数据
+   *
    * @private
    */
   reload(): void {
@@ -58,6 +59,7 @@ export class SysRoleComponent implements OnInit {
   }
   /**
    * 删除角色
+   *
    * @param id
    */
   delete(id: string): void {
@@ -65,7 +67,7 @@ export class SysRoleComponent implements OnInit {
       nzTitle: '提示',
       nzContent: '是否要删除?',
       nzOnOk: () => {
-        this.http.delete('/sys/role/' + id).subscribe(res => {
+        this.http.delete(`/sys/role/${id}`).subscribe(res => {
           this.messageSrv.success("操作成功")
           this.reload();
         });

@@ -53,7 +53,7 @@ export class SysNoticeEditComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.record) {
-      this.http.get(`/sys/user/detail` + this.record.id).subscribe((res) => {
+      this.http.get(`/sys/user/detail${  this.record.id}`).subscribe((res) => {
         if (res.avatar) {
           res.avatar = [res.avatar];
         }

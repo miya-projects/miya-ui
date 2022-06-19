@@ -38,6 +38,7 @@ export class SysNoticeComponent implements OnInit, AfterViewInit {
 
   /**
    * 加载数据
+   *
    * @private
    */
   reload(): void {

@@ -98,7 +98,7 @@ export class SysRolePermissionComponent implements OnInit {
 
   reload(): void {
     // todo 优化
-    this.http.get('/sys/role/' + this.id).subscribe(role => {
+    this.http.get(`/sys/role/${  this.id}`).subscribe(role => {
       this.role = role;
       let res = role.business;
       const acls = res.map((i: any) => i.fullCode);
@@ -126,6 +126,7 @@ export class SysRolePermissionComponent implements OnInit {
 
   /**
    * 保存角色权限
+   *
    * @param id
    */
   save(id: string): void {

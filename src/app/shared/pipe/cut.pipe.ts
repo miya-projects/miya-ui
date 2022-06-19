@@ -1,5 +1,5 @@
-import { Pipe } from "@angular/core";
-import {PipeTransform} from "@angular/core";
+import { Pipe ,PipeTransform} from "@angular/core";
+
 
 /**
  * 数据截断
@@ -9,6 +9,7 @@ export class CutPipe implements PipeTransform {
 
   /**
    * 数据截断函数
+   *
    * @param value 原始值
    * @param length  最多保留长度
    */

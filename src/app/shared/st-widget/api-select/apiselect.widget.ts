@@ -19,6 +19,7 @@ export class ApiSelectWidget extends SelectWidget implements OnInit {
 
   /**
    * 给sf值的时候调用该方法
+   *
    * @param value 组件值
    */
   reset(value: SFValue): void {

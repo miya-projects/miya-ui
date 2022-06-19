@@ -154,6 +154,7 @@ export class DefaultInterceptor implements HttpInterceptor {
   // #endregion
   /**
    * 跳转到登录页
+   *
    * @private
    */
   private toLogin(): void {
@@ -163,6 +164,7 @@ export class DefaultInterceptor implements HttpInterceptor {
 
   /**
    * 处理请求结果，状态码不为200，统一处理，状态码为200，响应body中success为false，进行catch处理
+   *
    * @param ev  响应对象
    * @param req 请求对象
    * @param next
@@ -199,6 +201,7 @@ export class DefaultInterceptor implements HttpInterceptor {
 
   /**
    * http请求状态码错误处理
+   *
    * @param ev
    * @param req
    * @param next

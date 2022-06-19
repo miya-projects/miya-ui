@@ -58,5 +58,4 @@ export class SysDepartmentSelectComponent implements OnInit, AfterViewInit {
   }
 
 
-
 }

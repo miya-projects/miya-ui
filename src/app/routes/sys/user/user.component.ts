@@ -88,7 +88,7 @@ export class SysUserComponent implements OnInit, AfterViewInit {
               type: 'del',
               acl: 'sys:user:delete',
               click: (record: any, modal?: any, instance?: STComponent) => {
-                this.http.delete('/sys/user/' + record.id).subscribe(() => {
+                this.http.delete(`/sys/user/${record.id}`).subscribe(() => {
                   this.msgSrv.success('删除成功');
                   this.st.reload();
                 });

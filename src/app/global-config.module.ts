@@ -9,7 +9,7 @@ import {
   SkipSelf,
   TemplateRef,
   ViewChild,
-} from '@angular/core';
+ InjectionToken } from '@angular/core';
 import { throwIfAlreadyLoaded } from '@core';
 import { STData } from '@delon/abc/st';
 import { ErrorData } from '@delon/form/src/errors';
@@ -23,7 +23,7 @@ import {AlainACLType} from '@delon/util/config/acl/acl.type';
 // #region NG-ALAIN Config
 
 import { DelonACLModule } from '@delon/acl';
-import { InjectionToken } from '@angular/core';
+
 
 const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolver, http: HttpClient): AlainConfig => {
   return {

@@ -85,7 +85,7 @@ export class SysUserEditComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.record) {
-      this.http.get(`/sys/user/` + this.record.id).subscribe((res) => {
+      this.http.get(`/sys/user/${  this.record.id}`).subscribe((res) => {
         this.formData = res;
       });
     } else {
@@ -97,7 +97,7 @@ export class SysUserEditComponent implements OnInit {
     let url = '/sys/user';
     let method = 'post';
     if (this.record) {
-      url = '/sys/user/' + this.record.id;
+      url = `/sys/user/${  this.record.id}`;
       method = 'put';
     }
     this.http.request(method, url, {body: value}).subscribe((res) => {

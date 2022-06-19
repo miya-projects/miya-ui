@@ -105,6 +105,7 @@ export class SysDictDataComponent implements OnInit {
 
   /**
    * 删除字典项
+   *
    * @param id
    * @private
    */
@@ -113,7 +114,7 @@ export class SysDictDataComponent implements OnInit {
       nzTitle: '提示',
       nzContent: '确认删除?',
       nzOnOk: () => {
-        this.http.delete('/sys/dict/item/' + id).subscribe((res) => {
+        this.http.delete(`/sys/dict/item/${  id}`).subscribe((res) => {
           this.messageSrv.success('删除成功');
           this.reload();
         });
@@ -142,6 +143,7 @@ export class SysDictDataComponent implements OnInit {
 
   /**
    * 增加数据字典项
+   *
    * @private
    */
   add(): void {

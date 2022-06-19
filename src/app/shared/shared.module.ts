@@ -13,14 +13,14 @@ import {PipeModule} from "./pipe/pipe.module";
 
 // #region third libs
 
-const THIRDMODULES: Type<any>[] = [UEditorModule];
+const THIRDMODULES: Array<Type<any>> = [UEditorModule];
 
 // #endregion
 
 // #region your componets & directives
 
-const COMPONENTS: Type<any>[] = [];
-const DIRECTIVES: Type<any>[] = [];
+const COMPONENTS: Array<Type<any>> = [];
+const DIRECTIVES: Array<Type<any>> = [];
 
 // #endregion
 

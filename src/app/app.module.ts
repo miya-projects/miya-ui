@@ -47,7 +47,7 @@ const INTERCEPTOR_PROVIDES = [
 // #endregion
 
 // #region global third module
-const GLOBAL_THIRD_MODULES: Type<any>[] = [];
+const GLOBAL_THIRD_MODULES: Array<Type<any>> = [];
 // #endregion
 
 // #region Startup Service

@@ -29,7 +29,7 @@ import {SysDownComponent} from "./down/down.component";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
 import {SysLogModalComponent} from "./log/modal/log-modal.component";
 
-const COMPONENTS: Type<void>[] = [
+const COMPONENTS: Array<Type<void>> = [
   SysDictComponent,
   SysDictDataComponent,
   DictEditComponent,

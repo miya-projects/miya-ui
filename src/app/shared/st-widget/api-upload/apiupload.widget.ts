@@ -20,6 +20,7 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
 
   /**
    * 给upload赋值的时候调用该方法
+   *
    * @param value 组件值
    */
   reset(value: SFValue): void {
@@ -50,6 +51,7 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
 
   /**
    * 格式修正
+   *
    * @param value
    */
   normalize(value: any): NzUploadFile {

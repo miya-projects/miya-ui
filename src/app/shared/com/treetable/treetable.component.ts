@@ -42,6 +42,7 @@ export class TreetableComponent implements OnInit {
 
   /**
    * 主要目的是当节点缩起来的时候将子节点也缩起来
+   *
    * @param array
    * @param data
    * @param $event
@@ -95,6 +96,7 @@ export class TreetableComponent implements OnInit {
 
   /**
    * tree节点转数组
+   *
    * @param root
    */
   convertTreeToList(root: TreeNodeInterface[]): TreeNodeInterface[] {

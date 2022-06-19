@@ -34,6 +34,7 @@ export class SysConfigComponent implements OnInit {
 
   /**
    * 加载数据
+   *
    * @private
    */
   reload(): void {

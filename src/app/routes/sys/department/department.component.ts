@@ -117,7 +117,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
       nzTitle: '提示',
       nzContent: '确认要删除吗?',
       nzOnOk: () => {
-        this.http.delete('/sys/department/' + id).subscribe(res => {
+        this.http.delete(`/sys/department/${  id}`).subscribe(res => {
           this.msgSrv.success("删除成功");
           this.treetable.reload();
         })
