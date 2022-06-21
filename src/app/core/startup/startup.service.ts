@@ -8,13 +8,16 @@ import { ICONS } from '../../../style-icons';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 import Menus from '../../routes/menu';
 import { environment } from '@env/environment';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
 
 /**
  * Used for application startup
  * Generally used to get the basic data of the application, like: Menu Data, User Data, etc.
  */
-@Injectable()
-export class StartupService {
+@Injectable({
+  providedIn: 'root',
+})
+export class StartupService implements Resolve<any>{
   constructor(
     iconSrv: NzIconService,
     private menuService: MenuService,
@@ -82,5 +85,15 @@ export class StartupService {
     return new Promise((resolve, reject) => {
       this.viaHttp(resolve, reject);
     });
+  }
+
+  /**
+   * 路由前的准备数据
+   * todo 加载时间太长可能有长时间白屏
+   * @param route
+   * @param state
+   */
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+    return this.load();
   }
 }

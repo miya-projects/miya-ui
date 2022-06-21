@@ -30,9 +30,9 @@ export class SysUserEditComponent implements OnInit {
       phone: {type: 'string', title: '手机号', format: 'mobile'},
       sex: {type: 'string', title: '性别'},
       avatar: {type: 'string', title: '头像'},
-      remark: {type: 'string', title: '备注', maxLength: 140},
-      roles: {type: 'string', title: '角色', maxLength: 140},
-      departments: {type: 'string', title: '部门', maxLength: 140},
+      remark: {type: 'string', title: '备注', maxLength: 150},
+      roles: {type: 'string', title: '角色'},
+      departments: {type: 'string', title: '部门'},
     },
     required: ['username', 'name', 'phone'],
   };

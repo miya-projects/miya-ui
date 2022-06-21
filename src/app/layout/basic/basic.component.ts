@@ -100,15 +100,13 @@ export class LayoutBasicComponent implements OnInit{
     return this.settings.app.version;
   }
 
-  constructor(private settings: SettingsService, private router: Router,
-              private startupService: StartupService) {}
+  constructor(private settings: SettingsService, private router: Router) {}
 
   toDown(){
     this.router.navigateByUrl('/sys/down');
   }
 
   ngOnInit(): void {
-    this.startupService.load();
   }
 
 }

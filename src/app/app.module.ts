@@ -54,15 +54,15 @@ const GLOBAL_THIRD_MODULES: Array<Type<any>> = [];
 export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
   return () => startupService.load();
 }
-const APPINIT_PROVIDES = [
-  StartupService,
+// const APPINIT_PROVIDES = [
+  // StartupService,
   // {
   //   provide: APP_INITIALIZER,
   //   useFactory: StartupServiceFactory,
   //   deps: [StartupService],
   //   multi: true,
   // },
-];
+// ];
 // #endregion
 
 import { Observable } from 'rxjs';
@@ -100,7 +100,7 @@ import { STWidgetModule } from './shared/st-widget/st-widget.module';
       },
     }),
   ],
-  providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...APPINIT_PROVIDES],
+  providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
