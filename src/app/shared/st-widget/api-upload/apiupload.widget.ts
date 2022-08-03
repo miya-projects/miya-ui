@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {ControlWidget, SelectWidget, SFValue, UploadWidget} from '@delon/form';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzUploadFile} from 'ng-zorro-antd/upload';
+import {NzSafeAny} from "ng-zorro-antd/core/types";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 /**
  * 1. 规范化文件对象，方便回显内容
@@ -46,7 +48,20 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
     } else {
       value = [this.normalize(value)];
     }
+    // {
+    //   filename: "默认头像???",
+    //     name: "默认头像???",
+    //   path: "default_avatar.jpg",
+    //   url: "https://miya.rxxy.icu/backend/default_avatar.jpg",
+    //   showDownload: true,
+    //   status: 'done',
+    //   response: value
+    // }
     super.setValue(value);
+  }
+
+  get value(): NzSafeAny{
+    return this.formProperty.value.id
   }
 
   /**
@@ -55,6 +70,7 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
    * @param value
    */
   normalize(value: any): NzUploadFile {
+    console.log('normalize value', value);
     if (value.__proto__ === Object.prototype) {
       return {
         uid: value.id,
@@ -70,6 +86,7 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
   private IMAGE_SUFFIX = ['jpg', 'jpeg', 'png', 'bmp', 'gif'];
 
   handlePreview = (file: NzUploadFile) => {
+    console.log('handlePreview', file);
     if (this.ui.preview) {
       this.ui.preview(file);
       return;
@@ -81,12 +98,14 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
     // 只支持预览图像
     let name = file.name;
     let suffix = name.substring(name.lastIndexOf('.')+1)
-    if (this.IMAGE_SUFFIX.indexOf(suffix) != -1){
-      this.injector.get<NzModalService>(NzModalService).create({
-        nzContent: `<img src="${_url}" class="img-fluid"  alt="${file.name}"/>`,
-        nzFooter: null
-      });
+    if (this.IMAGE_SUFFIX.indexOf(suffix) == -1 && suffix != '默认头像') {
+      this.injector.get(NzMessageService).error('只支持预览图像');
+      return;
     }
+    this.injector.get<NzModalService>(NzModalService).create({
+      nzContent: `<img src="${_url}" class="img-fluid"  alt="${file.name}"/>`,
+      nzFooter: null
+    });
 
   };
 }

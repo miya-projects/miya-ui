@@ -86,9 +86,16 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
           },
         },
         ...({
-          resReName: 'id',
+          resReName: '0',
           urlReName: 'url',
           action: '/sys/file/upload',
+          name: 'file',
+          customRequest: (item: NzUploadXHRArgs): Subscription => {
+            return http.post('/sys/file/upload', item.file).subscribe(res => {
+              // item.onSuccess(res, item.file, null);
+
+            })
+          }
         } as SFUploadWidgetSchema),
         ...({
           allowClear: true,
@@ -135,8 +142,8 @@ const alainProvides = [{ provide: ALAIN_CONFIG, useFactory: alainConfigFactory, 
 
 // mock
 import { environment } from '@env/environment';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
-import {Observable} from 'rxjs';
+import {NzUploadFile, NzUploadXHRArgs} from 'ng-zorro-antd/upload';
+import {Observable, Subscription} from 'rxjs';
 import * as MOCKDATA from '../../_mock';
 
 

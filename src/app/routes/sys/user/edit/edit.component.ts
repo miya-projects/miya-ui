@@ -85,7 +85,7 @@ export class SysUserEditComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.record) {
-      this.http.get(`/sys/user/${  this.record.id}`).subscribe((res) => {
+      this.http.get(`/sys/user/${this.record.id}`).subscribe((res) => {
         this.formData = res;
       });
     } else {
