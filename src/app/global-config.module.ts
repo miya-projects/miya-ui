@@ -88,7 +88,7 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
         ...({
           resReName: 'id',
           urlReName: 'url',
-          action: '/sys/file',
+          action: '/sys/file/upload',
         } as SFUploadWidgetSchema),
         ...({
           allowClear: true,
