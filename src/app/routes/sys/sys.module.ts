@@ -28,6 +28,7 @@ import { SysDepartmentComponent } from './department/department.component';
 import {SysDownComponent} from "./down/down.component";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
 import {SysLogModalComponent} from "./log/modal/log-modal.component";
+import {DevelopModule} from "./develop/develop.module";
 
 const COMPONENTS: Array<Type<void>> = [
   SysDictComponent,
@@ -59,7 +60,7 @@ const COMPONENTS: Array<Type<void>> = [
   SysDepartmentComponent];
 
 @NgModule({
-  imports: [SharedModule, SysRoutingModule, NzTreeModule, NzEmptyModule, NzUploadModule, ComModule, NzBreadCrumbModule],
+  imports: [SharedModule, SysRoutingModule, NzTreeModule, NzEmptyModule, NzUploadModule, ComModule, NzBreadCrumbModule, DevelopModule],
   declarations: COMPONENTS,
   providers: [CanLeaveProvide],
 })

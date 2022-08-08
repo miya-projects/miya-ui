@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {ControlWidget, SelectWidget, SFValue, UploadWidget} from '@delon/form';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {SFValue, UploadWidget} from '@delon/form';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzUploadFile} from 'ng-zorro-antd/upload';
-import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {NzMessageService} from "ng-zorro-antd/message";
 
 /**
@@ -38,31 +37,6 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
     super.reset(value);
   }
 
-  setValue(value: SFValue) {
-    if (value == null){
-      super.setValue(value);
-      return;
-    }
-    if (value instanceof Array) {
-      value = value.map(i => this.normalize(i));
-    } else {
-      value = [this.normalize(value)];
-    }
-    // {
-    //   filename: "默认头像???",
-    //     name: "默认头像???",
-    //   path: "default_avatar.jpg",
-    //   url: "https://miya.rxxy.icu/backend/default_avatar.jpg",
-    //   showDownload: true,
-    //   status: 'done',
-    //   response: value
-    // }
-    super.setValue(value);
-  }
-
-  get value(): NzSafeAny{
-    return this.formProperty.value.id
-  }
 
   /**
    * 格式修正
@@ -70,7 +44,6 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
    * @param value
    */
   normalize(value: any): NzUploadFile {
-    console.log('normalize value', value);
     if (value.__proto__ === Object.prototype) {
       return {
         uid: value.id,
@@ -86,7 +59,6 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
   private IMAGE_SUFFIX = ['jpg', 'jpeg', 'png', 'bmp', 'gif'];
 
   handlePreview = (file: NzUploadFile) => {
-    console.log('handlePreview', file);
     if (this.ui.preview) {
       this.ui.preview(file);
       return;

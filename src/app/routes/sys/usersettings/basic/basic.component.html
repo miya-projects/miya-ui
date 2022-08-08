@@ -26,7 +26,7 @@
   <div class="right">
     <div class="avatar_title">头像</div>
     <div class="avatar"><img src="{{ user.avatar }}" alt="Avatar"/></div>
-    <nz-upload nzAction="/sys/file" [nzShowUploadList]="false" [(nzFileList)]="avatar"
+    <nz-upload nzAction="/sys/file/upload" [nzShowUploadList]="false" [(nzFileList)]="avatar" [nzData]="{formatType: 'Object'}"
                (nzChange)="avatarChange($event)">
       <button nz-button class="button_view">
         <i nz-icon nzType="upload"></i>

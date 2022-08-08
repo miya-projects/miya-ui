@@ -86,16 +86,10 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
           },
         },
         ...({
-          resReName: '0',
           urlReName: 'url',
+          // multiple: true,
           action: '/sys/file/upload',
           name: 'file',
-          customRequest: (item: NzUploadXHRArgs): Subscription => {
-            return http.post('/sys/file/upload', item.file).subscribe(res => {
-              // item.onSuccess(res, item.file, null);
-
-            })
-          }
         } as SFUploadWidgetSchema),
         ...({
           allowClear: true,

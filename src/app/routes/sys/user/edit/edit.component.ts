@@ -44,6 +44,10 @@ export class SysUserEditComponent implements OnInit {
     $avatar: {
       widget: 'api-upload',
       limitFileCount: 1,
+      data: {
+        // 指定上传接口返回数据为对象，否则返回数组
+        formatType: 'Object'
+      }
     } as SFUploadWidgetSchema,
     $roles: {
       widget: 'api-select',

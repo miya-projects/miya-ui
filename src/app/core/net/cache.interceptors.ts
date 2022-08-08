@@ -29,7 +29,7 @@ export const CACHE_ENABLE: {
 }
 
 /**
- * 用于缓存通用型http请求
+ * 用于缓存通用型http请求， 只支持GET
  */
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
@@ -40,7 +40,7 @@ export class CacheInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.context.get(IS_CACHE_ENABLED)) {
+    if (req.context.get(IS_CACHE_ENABLED) && req.method === 'GET') {
       let res = this.cacheSrv.get(CacheInterceptor.getKey(req), {mode: 'none', type: 'm'});
       if (res) {
         return of(res);
@@ -57,7 +57,7 @@ export class CacheInterceptor implements HttpInterceptor {
   }
 
   private static getKey(req: HttpRequest<any>): string{
-    return hash.sha256().update(JSON.stringify(req)).digest('hex');
+    return hash.sha256().update(JSON.stringify(req.urlWithParams)).digest('hex');
   }
 
 }

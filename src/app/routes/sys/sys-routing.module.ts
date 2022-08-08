@@ -30,6 +30,9 @@ const routes: Routes = [
       {path: 'security', component: SecuritySettingsComponent, data: {title: '修改密码'}},
     ]
   },
+  {
+    path: 'develop', loadChildren: () => import('./develop/develop.module').then((m) => m.DevelopModule)
+  },
 ];
 
 @NgModule({

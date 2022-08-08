@@ -75,6 +75,11 @@ const data: Menu[] = [
                 icon: {type: 'iconfont', iconfont: 'icon-document'},
               },
               {
+                text: '系统枚举',
+                link: '/sys/develop/system-enum',
+                icon: {type: 'icon', value: 'tool'},
+              },
+              {
                 text: 'Ng-alain演示站',
                 externalLink: 'https://ng-alain.gitee.io/#/dashboard/v1',
                 target: '_blank',
