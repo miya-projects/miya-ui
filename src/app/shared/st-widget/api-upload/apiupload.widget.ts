@@ -3,6 +3,8 @@ import {SFValue, UploadWidget} from '@delon/form';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzUploadFile} from 'ng-zorro-antd/upload';
 import {NzMessageService} from "ng-zorro-antd/message";
+import {NzUploadChangeParam} from "ng-zorro-antd/upload/interface";
+import {Observable, of} from "rxjs";
 
 /**
  * 1. 规范化文件对象，方便回显内容
@@ -54,6 +56,29 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
       } as NzUploadFile
     }
     return value;
+  }
+
+  change(args: NzUploadChangeParam) {
+    super.change(args);
+    let data = this.ui.data;
+    let dataObservable: Observable<any>;
+    if (typeof data === 'function') {
+      let dataResult = (data as (file: NzUploadFile) => {} | Observable<{}>)(this.fileList[0]);
+      if (dataResult instanceof Observable) {
+        dataObservable = dataResult;
+      }else {
+        dataObservable = of(dataResult);
+      }
+    }else {
+      dataObservable = of(data);
+    }
+    dataObservable.subscribe(i => {
+      if (i?.formatType === 'Object') {
+        this.formProperty.setValue(this.fileList[0].response?.id, false);
+      }else {
+        this.formProperty.setValue(this.fileList.map(f => f.response?.id) , false);
+      }
+    })
   }
 
   private IMAGE_SUFFIX = ['jpg', 'jpeg', 'png', 'bmp', 'gif'];

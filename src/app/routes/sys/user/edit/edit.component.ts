@@ -101,7 +101,7 @@ export class SysUserEditComponent implements OnInit {
     let url = '/sys/user';
     let method = 'post';
     if (this.record) {
-      url = `/sys/user/${  this.record.id}`;
+      url = `/sys/user/${this.record.id}`;
       method = 'put';
     }
     this.http.request(method, url, {body: value}).subscribe((res) => {
