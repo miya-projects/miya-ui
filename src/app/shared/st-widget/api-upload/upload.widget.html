@@ -25,7 +25,7 @@
     [nzPreviewFile]="ui.previewFile"
     [nzDownload]="ui.download"
     [nzTransformFile]="ui.transformFile"
-    (nzChange)="change($event)"
+    (nzChange)="handleChange($event)"
     [nzShowButton]="fileList.length < i.limitFileCount"
   >
     <ng-container [ngSwitch]="btnType">

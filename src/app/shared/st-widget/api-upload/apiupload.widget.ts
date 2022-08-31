@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {SFValue, UploadWidget} from '@delon/form';
 import {NzModalService} from 'ng-zorro-antd/modal';
-import {NzUploadFile} from 'ng-zorro-antd/upload';
+import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
 import {NzMessageService} from "ng-zorro-antd/message";
 
 /**
@@ -35,8 +35,23 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
       value = [this.normalize(value)];
     }
     super.reset(value);
+    if (this.i.limitFileCount > 1){
+      this.setValue(value.map((i: any) => i.response.id));
+      return;
+    }
+    this.setValue(value[0]?.response?.id);
   }
 
+  handleChange(e: NzUploadChangeParam){
+    this.change(e);
+    if (e.type === 'success' || e.type === 'removed'){
+      if (this.i.limitFileCount > 1) {
+        this.setValue(e.fileList.map(i => i.response.id));
+        return;
+      }
+      this.setValue(e.fileList[0]?.response?.id);
+    }
+  }
 
   /**
    * 格式修正

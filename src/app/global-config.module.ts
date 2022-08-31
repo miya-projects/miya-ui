@@ -86,7 +86,14 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
           },
         },
         ...({
+          // 默认只允许上传单文件
+          // limitFileCount: 1,
           urlReName: 'url',
+          data: {
+            // 指定上传接口返回数据为对象，否则返回数组
+            formatType: 'Object'
+          },
+          // 选择文件时可以选择多个文件，暂时不支持 todo
           // multiple: true,
           action: '/sys/file/upload',
           name: 'file',
