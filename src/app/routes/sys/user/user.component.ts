@@ -9,6 +9,7 @@ import {CACHE_ENABLE} from '../../../core/net/cache.interceptors';
 import {SysDepartmentSelectComponent} from '../department/select/select.component';
 import {SysUserEditComponent} from './edit/edit.component';
 import {SysLogModalComponent} from "../log/modal/log-modal.component";
+import {download} from "../../../shared/utils";
 
 @Component({
   selector: 'app-sys-user',
@@ -164,14 +165,13 @@ export class SysUserComponent implements OnInit, AfterViewInit {
   down() {
     this.http.get("/sys/user/export", this.sf.value,{responseType: 'blob', observe: 'response'})
       .subscribe(res => {
-        const a = document.createElement("a");
         let reg = new RegExp('filename=(.+)');
         let exec = reg.exec(res.headers.get('content-disposition') as string);
-        if (exec != null){
-          a.download = decodeURI(exec[1]) || 'export.xlsx';
+        let filename = 'export.xlsx';
+        if (exec != null && exec.length >= 2){
+          filename = decodeURI(exec[1]);
         }
-        a.href = window.URL.createObjectURL(res.body as Blob);
-        a.click();
+        download(filename, res.body as Blob);
     });
   }
 }
