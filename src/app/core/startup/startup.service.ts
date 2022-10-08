@@ -9,6 +9,7 @@ import { ICONS_AUTO } from '../../../style-icons-auto';
 import Menus from '../../routes/menu';
 import { environment } from '@env/environment';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
+import {PreferencesService} from "../preferences/preferences.service";
 
 /**
  * Used for application startup
@@ -26,6 +27,7 @@ export class StartupService implements Resolve<any>{
     private titleService: TitleService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: HttpClient,
+    private preferencesService: PreferencesService,
     private injector: Injector,
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
@@ -71,6 +73,8 @@ export class StartupService implements Resolve<any>{
         this.aclService.attachAbility(businesses);
         this.menuService.add(Menus);
         this.titleService.suffix = appData.name;
+
+        this.preferencesService.init(res.user.preferences.front);
       },
       (err) => {
         resolve({});

@@ -1,14 +1,14 @@
 <page-header [action]="phActionTpl">
   <ng-template #phActionTpl>
-    <button nz-button nzType="primary">全部收缩</button>
-    <button nz-button nzType="primary">全部展开</button>
+    <button nz-button nzType="primary" (click)="treeTable.collapseAll()">全部收缩</button>
+    <button nz-button nzType="primary" (click)="treeTable.expandAll()">全部展开</button>
     <button nz-button nzType="primary" (click)="addDepartment()">新建部门</button>
   </ng-template>
 </page-header>
 
-<app-treetable #treetable [data]="'/sys/department'" [columns]="columns">
+<app-treetable #treeTable [data]="'/sys/department'" [columns]="columns">
   <ng-template tree-row="action" let-item>
-    <a nz-button nzType="link">添加下级部门</a>
+    <a nz-button nzType="link" (click)="addDepartment(item)">添加下级部门</a>
     <a nz-button nzType="link" (click)="modify(item)">编辑</a>
     <a nz-button nzType="link" nzDanger (click)="delete(item.id)">删除</a>
   </ng-template>

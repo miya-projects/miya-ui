@@ -1,16 +1,22 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {STColumn} from '@delon/abc/st';
 import {NzCheckBoxOptionInterface} from 'ng-zorro-antd/checkbox/checkbox-group.component';
+import {PreferencesService} from "../../../core/preferences/preferences.service";
+import {STColumnTitle} from "@delon/abc/st/st.interfaces";
 
-// todo 用户首选项存储
 // 自定义table显示列
 @Component({
   selector: 'app-custom-col',
   templateUrl: './customcol.component.html'
 })
 export class CustomColComponent implements OnInit {
-  isVisible: boolean = false;
+  // 是否显示模态框
+  isVisibleModal: boolean = false;
+  // 支持自定义是否展示的列
   customColumns: NzCheckBoxOptionInterface[] = [];
+
+  // 全选按钮ngModel
+  allChecked: boolean = this.customColumns.filter(col => col.checked).length === this.customColumns.length;
 
   @Input()
   originColumns: STColumn[] = [];
@@ -20,37 +26,76 @@ export class CustomColComponent implements OnInit {
   // 一直显示的，不参与自定义设置
   @Input()
   alwaysShow: string[] = [''];
+  // 偏好配置保存的key，实际保存会使用customTableKey:${key}
+  @Input()
+  key: string | undefined = undefined;
 
   // 最终展示的
   public columns: STColumn[] = [];
 
-  constructor() {
+  constructor(
+    private preferencesService: PreferencesService
+  ) {
+  }
+
+  get indeterminate(): boolean {
+    return new Set(this.customColumns.map(col => col.checked)).size > 1;
   }
 
   ngOnInit(): void {
-    this.customColumns = this.originColumns.filter(col => this.alwaysShow.indexOf(col.title as string) === -1).map(col => {
+    let customColumns = this.originColumns.map(col => {
+      if (typeof col.title === 'string'){
+        return col.title as string;
+      }
+      return (col.title as STColumnTitle).text as string;
+    }).filter(title => this.alwaysShow.indexOf(title) === -1)
+
+    this.customColumns = customColumns.map(title => {
       return {
-        label: col.title as string,
-        value: col.title as string,
-        // 加载上一次的设置或使用默认
-        checked: true
+        label: title,
+        value: title,
       }
     });
+    this.resetSelected();
     this.reCalcColumns();
   }
 
+  // 重置选中的列
+  resetSelected(){
+    let checkedCols: string[];
+    let obj:{[key:string]: boolean} = {}
+    if (this.key) {
+      checkedCols = this.preferencesService.get(`customTableKey:${this.key}`);
+      checkedCols.forEach(col => {
+        obj[col] = true;
+      })
+      this.customColumns.forEach(col => {
+        col.checked = !!(obj[col.label]);
+      })
+    } else {
+      this.customColumns.forEach(col => {
+        col.checked = true;
+      })
+    }
+  }
+
   openSetting() {
-    this.isVisible = true;
+    this.resetSelected();
+    this.isVisibleModal = true;
   }
 
   handleOk() {
     this.reCalcColumns();
-    this.isVisible = false;
+    if (this.key) {
+      let checkedCols = this.customColumns.filter(col => col.checked).map(col => col.value)
+      this.preferencesService.save(`customTableKey:${this.key}`, checkedCols);
+    }
+    this.isVisibleModal = false;
   }
 
   // 恢复默认设置
   resetDefault() {
-    if (this.defaultColumns.length === 0){
+    if (this.defaultColumns.length === 0) {
       for (let i = 0; i < this.customColumns.length; i++) {
         this.customColumns[i].checked = true;
       }
@@ -61,10 +106,19 @@ export class CustomColComponent implements OnInit {
     }
   }
 
-  reCalcColumns(): void{
+  reCalcColumns(): void {
     let checkedCols = this.customColumns.filter(col => col.checked).map(col => col.value);
     // 选中的 + 一直显示
     this.columns = this.originColumns.filter(col => (checkedCols.indexOf(col.title as string) != -1) || this.alwaysShow.indexOf(col.title as string) != -1);
+  }
+
+  // 点击全选按钮回调
+  updateAllChecked(checked: boolean) {
+    this.customColumns.forEach(col => col.checked = checked)
+  }
+
+  checkboxGroupChange($event: any) {
+    this.allChecked = this.customColumns.filter(col => col.checked).length === this.customColumns.length;
   }
 
 }

@@ -11,6 +11,7 @@ import {CustomColComponent} from './custom-col/customcol.component';
 import {PasswordComponent} from './password/password.component';
 import {TreeRowDirective} from './treetable/tree-row.directive';
 import {TreetableComponent} from './treetable/treetable.component';
+import {NzDividerModule} from "ng-zorro-antd/divider";
 
 export const COMPONENTS = [
   PasswordComponent,
@@ -21,16 +22,17 @@ export const COMPONENTS = [
 
 @NgModule({
   declarations: COMPONENTS,
-  imports: [
-    NzInputModule,
-    FormsModule,
-    NzIconModule,
-    NzTableModule,
-    CommonModule,
-    NzButtonModule,
-    NzModalModule,
-    NzCheckboxModule,
-  ],
+    imports: [
+        NzInputModule,
+        FormsModule,
+        NzIconModule,
+        NzTableModule,
+        CommonModule,
+        NzButtonModule,
+        NzModalModule,
+        NzCheckboxModule,
+        NzDividerModule,
+    ],
   exports: [...COMPONENTS],
 })
 export class ComModule {

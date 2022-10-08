@@ -84,7 +84,7 @@ export class UserLoginComponent implements OnDestroy {
       return;
     }
     this.http
-      .post('/sys/user/sendVerifyCode?_allow_anonymous=true', {
+      .post('/sys/user/current/sendVerifyCode?_allow_anonymous', {
         phone: this.mobile.value,
       })
       .subscribe(() => {
@@ -123,7 +123,7 @@ export class UserLoginComponent implements OnDestroy {
       return;
     }
     this.http
-      .post('/sys/user/loginByPhone', {
+      .post('/sys/user/current/loginByPhone', {
         phone: this.mobile.value,
         verifyCode: this.captcha.value,
       })

@@ -29,8 +29,8 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
   private readonly sf!: SFComponent;
   @ViewChild('addDepartmentTemplate')
   addDepartmentTemplate!: TemplateRef<any>;
-  @ViewChild('treetable')
-  treetable!: TreetableComponent;
+  @ViewChild('treeTable')
+  treeTable!: TreetableComponent;
 
   schema: SFSchema = {
     properties: {
@@ -85,10 +85,12 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-  addDepartment() {
+  addDepartment(item?: any) {
     const modal: NzModalRef = this.modalService.create({
       nzContent: this.addDepartmentTemplate,
+      nzComponentParams: {parent: item.id},
       nzOkLoading: false,
+      nzStyle: {top: '30%'},
       nzOnOk: () => {
         modal.updateConfig({nzOkLoading: true});
         // @ts-ignore
@@ -101,7 +103,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
         })).subscribe(res => {
           modal.close();
           this.msgSrv.success('操作成功');
-          this.treetable.reload();
+          this.treeTable.reload();
         });
         return false;
       }
@@ -119,7 +121,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
       nzOnOk: () => {
         this.http.delete(`/sys/department/${  id}`).subscribe(res => {
           this.msgSrv.success("删除成功");
-          this.treetable.reload();
+          this.treeTable.reload();
         })
       }
     })
@@ -130,6 +132,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
       nzContent: this.addDepartmentTemplate,
       nzComponentParams: item,
       nzOkLoading: false,
+      nzStyle: {top: '30%'},
       nzOnOk: () => {
         modal.updateConfig({nzOkLoading: true});
         // @ts-ignore
@@ -142,7 +145,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
         })).subscribe(res => {
           modal.close();
           this.msgSrv.success('操作成功');
-          this.treetable.reload();
+          this.treeTable.reload();
         });
         return false;
       }

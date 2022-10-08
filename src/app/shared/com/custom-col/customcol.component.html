@@ -1,15 +1,25 @@
+<button type="button" nz-button (click)="openSetting()"><i nz-icon nzType="setting" title="设置显示列"></i></button>
 
-<button nz-button (click)="openSetting()"><i nz-icon nzType="setting" title="设置显示列"></i></button>
-
-<nz-modal [(nzVisible)]="isVisible" nzTitle="自定义列表字段" (nzOnCancel)="isVisible = false" [nzMaskClosable]="false" [nzStyle]="{ top: '22%' }">
+<nz-modal [(nzVisible)]="isVisibleModal" nzTitle="自定义表格字段" (nzOnCancel)="isVisibleModal = false"
+          [nzMaskClosable]="false" [nzStyle]="{ top: '22%', width: '40%' }">
   <ng-container *nzModalContent>
     <nz-checkbox-group
       [(ngModel)]="customColumns"
+      (ngModelChange)="checkboxGroupChange($event)"
       name="customColumns"
     ></nz-checkbox-group>
   </ng-container>
 
   <div *nzModalFooter>
+    <label
+      style="float: left;margin-top: 6px;"
+      nz-checkbox
+      (ngModelChange)="updateAllChecked($event)"
+      [nzIndeterminate]="indeterminate"
+      [(ngModel)]="allChecked">
+      全选
+    </label>
+
     <button nz-button nzType="default" (click)="resetDefault()">恢复默认</button>
     <button nz-button nzType="primary" (click)="handleOk()">确定</button>
   </div>

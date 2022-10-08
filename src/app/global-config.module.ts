@@ -10,25 +10,25 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import { throwIfAlreadyLoaded } from '@core';
-import { STData } from '@delon/abc/st';
-import { ErrorData } from '@delon/form/src/errors';
-import { SFSelectWidgetSchema } from '@delon/form/src/widgets/select/schema';
-import { DelonMockModule } from '@delon/mock';
-import { AlainThemeModule } from '@delon/theme';
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
+import {throwIfAlreadyLoaded} from '@core';
+import {STData} from '@delon/abc/st';
+import {ErrorData} from '@delon/form/src/errors';
+import {SFSelectWidgetSchema} from '@delon/form/src/widgets/select/schema';
+import {DelonMockModule} from '@delon/mock';
+import {AlainThemeModule} from '@delon/theme';
+import {AlainConfig, ALAIN_CONFIG} from '@delon/util';
 import {AlainACLType} from '@delon/util/config/acl/acl.type';
 
 // Please refer to: https://ng-alain.com/docs/global-config
 // #region NG-ALAIN Config
 
-import { DelonACLModule } from '@delon/acl';
+import {DelonACLModule} from '@delon/acl';
 
 
 const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolver, http: HttpClient): AlainConfig => {
   return {
     st: {
-      modal: { size: 'lg' },
+      modal: {size: 'lg'},
       pi: 0,
       ps: 20,
       req: {
@@ -43,18 +43,22 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
         lazyLoad: true,
       },
       res: {
-        process: (data: STData[], rawData?: any): STData[] => {
-          if (Array.isArray(rawData)){
-            return rawData;
-          }
-          return rawData.rows;
-        },
+        // process: (data: STData[], rawData?: any): STData[] => {
+        //   if (Array.isArray(rawData)) {
+        //     return rawData;
+        //   }
+        //   return rawData.rows;
+        // },
+        reName: {
+          total: 'total',
+          list: 'rows'
+        }
       },
       page: {
         showSize: true,
-        pageSizes: [20, 50, 10, 200],
+        pageSizes: [20, 50, 100, 200],
         showQuickJumper: true,
-        total: true,
+        total: `共 {{total}} 条`,
         zeroIndexed: true,
       },
       loadingDelay: 1000,
@@ -105,7 +109,7 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
         } as SFSelectWidgetSchema),
       } as SFUISchemaItem,
     },
-    pageHeader: { homeI18n: 'home' },
+    pageHeader: {homeI18n: 'home'},
     lodop: {
       license: `A59B099A586B3851E0F0D7FDBF37B603`,
       licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`,
@@ -120,12 +124,12 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
       //   return http.post(reqObj.url as string, reqObj.body as object);
       // }
     },
-    auth: { login_url: '/passport/login', token_exp_offset: 0 },
+    auth: {login_url: '/passport/login', token_exp_offset: 0, ignores: [/\/login/, /assets\//, /passport\//]},
     acl: {
       preCan: (roleOrAbility: number | number[] | string | string[] | AlainACLType): AlainACLType | null => {
-        if(typeof roleOrAbility === 'string'){
+        if (typeof roleOrAbility === 'string') {
           // @ts-ignore
-          return { ability: Array.isArray(roleOrAbility)?roleOrAbility:[roleOrAbility]  }
+          return {ability: Array.isArray(roleOrAbility) ? roleOrAbility : [roleOrAbility]}
         }
         // @ts-ignore
         return roleOrAbility
@@ -139,10 +143,14 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
 };
 
 const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot()];
-const alainProvides = [{ provide: ALAIN_CONFIG, useFactory: alainConfigFactory, deps: [Injector, ComponentFactoryResolver, HttpClient]  }];
+const alainProvides = [{
+  provide: ALAIN_CONFIG,
+  useFactory: alainConfigFactory,
+  deps: [Injector, ComponentFactoryResolver, HttpClient]
+}];
 
 // mock
-import { environment } from '@env/environment';
+import {environment} from '@env/environment';
 import {NzUploadFile, NzUploadXHRArgs} from 'ng-zorro-antd/upload';
 import {Observable, Subscription} from 'rxjs';
 import * as MOCKDATA from '../../_mock';
@@ -150,7 +158,7 @@ import * as MOCKDATA from '../../_mock';
 
 if (!environment.production) {
   // alainConfig.mock = { data: MOCKDATA };
-  DelonMockModule.forRoot({ data: MOCKDATA })
+  DelonMockModule.forRoot({data: MOCKDATA})
 }
 
 // #region reuse-tab
@@ -182,7 +190,8 @@ if (!environment.production) {
 // #region NG-ZORRO Config
 
 // 全局变更加载中样式
-import { NzIconModule } from 'ng-zorro-antd/icon';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+
 @Component({
   template: `
     <ng-template #nzIndicatorTpl>
@@ -193,13 +202,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   `,
 })
 export class SpinLoadingComponent {
-  @ViewChild('nzIndicatorTpl', { static: true })
+  @ViewChild('nzIndicatorTpl', {static: true})
   nzIndicator!: TemplateRef<void>;
 }
 
 const nzConfigFactory = (injector: Injector, resolver: ComponentFactoryResolver): NzConfig => {
   const factory = resolver.resolveComponentFactory(SpinLoadingComponent);
-  const { nzIndicator } = factory.create(injector).instance;
+  const {nzIndicator} = factory.create(injector).instance;
   return {
     spin: {
       // 先不变更
@@ -208,18 +217,18 @@ const nzConfigFactory = (injector: Injector, resolver: ComponentFactoryResolver)
   };
 };
 
-import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
-import { SFUISchemaItem, SFUploadWidgetSchema, UploadWidget } from '@delon/form';
+import {NzConfig, NZ_CONFIG} from 'ng-zorro-antd/core/config';
+import {SFUISchemaItem, SFUploadWidgetSchema, UploadWidget} from '@delon/form';
 import {AlainImageConfig} from "@delon/util/config/abc";
 
-const zorroProvides = [{ provide: NZ_CONFIG, useFactory: nzConfigFactory, deps: [Injector, ComponentFactoryResolver] }];
+const zorroProvides = [{provide: NZ_CONFIG, useFactory: nzConfigFactory, deps: [Injector, ComponentFactoryResolver]}];
 
 // #endregion
 
 @NgModule({
   declarations: [SpinLoadingComponent],
   imports: [...alainModules, NzIconModule],
-  providers: [{ provide: ALAIN_CONFIG, useFactory: alainConfigFactory }],
+  providers: [{provide: ALAIN_CONFIG, useFactory: alainConfigFactory}],
 })
 export class GlobalConfigModule {
   constructor(@Optional() @SkipSelf() parentModule: GlobalConfigModule) {
