@@ -3,9 +3,8 @@
     <button (click)="add()" nz-button nzType="primary" acl="sys:user:add">新建</button>
   </ng-template>
 </page-header>
-<nz-card>
   <div nz-row>
-    <div nz-col nzSpan="4">
+    <div nz-col nzSpan="4" style="height: 76vh;">
       <app-sys-department-select #sysDepartmentSelectComponent></app-sys-department-select>
     </div>
     <div nz-col nzSpan="20">
@@ -15,7 +14,7 @@
           <app-custom-col #cc key="sys:user" [originColumns]="columns" [alwaysShow]="['登录名', '']"></app-custom-col>
         </div>
       </sf>
-      <st #st [data]="'/sys/user'" [columns]="cc.columns" total="1">
+      <st #st [data]="'/sys/user'" [columns]="cc.columns" [scroll]="{y: '70vh'}">
         <ng-template st-row="roles" let-item let-index="index">
           <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.roles">
             {{ i.name }}
@@ -34,5 +33,3 @@
       </st>
     </div>
   </div>
-
-</nz-card>

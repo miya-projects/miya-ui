@@ -88,7 +88,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
   addDepartment(item?: any) {
     const modal: NzModalRef = this.modalService.create({
       nzContent: this.addDepartmentTemplate,
-      nzComponentParams: {parent: item.id},
+      nzComponentParams: {parent: item?.id},
       nzOkLoading: false,
       nzStyle: {top: '30%'},
       nzOnOk: () => {

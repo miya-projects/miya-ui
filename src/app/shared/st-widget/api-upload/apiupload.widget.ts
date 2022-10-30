@@ -3,7 +3,6 @@ import {SFValue, UploadWidget} from '@delon/form';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzUploadChangeParam, NzUploadFile} from 'ng-zorro-antd/upload';
 import {NzMessageService} from "ng-zorro-antd/message";
-import {NzUploadChangeParam} from "ng-zorro-antd/upload/interface";
 import {Observable, of} from "rxjs";
 
 /**
@@ -67,10 +66,18 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
         name: value.name,
         showDownload: true,
         status: 'done',
-        response: value
+        response: value,
+        url: value.url
       } as NzUploadFile
     }
-    return value;
+    return {
+      uid: '0',
+      name: `${value.substring(value.lastIndexOf("/") + 1, value.length)}`,
+      showDownload: true,
+      status: 'done',
+      response: value,
+      url: value
+    } as NzUploadFile;
   }
 
   change(args: NzUploadChangeParam) {

@@ -66,12 +66,17 @@ export class CustomColComponent implements OnInit {
     let obj:{[key:string]: boolean} = {}
     if (this.key) {
       checkedCols = this.preferencesService.get(`customTableKey:${this.key}`);
-      checkedCols.forEach(col => {
-        obj[col] = true;
-      })
-      this.customColumns.forEach(col => {
-        col.checked = !!(obj[col.label]);
-      })
+      if (checkedCols){
+        checkedCols.forEach(col => {
+          obj[col] = true;
+        })
+        this.customColumns.forEach(col => {
+          col.checked = !!(obj[col.label]);
+        })
+      }else {
+        // 没设置首选项，用默认的
+        this.resetDefault();
+      }
     } else {
       this.customColumns.forEach(col => {
         col.checked = true;

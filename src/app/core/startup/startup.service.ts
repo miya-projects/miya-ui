@@ -74,7 +74,7 @@ export class StartupService implements Resolve<any>{
         this.menuService.add(Menus);
         this.titleService.suffix = appData.name;
 
-        this.preferencesService.init(res.user.preferences.front);
+        this.preferencesService.init(res.user.preferences?.front || "{}");
       },
       (err) => {
         resolve({});

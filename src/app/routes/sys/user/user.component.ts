@@ -127,7 +127,7 @@ export class SysUserComponent implements OnInit, AfterViewInit {
             }, {
               text: '操作日志',
               click: (record) =>
-                this.modal.createStatic(SysLogModalComponent, {businessId: record.id}, {size: 'xl'}).subscribe(() => this.st.reload())
+                this.modal.createStatic(SysLogModalComponent, {businessId: record.id}, {size: 'xl'}).subscribe(() => {})
             },
             // {
             //   text: `权限配置(待开发)`,
