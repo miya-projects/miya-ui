@@ -82,9 +82,12 @@
               "@antv/g-svg",
               "@antv/path-util",
               "@antv/util",
+              "ajv",
+              "ajv-formats",
+              "extend",
               "file-saver",
               "hammerjs",
-              "ajv"
+              "mockjs"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -189,8 +192,11 @@
       }
     }
   },
-  "defaultProject": "miya-ui",
   "cli": {
-    "packageManager": "pnpm"
+    "packageManager": "yarn",
+    "schematicCollections": [
+      "@schematics/angular",
+      "ng-alain"
+    ]
   }
 }

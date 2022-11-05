@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {_HttpClient, SettingsService} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
 
@@ -13,7 +13,7 @@ export class SecuritySettingsComponent implements OnInit, AfterViewInit {
               private msgSrv: NzMessageService) {}
 
   @ViewChild("f")
-  form!: FormControl;
+  form!: UntypedFormControl;
   formData: any = {};
 
   ngOnInit(): void {

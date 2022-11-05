@@ -41,6 +41,7 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
         allInBody: true,
         // 默认延迟加载
         lazyLoad: true,
+        ignoreParamNull: true
       },
       res: {
         // process: (data: STData[], rawData?: any): STData[] => {
@@ -60,6 +61,7 @@ const alainConfigFactory = (injector: Injector, resolver: ComponentFactoryResolv
         showQuickJumper: true,
         total: `共 {{total}} 条`,
         zeroIndexed: true,
+        toTop: false,
       },
       loadingDelay: 1000,
       singleSort: {

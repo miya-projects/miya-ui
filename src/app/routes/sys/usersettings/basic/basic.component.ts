@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {_HttpClient, SettingsService} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzUploadFile} from 'ng-zorro-antd/upload';
@@ -21,7 +21,7 @@ export class BasicSettingsComponent implements OnInit, AfterViewInit {
               private msgSrv: NzMessageService, private cdf: ChangeDetectorRef) {}
 
   @ViewChild("f")
-  form!: FormControl;
+  form!: UntypedFormControl;
 
   ngOnInit(): void {
     this.user = {}

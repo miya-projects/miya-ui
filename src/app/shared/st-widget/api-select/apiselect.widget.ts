@@ -7,13 +7,11 @@ import {CACHE_ENABLE} from '../../../core/net/cache.interceptors';
  * 支持对象形式的select
  */
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'sf-select',
   templateUrl: './select.widget.html',
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-// tslint:disable-next-line:component-class-suffix
 export class ApiSelectWidget extends SelectWidget implements OnInit {
   static readonly KEY = 'api-select';
 
