@@ -87,7 +87,10 @@
               "extend",
               "file-saver",
               "hammerjs",
-              "mockjs"
+              "mockjs",
+              "qs",
+              "screenfull",
+              "hash.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
