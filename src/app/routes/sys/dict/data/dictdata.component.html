@@ -1,7 +1,7 @@
 <div nz-row style="margin-bottom: 15px;">
   <div nz-col [nzSpan]="6">
     <div>
-      <button (click)="add()" nz-button nzType="primary" acl="sys:dict:edit">新建数据项</button>
+      <button (click)="add()" nz-button nzType="primary" [acl]="'sys:dict:edit'">新建数据项</button>
     </div>
   </div>
   <div nz-col [nzSpan]="2" [nzOffset]="4">
@@ -11,7 +11,7 @@
   </div>
   <div nz-col [nzSpan]="6" [nzOffset]="6">
     <div>
-      <button (click)="onDelete.emit(this.id)" nz-button nzType="primary" nzDanger acl="sys:dict:delete">删除字典</button>
+      <button (click)="onDelete.emit(this.id)" nz-button nzType="primary" nzDanger [acl]="'sys:dict:delete'">删除字典</button>
     </div>
   </div>
 </div>

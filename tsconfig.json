@@ -28,6 +28,12 @@
       ],
       "@env/*": [
         "src/environments/*"
+      ],
+      "@sys": [
+        "src/app/_sys/index"
+      ],
+      "@sys/*": [
+        "src/app/_sys/*"
       ]
     },
     "skipLibCheck": true,

@@ -22,7 +22,7 @@ import {browseTree} from '../../../../shared/utils';
         </nz-tag>
       </div>
       <div nz-col [nzSpan]="2" [nzOffset]="9">
-        <button (click)="onDelete.emit(this.id)" nz-button nzType="primary" nzDanger acl="sys:role:delete">删除
+        <button (click)="onDelete.emit(this.id)" nz-button nzType="primary" nzDanger [acl]="'sys:role:delete'">删除
         </button>
       </div>
     </div>
@@ -51,7 +51,7 @@ import {browseTree} from '../../../../shared/utils';
     </div>
     <div nz-row>
       <div nz-col nzSpan="5" nzOffset="20">
-        <button (click)="save(this.id)" nz-button nzType="primary" acl="sys:role:edit">保存</button>
+        <button (click)="save(this.id)" nz-button nzType="primary" [acl]="'sys:role:edit'">保存</button>
       </div>
     </div>
   `,
