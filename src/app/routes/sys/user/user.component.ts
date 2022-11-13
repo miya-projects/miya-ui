@@ -10,7 +10,6 @@ import {SysDepartmentSelectComponent} from '../department/select/select.componen
 import {SysUserEditComponent} from './edit/edit.component';
 import {SysLogModalComponent} from "../log/modal/log-modal.component";
 import {download} from "../../../shared/utils";
-import {UserService} from "@api/sys";
 
 @Component({
   selector: 'app-sys-user',
@@ -143,8 +142,7 @@ export class SysUserComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService, private cacheSrv: CacheService,
-              private userSrv: UserService) {
+  constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService, private cacheSrv: CacheService) {
   }
 
   ngOnInit(): void {
@@ -165,24 +163,15 @@ export class SysUserComponent implements OnInit, AfterViewInit {
    * 导出用户
    */
   down() {
-    this.userSrv.export(this.sf.value, {responseType: 'blob', observe: 'response'}).subscribe((res: any) => {
-      let reg = new RegExp('filename=(.+)');
-      let exec = reg.exec(res.headers.get('content-disposition') as string);
-      let filename = 'export.xlsx';
-      if (exec != null && exec.length >= 2){
-        filename = decodeURI(exec[1]);
-      }
-      download(filename, res.body as Blob);
-    })
-    // this.http.get("/sys/user/export", this.sf.value,{responseType: 'blob', observe: 'response'})
-    //   .subscribe(res => {
-    //     let reg = new RegExp('filename=(.+)');
-    //     let exec = reg.exec(res.headers.get('content-disposition') as string);
-    //     let filename = 'export.xlsx';
-    //     if (exec != null && exec.length >= 2){
-    //       filename = decodeURI(exec[1]);
-    //     }
-    //     download(filename, res.body as Blob);
-    // });
+    this.http.get("/sys/user/export", this.sf.value,{responseType: 'blob', observe: 'response'})
+      .subscribe(res => {
+        let reg = new RegExp('filename=(.+)');
+        let exec = reg.exec(res.headers.get('content-disposition') as string);
+        let filename = 'export.xlsx';
+        if (exec != null && exec.length >= 2){
+          filename = decodeURI(exec[1]);
+        }
+        download(filename, res.body as Blob);
+    });
   }
 }
