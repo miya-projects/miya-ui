@@ -2,7 +2,7 @@
 const { route, utils, config } = it;
 const { _, classNameCase, require } = utils;
 const { query, payload, pathParams, headers } = route.request;
-const routeNamespace = classNameCase(it.moduleName) + classNameCase(route.routeName.usage);
+const routeNamespace = classNameCase(it.moduleName) + classNameCase(route.raw['x-client-method']);
 const request = (query && query.type) || (payload && payload.type)
 const isInterface = request?.includes(':')
 %>

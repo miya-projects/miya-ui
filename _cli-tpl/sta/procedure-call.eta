@@ -9,7 +9,7 @@ const routeDocs = includeFile("route-docs", { config, route, utils });
 const req = query || payload ? { ...query, ...payload } : null;
 const reqName = req?.name || "req";
 const pathParams = _.values(parameters);
-
+const clientMethod = raw['x-client-method'];
 const optionsParam = {
   name: 'options',
   optional: true,
@@ -21,12 +21,12 @@ const argToTmpl = ({ name, optional, type, defaultValue }) => `${name}${!default
 if (req) {
   req.name = 'req';
   if (req.type.includes(':')) {
-    req.type = `${classNameCase(raw.moduleName)}${classNameCase(routeName.usage)}Request`;
+    req.type = `${classNameCase(raw.moduleName)}${classNameCase(clientMethod)}Request`;
   }
 }
 let res = type
 if (res && res.includes(':')) {
-  res = `${classNameCase(raw.moduleName)}${classNameCase(routeName.usage)}Response`;
+  res = `${classNameCase(raw.moduleName)}${classNameCase(clientMethod)}Response`;
 }
 
 const rawWrapperArgs = _.compact([
@@ -58,7 +58,7 @@ const headersTmpl = requestContentKind ? "'content-type': `" + requestContentKin
 <%~ routeDocs.lines %>
 
  */
-<%~ route.routeName.usage %>(<%~ wrapperArgs %>): Observable<<%~ res %>> {
+<%~ clientMethod %>(<%~ wrapperArgs %>): Observable<<%~ res %>> {
   return this.request('<%~ _.upperCase(method) %>', `<%~ path %>`, {
     <%~ query ? `params: req,` : '' %>
     <%~ payload ? `body: req,` : '' %>
