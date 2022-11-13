@@ -29,6 +29,9 @@
       "@env/*": [
         "src/environments/*"
       ],
+      "@api/*": [
+        "src/app/api/*"
+      ],
       "@sys": [
         "src/app/_sys/index"
       ],

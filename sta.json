@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/ng-alain/sta/schema.json",
+  "url": "http://localhost:8083/v2/api-docs?group=%E7%B3%BB%E7%BB%9F",
+  "output": "src/app/api/sys",
+  "name": "sys",
+  "generateApiOptions": {
+    "disableStrictSSL": false,
+    "templates": "_cli-tpl/sta"
+  },
+  "tagsMapping": {
+    "部门": "dept",
+    "参数": "config",
+    "日志": "log",
+    "用户": "user",
+    "账户": "account",
+    "通知": "notice",
+    "文件": "file",
+    "角色": "role",
+    "下拉框可选项接口": "ddl",
+    "字典": "dict",
+    "监控": "monitor"
+
+  }
+}
