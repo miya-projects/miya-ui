@@ -30,6 +30,8 @@ export class StartupService implements Resolve<any>{
     private preferencesService: PreferencesService,
     private injector: Injector,
   ) {
+    // 如果icon放到cdn上，可以修改资源的位置
+    // iconSrv.changeAssetsSource('');
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
     // 加载 动态iconfont
     if (environment.iconfont) {
