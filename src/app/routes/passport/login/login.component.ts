@@ -3,12 +3,13 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } fro
 import { Router } from '@angular/router';
 import { StartupService } from '@core';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
+import {ALLOW_ANONYMOUS, DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService} from '@delon/auth';
 import { _HttpClient, SettingsService } from '@delon/theme';
 import { environment } from '@env/environment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
 import { LoginType } from './login.service';
+import {HttpContext} from "@angular/common/http";
 
 @Component({
   selector: 'passport-login',
@@ -84,8 +85,10 @@ export class UserLoginComponent implements OnDestroy {
       return;
     }
     this.http
-      .post('/sys/user/current/sendVerifyCode?_allow_anonymous', {
+      .post('/sys/user/current/sendVerifyCode', {
         phone: this.mobile.value,
+      }, null, {
+        context: new HttpContext().set(ALLOW_ANONYMOUS, true)
       })
       .subscribe(() => {
         this.count = 59;
@@ -189,6 +192,8 @@ export class UserLoginComponent implements OnDestroy {
   // #region social
 
   open(type: string, openType: SocialOpenType = 'href'): void {
+    this.msg.info("待接入")
+    return;
     let url = ``;
     let callback = ``;
     // tslint:disable-next-line: prefer-conditional-expression

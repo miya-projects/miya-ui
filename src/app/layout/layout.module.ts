@@ -37,28 +37,30 @@ const HEADERCOMPONENTS = [
 
 // passport
 import { LayoutPassportComponent } from './passport/passport.component';
+import {NzButtonModule} from "ng-zorro-antd/button";
 const PASSPORT = [LayoutPassportComponent];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    ThemeBtnModule,
-    SettingDrawerModule,
-    LayoutDefaultModule,
-    NoticeIconModule,
-    GlobalFooterModule,
-    NzDropDownModule,
-    NzInputModule,
-    NzAutocompleteModule,
-    NzGridModule,
-    NzFormModule,
-    NzSpinModule,
-    NzBadgeModule,
-    NzAvatarModule,
-    NzIconModule,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        RouterModule,
+        ThemeBtnModule,
+        SettingDrawerModule,
+        LayoutDefaultModule,
+        NoticeIconModule,
+        GlobalFooterModule,
+        NzDropDownModule,
+        NzInputModule,
+        NzAutocompleteModule,
+        NzGridModule,
+        NzFormModule,
+        NzSpinModule,
+        NzBadgeModule,
+        NzAvatarModule,
+        NzIconModule,
+        NzButtonModule,
+    ],
   declarations: [...COMPONENTS, ...HEADERCOMPONENTS, ...PASSPORT],
   exports: [...COMPONENTS, ...PASSPORT],
 })

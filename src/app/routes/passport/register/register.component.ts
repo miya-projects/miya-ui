@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {HttpContext} from "@angular/common/http";
+import {ALLOW_ANONYMOUS} from "@delon/auth";
 
 @Component({
   selector: 'passport-register',
@@ -115,7 +117,9 @@ export class UserRegisterComponent implements OnDestroy {
     }
 
     const data = this.form.value;
-    this.http.post('/register?_allow_anonymous=true', data).subscribe(() => {
+    this.http.post('/register', data, null, {
+      context: new HttpContext().set(ALLOW_ANONYMOUS, true)
+    }).subscribe(() => {
       this.router.navigate(['passport', 'register-result'], { queryParams: { email: data.mail } });
     });
   }

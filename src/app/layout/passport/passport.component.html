@@ -1,16 +1,19 @@
-<div class="container">
-  <div class="wrap">
-    <div class="top">
-      <div class="head">
-        <img class="logo" src="./assets/logo-color.svg" />
-        <span class="title">miya</span>
+<div class="container" [style.background-image]="'url(' + backgroundUrl + ')'">
+  <div class="login-div">
+    <div class="wrap">
+      <div class="top">
+        <div class="head">
+          <img class="logo" src="./assets/logo-color.svg"/>
+          <span class="title">miya</span>
+        </div>
+        <div class="desc">生活是一直这么艰辛，还是只有童年如此？——总是如此</div>
       </div>
-      <div class="desc">生活是一直这么艰辛，还是只有童年如此？——总是如此</div>
+      <router-outlet></router-outlet>
+      <global-footer [links]="links">
+        Copyright
+        <i class="anticon anticon-copyright"></i> 2021 <a href="//github.com/rxxy" target="_blank">Rxxy</a>
+        <a nz-button nzType="link" (click)="acquireBackgroundUrl(false)">更换壁纸</a>
+      </global-footer>
     </div>
-    <router-outlet></router-outlet>
-    <global-footer [links]="links">
-      Copyright
-      <i class="anticon anticon-copyright"></i> 2021 <a href="//github.com/rxxy" target="_blank">Rxxy</a>
-    </global-footer>
   </div>
 </div>
