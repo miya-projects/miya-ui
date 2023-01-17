@@ -1,13 +1,13 @@
 ## 构建
 FROM node as build
 # --registry=https://registry.npm.taobao.org/
-RUN npm install -g pnpm
+RUN npm install -g yarn
 WORKDIR /app/
 COPY ./package.json /app/
-COPY ./pnpm-lock.yaml /app/
-RUN --mount=type=cache,mode=0777,target=/app/node_modules,id=node_module_cache pnpm install
+COPY ./yarn.lock /app/
+RUN --mount=type=cache,mode=0777,target=/app/node_modules,id=node_module_cache yarn install
 COPY ./ /app/
-RUN pnpm run build
+RUN yarn run build
 
 #--mount=type=cache,mode=0777,target=/root/.m2/repository/,id=maven_cache \
 
