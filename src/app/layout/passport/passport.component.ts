@@ -32,6 +32,7 @@ export class LayoutPassportComponent implements OnInit {
               private settingService: SettingsService) {}
 
   ngOnInit(): void {
+    console.log(this.http)
     // this.tokenService.clear();
     this.acquireBackgroundUrl(true);
   }

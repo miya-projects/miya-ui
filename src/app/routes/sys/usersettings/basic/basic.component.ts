@@ -36,10 +36,10 @@ export class BasicSettingsComponent implements OnInit, AfterViewInit {
 
       this.avatar = [{
         name: '',
-        uid: this.user.avatarObj.id,
+        uid: '',
         showDownload: false,
         status: 'done',
-        response: this.user.avatarObj,
+        response: this.user.avatar,
         isUploading: false,
       }] as NzUploadFile[];
     })

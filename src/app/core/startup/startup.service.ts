@@ -51,8 +51,7 @@ export class StartupService implements Resolve<any>{
 
           const appData = res.systemMeta;
           const user: any = (res as any).user;
-          user.avatarObj = res.user.avatar;
-          user.avatar = user.avatar.url;
+          user.avatar = user.avatar;
           user.email = '891841484@qq.com';
           this.settingService.setApp(appData as App);
           this.settingService.setData('unreadNoticeAmount', res.unreadNoticeAmount);

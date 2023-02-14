@@ -38,6 +38,7 @@ const HEADERCOMPONENTS = [
 // passport
 import { LayoutPassportComponent } from './passport/passport.component';
 import {NzButtonModule} from "ng-zorro-antd/button";
+import {_HttpClient} from "@delon/theme";
 const PASSPORT = [LayoutPassportComponent];
 
 @NgModule({
@@ -63,5 +64,6 @@ const PASSPORT = [LayoutPassportComponent];
     ],
   declarations: [...COMPONENTS, ...HEADERCOMPONENTS, ...PASSPORT],
   exports: [...COMPONENTS, ...PASSPORT],
+  providers: [_HttpClient]
 })
 export class LayoutModule {}

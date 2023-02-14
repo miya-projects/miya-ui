@@ -51,7 +51,7 @@ export class SysUserComponent implements OnInit, AfterViewInit {
   @ViewChild('sysDepartmentSelectComponent') private readonly sysDepartmentSelectComponent!: SysDepartmentSelectComponent;
 
   columns: STColumn[] = [
-    {title: '头像', type: 'img', width: '60px', index: 'avatar.url'},
+    {title: '头像', type: 'img', width: '60px', index: 'avatar'},
     {title: '登录名', index: 'username', sort: {reName: {ascend: 'asc', descend: 'desc'}}},
     {title: '姓名', index: 'name', sort: {reName: {ascend: 'asc', descend: 'desc'}}},
     {title: '手机', index: 'phone'},

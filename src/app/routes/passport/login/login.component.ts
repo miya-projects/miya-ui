@@ -1,14 +1,14 @@
-import { Component, Inject, OnDestroy, Optional } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { StartupService } from '@core';
-import { ReuseTabService } from '@delon/abc/reuse-tab';
+import {Component, Inject, OnDestroy, Optional} from '@angular/core';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {StartupService} from '@core';
+import {ReuseTabService} from '@delon/abc/reuse-tab';
 import {ALLOW_ANONYMOUS, DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService} from '@delon/auth';
-import { _HttpClient, SettingsService } from '@delon/theme';
-import { environment } from '@env/environment';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
-import { LoginType } from './login.service';
+import {_HttpClient, SettingsService} from '@delon/theme';
+import {environment} from '@env/environment';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzTabChangeEvent} from 'ng-zorro-antd/tabs';
+import {LoginType} from './login.service';
 import {HttpContext} from "@angular/common/http";
 
 @Component({
@@ -31,6 +31,7 @@ export class UserLoginComponent implements OnDestroy {
     public http: _HttpClient,
     public msg: NzMessageService,
   ) {
+    console.log(this.http)
     this.form = fb.group({
       userName: ['admin', [Validators.required]],
       password: ['123456', [Validators.required]],
@@ -71,7 +72,7 @@ export class UserLoginComponent implements OnDestroy {
 
   // #endregion
 
-  switch({ index }: NzTabChangeEvent): void {
+  switch({index}: NzTabChangeEvent): void {
     this.type = index!;
   }
 
@@ -80,8 +81,8 @@ export class UserLoginComponent implements OnDestroy {
    */
   getCaptcha(): void {
     if (this.mobile.invalid) {
-      this.mobile.markAsDirty({ onlySelf: true });
-      this.mobile.updateValueAndValidity({ onlySelf: true });
+      this.mobile.markAsDirty({onlySelf: true});
+      this.mobile.updateValueAndValidity({onlySelf: true});
       return;
     }
     this.http
@@ -130,25 +131,14 @@ export class UserLoginComponent implements OnDestroy {
         phone: this.mobile.value,
         verifyCode: this.captcha.value,
       })
-      .subscribe(
-        (data) => {
-          // 清空路由复用信息
-          this.reuseTabService.clear();
-          // 设置用户Token信息
-          this.tokenService.set(data);
-          // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
-          this.startupSrv.load().then(() => {
-            let url = this.tokenService.referrer!.url || '/';
-            if (url.includes('/passport')) {
-              url = '/';
-            }
-            this.router.navigateByUrl(url);
-          });
+      .subscribe({
+        next: (data: any) => {
+          this.loginSuccessHandle(data);
         },
-        (body) => {
+        error: (body) => {
           this.errorForPhoneLogin = body.msg;
         },
-      );
+      });
   }
 
   /**
@@ -168,25 +158,29 @@ export class UserLoginComponent implements OnDestroy {
         userName: this.userName.value,
         password: this.password.value,
       })
-      .subscribe(
-        (data) => {
-          // 清空路由复用信息
-          this.reuseTabService.clear();
-          // 设置用户Token信息
-          this.tokenService.set(data);
-          // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
-          this.startupSrv.load().then(() => {
-            let url = this.tokenService.referrer!.url || '/';
-            if (url.includes('/passport')) {
-              url = '/';
-            }
-            this.router.navigateByUrl(url);
-          });
+      .subscribe({
+        next: (data) => {
+          this.loginSuccessHandle(data);
         },
-        (body) => {
+        error: (body) => {
           this.error = body.msg;
-        },
-      );
+        }
+      });
+  }
+
+  loginSuccessHandle(data: any) {
+    // 清空路由复用信息
+    this.reuseTabService.clear();
+    // 设置用户Token信息
+    this.tokenService.set(data);
+    // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
+    this.startupSrv.load().then(() => {
+      let url = this.tokenService.referrer!.url || '/';
+      if (url.includes('/passport')) {
+        url = '/';
+      }
+      this.router.navigateByUrl(url);
+    });
   }
 
   // #region social
@@ -198,9 +192,9 @@ export class UserLoginComponent implements OnDestroy {
     let callback = ``;
     // tslint:disable-next-line: prefer-conditional-expression
     if (environment.production) {
-      callback = `https://ng-alain.github.io/ng-alain/#/passport/callback/${  type}`;
+      callback = `https://ng-alain.github.io/ng-alain/#/passport/callback/${type}`;
     } else {
-      callback = `http://localhost:4200/#/passport/callback/${  type}`;
+      callback = `http://localhost:4200/#/passport/callback/${type}`;
     }
     switch (type) {
       case 'auth0':
