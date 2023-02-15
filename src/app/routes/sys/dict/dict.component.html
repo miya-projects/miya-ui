@@ -7,7 +7,7 @@
   <nz-tabset style="max-height: 700px" nzTabPosition="left" nzType="line">
     <nz-tab *ngFor="let tab of dicts" [nzTitle]="tab.name">
       <ng-template nz-tab>
-        <app-sys-dict-data (onDelete)="deleteDict($event)" [id]="tab.id" [code]="tab.code"></app-sys-dict-data>
+        <app-sys-dict-data (delete)="deleteDict($event)" [id]="tab.id" [code]="tab.code"></app-sys-dict-data>
       </ng-template>
     </nz-tab>
   </nz-tabset>

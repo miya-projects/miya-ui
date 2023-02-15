@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {STChange, STColumn, STComponent, STData} from '@delon/abc/st';
-import {SFSchema, SFUISchema} from '@delon/form';
 import {_HttpClient, ModalHelper} from '@delon/theme';
-import { copy } from '@delon/util';
+import {copy} from '@delon/util';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 /**
  * 字典数据
@@ -22,26 +21,22 @@ export class SysDictDataComponent implements OnInit {
 
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
-    { title: '字典描述', index: 'label', render: 'nameTpl' },
-    { title: '字典值', index: 'value', render: 'valueTpl' },
+    { title: '字典描述', index: 'label', render: 'nameTpl', width: '30%' },
+    { title: '字典值', index: 'value', render: 'valueTpl', width: '30%' },
     {
       title: '',
       buttons: [
         { text: '编辑', iif: (i) => !i._edit, acl: 'sys:dict:edit', click: (i) => {this.st.setRow(i, { _edit: true, _label: i.label, _value: i.value }, { refreshSchema: true })} },
         { text: '保存', iif: (i) => {
             return i._edit;
-          }, acl: 'sys:dict:edit', click: (i) => this.updateRow({
-            ...i,
-            label: i._label,
-            value: i._value
-          }, false) },
+          }, acl: 'sys:dict:edit', click: (i) => this.update({...i}, false) },
         {
           text: '取消',
           iif: (i) => i._edit,
           click: (i) => {
             this.st.setRow(i, { _edit: false }, { refreshSchema: true });
             if (i._temp) {
-              this.data.shift();
+              this.st._data.shift();
               // this.st.reload();
             }
           },
@@ -51,8 +46,7 @@ export class SysDictDataComponent implements OnInit {
     },
   ];
 
-  // tslint:disable-next-line:no-output-on-prefix
-  @Output() onDelete = new EventEmitter<string>();
+  @Output() readonly delete = new EventEmitter<string>();
 
   total: number = 0;
   pi: number = 1;
@@ -89,20 +83,6 @@ export class SysDictDataComponent implements OnInit {
     }
   }
 
-  private updateRow(i: STData, _edit: boolean): void {
-    let url = `/sys/dict/item/${i.id}`;
-    let keys: string[] = Object.keys(i).filter((v) => !v.startsWith('_'));
-    let o = {};
-    keys.forEach((k) => {
-      // @ts-ignore
-      o[k] = i[k];
-    });
-    this.http.put(url, o).subscribe((res) => {
-      // this.st.setRow(i, {_edit}, {refreshSchema: true});
-      this.reload();
-    });
-  }
-
   /**
    * 删除字典项
    *
@@ -122,39 +102,19 @@ export class SysDictDataComponent implements OnInit {
     });
   }
 
-  @ViewChild("addRef")
-  private readonly addRef!: TemplateRef<any>;
-
-  private modal!: NzModalRef;
-
-  schema: SFSchema = {
-    properties: {
-      label: { type: 'string', title: '字典描述' },
-      value: { type: 'string', title: '字典值' },
-    },
-    required: ['label', 'value'],
-  };
-  ui: SFUISchema = {
-    '*': {
-      spanLabelFixed: 100,
-      grid: { span: 16 },
-    },
-  };
-
   /**
    * 增加数据字典项
    *
    * @private
    */
   add(): void {
-    this.modal = this.modalSrv.create({
-      nzContent: this.addRef,
-      nzFooter: null
+    if (this.st._data.length > 0 && this.st._data[0]._temp) {
+      return
+    }
+    this.st.addRow({
+      _temp: true,
+      _edit: true
     });
-  }
-
-  close(): void {
-    this.modal.destroy();
   }
 
   save(value: any) {
@@ -163,7 +123,24 @@ export class SysDictDataComponent implements OnInit {
       ...value
     }).subscribe((res) => {
       this.reload();
-      this.modal.close(true);
+    });
+  }
+
+  private update(i: STData, _edit: boolean): void {
+    if (i._temp){
+      this.save(i)
+      return;
+    }
+    let url = `/sys/dict/item/${i.id}`;
+    let keys: string[] = Object.keys(i).filter((v) => !v.startsWith('_'));
+    let o = {};
+    keys.forEach((k) => {
+      // @ts-ignore
+      o[k] = i[k];
+    });
+    this.http.put(url, o).subscribe((res) => {
+      // this.st.setRow(i, {_edit}, {refreshSchema: true});
+      this.reload();
     });
   }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {STData} from '@delon/abc/st';
 import {_HttpClient, ModalHelper} from '@delon/theme';
 import {copy} from '@delon/util';
@@ -6,7 +6,9 @@ import {NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzTreeComponent} from 'ng-zorro-antd/tree';
-import {browseTree} from '../../../../shared/utils';
+import {PreferencesService} from "@core";
+import {NzSwitchComponent} from "ng-zorro-antd/switch";
+import {ConfigAble} from "../../../../core/preferences/configable";
 
 @Component({
   selector: 'app-sys-role-permission',
@@ -14,7 +16,7 @@ import {browseTree} from '../../../../shared/utils';
     <div nz-row style="margin-bottom: 15px;">
       <div nz-col nzOffset="2">
         显示Code
-        <nz-switch [(ngModel)]="showCode"></nz-switch>
+        <nz-switch #switchComponent [(ngModel)]="showCode"></nz-switch>
       </div>
       <div nz-col nzOffset="6">
         <nz-tag [nzColor]="'#108ee9'" *ngIf="role?.isSystem">
@@ -58,7 +60,7 @@ import {browseTree} from '../../../../shared/utils';
 })
 
 //   [nzSelectedKeys]="defaultSelectedKeys"
-export class SysRolePermissionComponent implements OnInit {
+export class SysRolePermissionComponent implements OnInit, AfterViewInit {
   data: STData[] = [];
   expandAll: boolean = false;
   // 默认选中的keys，即拥有的权限
@@ -75,14 +77,15 @@ export class SysRolePermissionComponent implements OnInit {
   @Input() business: any[] = [];
   role: any;
   @ViewChild('tree', {static: false}) tree!: NzTreeComponent;
+  @ViewChild('switchComponent') switchComponent!: NzSwitchComponent;
 
   showCode: boolean = false;
-
   constructor(
     private http: _HttpClient,
     private modal: ModalHelper,
     private messageSrv: NzMessageService,
     private modalSrv: NzModalService,
+    private preferencesService: PreferencesService
   ) {
   }
 
@@ -96,9 +99,17 @@ export class SysRolePermissionComponent implements OnInit {
     this.reload();
   }
 
+  ngAfterViewInit(): void {
+    let config: ConfigAble = this.preferencesService.getPreferences('sys:role:show-code')
+    setTimeout(() => {
+      this.showCode = config.getValue();
+    })
+    this.switchComponent.registerOnChange(config.saveValue)
+  }
+
   reload(): void {
     // todo 优化
-    this.http.get(`/sys/role/${  this.id}`).subscribe(role => {
+    this.http.get(`/sys/role/${this.id}`).subscribe(role => {
       this.role = role;
       let res = role.business;
       const acls = res.map((i: any) => i.fullCode);
