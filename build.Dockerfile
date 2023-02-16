@@ -5,7 +5,8 @@ FROM registry.cn-hangzhou.aliyuncs.com/rxxy/node:18.14.0 as build
 WORKDIR /app/
 COPY ./package.json /app/
 COPY ./yarn.lock /app/
-RUN --mount=type=cache,mode=0777,target=~/.cache/node_modules,id=node_module_cache yarn install
+#--mount=type=cache,mode=0777,target=/app/node_modules,id=node_module_cache
+RUN yarn install
 COPY ./ /app/
 RUN yarn run build
 

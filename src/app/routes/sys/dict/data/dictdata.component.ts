@@ -21,27 +21,39 @@ export class SysDictDataComponent implements OnInit {
 
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
-    { title: '字典描述', index: 'label', render: 'nameTpl', width: '30%' },
-    { title: '字典值', index: 'value', render: 'valueTpl', width: '30%' },
+    {title: '字典描述', index: 'label', render: 'nameTpl', width: '30%'},
+    {title: '字典值', index: 'value', render: 'valueTpl', width: '30%'},
     {
       title: '',
       buttons: [
-        { text: '编辑', iif: (i) => !i._edit, acl: 'sys:dict:edit', click: (i) => {this.st.setRow(i, { _edit: true, _label: i.label, _value: i.value }, { refreshSchema: true })} },
-        { text: '保存', iif: (i) => {
+        {
+          text: '编辑', iif: (i) => !i._edit, acl: 'sys:dict:edit', click: (i) => {
+            this.st.setRow(i, {_edit: true, _label: i.label, _value: i.value}, {refreshSchema: true})
+          }
+        },
+        {
+          text: '保存', iif: (i) => {
             return i._edit;
-          }, acl: 'sys:dict:edit', click: (i) => this.update({...i}, false) },
+          }, acl: 'sys:dict:edit', click: (i) => this.update({...i}, false)
+        },
         {
           text: '取消',
           iif: (i) => i._edit,
           click: (i) => {
-            this.st.setRow(i, { _edit: false }, { refreshSchema: true });
+            this.st.setRow(i, {_edit: false}, {refreshSchema: true});
             if (i._temp) {
               this.st._data.shift();
               // this.st.reload();
             }
           },
         },
-        { text: '删除', iif: (i) => !i._edit, acl: 'sys:dict:edit' ,click: (i) => this.deleteDictItem(i.id) },
+        {
+          text: '删除',
+          iif: (i) => !i._edit,
+          acl: 'sys:dict:edit',
+          pop: '确认删除?',
+          click: (i) => this.deleteDictItem(i.id)
+        },
       ],
     },
   ];
@@ -56,8 +68,8 @@ export class SysDictDataComponent implements OnInit {
     public http: _HttpClient,
     private modalHelper: ModalHelper,
     private messageSrv: NzMessageService,
-    private modalSrv: NzModalService,
-  ) {}
+  ) {
+  }
 
   copy(content: string): void {
     copy(content).then(() => {
@@ -70,14 +82,14 @@ export class SysDictDataComponent implements OnInit {
   }
 
   reload(): void {
-    this.http.get(`/sys/dict/${this.code}/item`, { page: this.pi - 1, size: this.ps }).subscribe((res) => {
+    this.http.get(`/sys/dict/${this.code}/item`, {page: this.pi - 1, size: this.ps}).subscribe((res) => {
       this.data = res.rows;
       this.total = res.total;
     });
   }
 
   change(e: STChange): void {
-    if (e.type === 'pi'){
+    if (e.type === 'pi') {
       this.pi = e.pi
       this.reload();
     }
@@ -90,16 +102,11 @@ export class SysDictDataComponent implements OnInit {
    * @private
    */
   private deleteDictItem(id: string): void {
-    this.modalSrv.confirm({
-      nzTitle: '提示',
-      nzContent: '确认删除?',
-      nzOnOk: () => {
-        this.http.delete(`/sys/dict/item/${  id}`).subscribe((res) => {
-          this.messageSrv.success('删除成功');
-          this.reload();
-        });
-      },
-    });
+    this.http.delete(`/sys/dict/item/${id}`).subscribe((res) => {
+        this.messageSrv.success('删除成功');
+        this.reload();
+      }
+    );
   }
 
   /**
@@ -127,7 +134,7 @@ export class SysDictDataComponent implements OnInit {
   }
 
   private update(i: STData, _edit: boolean): void {
-    if (i._temp){
+    if (i._temp) {
       this.save(i)
       return;
     }

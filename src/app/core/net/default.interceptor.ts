@@ -122,24 +122,24 @@ export class DefaultInterceptor implements HttpInterceptor {
    * @param next
    * @private
    */
-  private handleError(ev: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandler): void {
+  private handleError(ev: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     switch (ev.status) {
       case 401:
-        // if (this.refreshTokenType === 're-request') {
-        //   return this.tryRefreshToken(ev, req, next);
-        // }
         this.toLogin();
-        break;
+        return of(ev);
+      case 400:
+        this.notification.error('请求错误', ev.error.msg);
+        return of(ev);
       // case 500:
       //   // this.goTo(`/exception/${ev.status}`);
       //   break;
       default:
-        let errorText: string = CODEMESSAGE[ev.status] || ev.statusText;
+        let errorText = CODEMESSAGE[ev.status] || ev.statusText;
         errorText = (ev as HttpErrorResponse).error?.msg;
-        // todo 不太友好
         this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errorText);
         break;
     }
+    throw ev.error;
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -162,8 +162,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     return next.handle(newReq).pipe(
       // 先catch http状态码异常
       catchError((ev: HttpErrorResponse) => {
-        this.handleError(ev, newReq, next);
-        throw ev;
+        return this.handleError(ev, newReq, next);
       }),
       mergeMap((ev) => {
         if (ev instanceof HttpResponseBase) {
