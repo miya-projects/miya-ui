@@ -3,7 +3,7 @@ import { SettingsService, User } from '@delon/theme';
 import { LayoutDefaultOptions } from '@delon/theme/layout-default';
 import { environment } from '@env/environment';
 import {Router} from "@angular/router";
-import {StartupService} from "@core";
+import { ThemeBtnType } from '@delon/theme/theme-btn';
 
 @Component({
   selector: 'layout-basic',
@@ -80,7 +80,7 @@ import {StartupService} from "@core";
     </layout-default>
 
     <setting-drawer *ngIf="showSettingDrawer"></setting-drawer>
-    <theme-btn></theme-btn>
+    <theme-btn [types]="themeBtnTypes" devTips=""></theme-btn>
   `,
 })
 export class LayoutBasicComponent implements OnInit{
@@ -88,6 +88,18 @@ export class LayoutBasicComponent implements OnInit{
     logoExpanded: `./assets/logo-full.svg`,
     logoCollapsed: `./assets/logo.svg`,
   };
+  themeBtnTypes: ThemeBtnType[] = [
+    {
+      key: 'default',
+      text: '默认主题'
+    },{
+      key: 'dark',
+      text: '暗黑主题'
+    },{
+      key: 'compact',
+      text: '紧凑主题'
+    }
+  ]
   // 改为true后不自动跟随url自动展开菜单
   openStrictly = false;
   searchToggleStatus = false;

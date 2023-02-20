@@ -17,7 +17,7 @@ export function browseTree(data: any[], callback: Function): void {
 
 
 const of = (label: string, range: Date[]) => {
-  let o: {[key: string]: Date[]} = {};
+  let o: { [key: string]: Date[] } = {};
   o[label] = range;
   return o;
 }
@@ -26,7 +26,7 @@ const of = (label: string, range: Date[]) => {
  */
 export const DATE_RANGES = {
   TODAY: of("今天", [new Date(), new Date()]),
-  YESTERDAY: of("昨天", [ addDays(new Date(), -1), addDays(new Date(), -1)]),
+  YESTERDAY: of("昨天", [addDays(new Date(), -1), addDays(new Date(), -1)]),
   /**
    * 近7天
    */
@@ -42,9 +42,28 @@ export const DATE_RANGES = {
  * @param filename  弹出下载框默认的文件名
  * @param byte  文件二进制流
  */
-export function download(filename: string, byte: Blob): void{
+export function download(filename: string, byte: Blob): void {
   const a = document.createElement("a");
   a.download = filename;
   a.href = window.URL.createObjectURL(byte as Blob);
   a.click();
 }
+
+/**
+ * 去除对象中指定key之外的所有key， omit({a:1,b:2}, 'a') => {a: 1}
+ * @param obj   去除的对象
+ * @param ignoreKys 忽略的key
+ * @return 一个新对象
+ */
+export function omit(obj: {
+  [key: string]: any
+}, ignoreKys: string[]): object {
+  let result: {
+    [key: string]: any
+  } = {};
+  for (let i = 0; i < ignoreKys.length; i++) {
+    result[ignoreKys[i]] = obj[ignoreKys[i]];
+  }
+  return result;
+}
+

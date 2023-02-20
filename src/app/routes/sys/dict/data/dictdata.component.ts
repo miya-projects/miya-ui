@@ -3,7 +3,7 @@ import {STChange, STColumn, STComponent, STData} from '@delon/abc/st';
 import {_HttpClient, ModalHelper} from '@delon/theme';
 import {copy} from '@delon/util';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzModalService} from 'ng-zorro-antd/modal';
+import {omit} from "../../../../shared/utils";
 
 /**
  * 字典数据
@@ -134,19 +134,13 @@ export class SysDictDataComponent implements OnInit {
   }
 
   private update(i: STData, _edit: boolean): void {
+    let keys = ['label', 'value']
     if (i._temp) {
-      this.save(i)
+      this.save(omit(i, keys))
       return;
     }
     let url = `/sys/dict/item/${i.id}`;
-    let keys: string[] = Object.keys(i).filter((v) => !v.startsWith('_'));
-    let o = {};
-    keys.forEach((k) => {
-      // @ts-ignore
-      o[k] = i[k];
-    });
-    this.http.put(url, o).subscribe((res) => {
-      // this.st.setRow(i, {_edit}, {refreshSchema: true});
+    this.http.put(url, omit(i, [...keys, 'id'])).subscribe((res) => {
       this.reload();
     });
   }
