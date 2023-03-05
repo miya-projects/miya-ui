@@ -5,7 +5,6 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {forkJoin} from 'rxjs';
 import {SysRoleEditComponent} from './edit/edit.component';
 import {browseTree} from "../../../shared/utils";
-import {PreferencesService} from "../../../core/preferences/preferences.service";
 
 @Component({
   selector: 'app-sys-role',
