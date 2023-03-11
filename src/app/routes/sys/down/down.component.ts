@@ -42,12 +42,29 @@ export class SysDownComponent implements OnInit, AfterViewInit {
   @ViewChild('sf') private readonly sf!: SFComponent;
   columns: STColumn[] = [
     // widget: {type: 'text'}
-    { title: '时间', index: 'createdTime', width: 130, sort: { reName: { ascend: 'asc', descend: 'desc' } } },
-    { title: '操作人', index: 'user', width: 100, sort: { reName: { ascend: 'asc', descend: 'desc' } } },
-    { title: '下载内容', index: 'name', width: 130},
-    { title: '下载时间', index: 'downloadTime', width: 130, sort: { reName: { ascend: 'asc', descend: 'desc' } } },
-    { title: '文件', index: 'fileName', width: 200 },
-    { title: '其他信息', index: 'extra', width: 300, format: (item) => JSON.stringify(item.extra), render: 'extra' },
+    { title: '时间', index: 'createdTime', width: 200, sort: { reName: { ascend: 'asc', descend: 'desc' } } },
+    { title: '操作人', index: 'user', width: 200, sort: { reName: { ascend: 'asc', descend: 'desc' } } },
+    { title: '下载内容', index: 'name'},
+    // { title: '下载时间', index: 'downloadTime', sort: { reName: { ascend: 'asc', descend: 'desc' } } },
+    { title: '处理完成时间', index: 'completedTime', sort: { reName: { ascend: 'asc', descend: 'desc' } } },
+    { title: '文件', index: 'fileName'},
+    { title: '大小', index: 'file.simpleSize', width: 200 },
+    { title: '状态', index: 'status.label', width: 200 },
+    { title: '其他信息', index: 'extra', format: (item) => JSON.stringify(item.extra), render: 'extra' },
+    {
+      title: '',
+      buttons: [
+        {
+          text: '下载',
+          type: 'link',
+          iif: (record: any) => record.status.value === 'COMPLETED' || record.status.value === 'DOWNLOAD',
+          acl: 'sys:user:download',
+          click: (record: any, modal?: any, instance?: STComponent): void => {
+            window.open(record.file.url);
+          }
+        }
+      ],
+    },
   ];
   rowClassName: STRowClassName = () => 'st-row-text';
 

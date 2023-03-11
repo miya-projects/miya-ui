@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {STColumn, STComponent, STData, STRes} from '@delon/abc/st';
 import {CacheService} from '@delon/cache';
 import {SFComponent, SFSchema, SFSelectWidgetSchema} from '@delon/form';
-import {ModalHelper, _HttpClient} from '@delon/theme';
+import {ModalHelper, _HttpClient, SettingsService, App} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {debounceTime, map} from 'rxjs/operators';
 import {CACHE_ENABLE} from '../../../core/net/cache.interceptors';
@@ -10,6 +10,7 @@ import {SysDepartmentSelectComponent} from '../department/select/select.componen
 import {SysUserEditComponent} from './edit/edit.component';
 import {SysLogModalComponent} from "../log/modal/log-modal.component";
 import {download} from "../../../shared/utils";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 @Component({
   selector: 'app-sys-user',
@@ -142,7 +143,11 @@ export class SysUserComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService, private cacheSrv: CacheService) {
+  constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService,
+              private cacheSrv: CacheService,
+              private settingsService: SettingsService,
+              private notificationService: NzNotificationService
+  ) {
   }
 
   ngOnInit(): void {
@@ -165,13 +170,19 @@ export class SysUserComponent implements OnInit, AfterViewInit {
   down() {
     this.http.get("/sys/user/export", this.sf.value,{responseType: 'blob', observe: 'response'})
       .subscribe(res => {
-        let reg = new RegExp('filename=(.+)');
-        let exec = reg.exec(res.headers.get('content-disposition') as string);
-        let filename = 'export.xlsx';
-        if (exec != null && exec.length >= 2){
-          filename = decodeURI(exec[1]);
+        let app = this.settingsService.getApp() as App
+        console.log(app.exportWay);
+        if (app.exportWay === 'async') {
+          this.notificationService.success('任务提交成功', '请在下载中心查看');
+        }else if (app.exportWay === 'sync'){
+          let reg = new RegExp('filename=(.+)');
+          let exec = reg.exec(res.headers.get('content-disposition') as string);
+          let filename = 'export.xlsx';
+          if (exec != null && exec.length >= 2){
+            filename = decodeURI(exec[1]);
+          }
+          download(filename, res.body as Blob);
         }
-        download(filename, res.body as Blob);
     });
   }
 }
