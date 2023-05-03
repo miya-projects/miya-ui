@@ -49,7 +49,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
     $parent: {
       widget: 'api-tree-select',
       showSearch: true,
-      asyncData: () => this.http.get('/sys/department?noPage', null, CACHE_ENABLE).pipe(map((items: any) => {
+      asyncData: () => this.http.get('/sys/department?noPage', null).pipe(map((items: any) => {
         browseTree(items, (item: any) => {
           item.title = item.name;
           item.key = item.id;
@@ -83,6 +83,9 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.treeTable.dataReady.subscribe((data: any) => {
+      this.treeTable.expandAll();
+    });
   }
 
   addDepartment(item?: any) {

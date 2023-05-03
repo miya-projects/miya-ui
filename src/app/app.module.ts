@@ -52,9 +52,9 @@ const GLOBAL_THIRD_MODULES: Array<Type<any>> = [];
 // #endregion
 
 // #region Startup Service
-export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
-  return () => startupService.load();
-}
+// export function StartupServiceFactory(startupService: StartupService): () => Promise<void> {
+//   return () => startupService.load();
+// }
 // const APPINIT_PROVIDES = [
   // StartupService,
   // {

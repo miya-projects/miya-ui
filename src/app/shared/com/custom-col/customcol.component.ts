@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {STColumn} from '@delon/abc/st';
 import {NzCheckBoxOptionInterface} from 'ng-zorro-antd/checkbox/checkbox-group.component';
-import {PreferencesService} from "../../../core/preferences/preferences.service";
+import {PreferencesService} from "@core";
 import {STColumnTitle} from "@delon/abc/st/st.interfaces";
 
 // 自定义table显示列

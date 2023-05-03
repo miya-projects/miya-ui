@@ -67,3 +67,45 @@ export function omit(obj: {
   return result;
 }
 
+/**
+ * 类似vue中useStorage的用法
+ * @param key
+ * @param defaultValue
+ */
+export function useStorage(key: string, defaultValue: any = {}): { value: any } {
+  // __use_storage_前缀表示受此函数代理
+  key = `__use_storage_${key}`;
+
+  let proxy: any = null;
+  const defineReactive = (value: any) => {
+    if (Object.prototype.toString.call(value) !== '[object Object]') {
+      return value;
+    }
+    let keys = Object.keys(value)
+    keys.forEach((key) => {
+      if (Object.prototype.toString.call(value[key]) === '[object Object]') {
+        value[key] = defineReactive(value[key])
+      }
+    })
+    return new Proxy(value, {
+      set: (target: any, property, value, receiver): boolean => {
+        if (Object.prototype.toString.call(value) === '[object Object]') {
+          value = defineReactive(value);
+        }
+        target[property] = value;
+        localStorage.setItem(key, JSON.stringify(proxy.value));
+        if (proxy.value === null) {
+          localStorage.removeItem(key);
+        }
+        return true;
+      },
+      get(target: any, p: string | symbol, receiver: any): any {
+        return target[p];
+      }
+    });
+  }
+
+  proxy = defineReactive({value: undefined});
+  proxy.value = defaultValue;
+  return proxy;
+}

@@ -1,34 +1,36 @@
-import { NgModule } from '@angular/core';
-import {ActivatedRouteSnapshot, RouterModule, RouterStateSnapshot, Routes} from '@angular/router';
-import { SimpleGuard } from '@delon/auth';
-import { environment } from '@env/environment';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {SimpleGuard} from '@delon/auth';
+import {environment} from '@env/environment';
 // layout
-import { LayoutBasicComponent } from '../layout/basic/basic.component';
-import { LayoutPassportComponent } from '../layout/passport/passport.component';
+import {LayoutBasicComponent} from '../layout/basic/basic.component';
+import {LayoutPassportComponent} from '../layout/passport/passport.component';
 // dashboard pages
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 // single pages
-import { CallbackComponent } from './passport/callback.component';
-import { UserLockComponent } from './passport/lock/lock.component';
+import {CallbackComponent} from './passport/callback.component';
+import {UserLockComponent} from './passport/lock/lock.component';
 // passport pages
-import { UserLoginComponent } from './passport/login/login.component';
-import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
-import { UserRegisterComponent } from './passport/register/register.component';
-import {of} from "rxjs";
+import {UserLoginComponent} from './passport/login/login.component';
+import {UserRegisterResultComponent} from './passport/register-result/register-result.component';
+import {UserRegisterComponent} from './passport/register/register.component';
 import {StartupService} from "@core";
+import {AclGuard} from "../core/guard/acl.guard";
 
+// 解析器resolve优先于守卫执行
+// https://angular.cn/api/router/Resolve#usage-notes
 const routes: Routes = [
   {
     path: '',
     component: LayoutBasicComponent,
-    canActivate: [SimpleGuard],
+    canActivate: [SimpleGuard, AclGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent, resolve: {startup: StartupService} },
+      { path: 'dashboard', component: DashboardComponent, resolve: {startup: StartupService}},
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then((m) => m.ExceptionModule) },
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
-      { path: 'sys', loadChildren: () => import('./sys/sys.module').then((m) => m.SysModule), resolve: {startup: StartupService} }
+      { path: 'sys', loadChildren: () => import('./sys/sys.module').then((m) => m.SysModule), resolve: {startup: StartupService}}
     ],
   },
   // 空白布局

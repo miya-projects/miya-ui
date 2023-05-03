@@ -31,7 +31,6 @@ export class UserLoginComponent implements OnDestroy {
     public http: _HttpClient,
     public msg: NzMessageService,
   ) {
-    console.log(this.http)
     this.form = fb.group({
       userName: ['admin', [Validators.required]],
       password: ['123456', [Validators.required]],
@@ -174,7 +173,7 @@ export class UserLoginComponent implements OnDestroy {
     // 设置用户Token信息
     this.tokenService.set(data);
     // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
-    this.startupSrv.load().then(() => {
+    this.startupSrv.load(true).subscribe(() => {
       let url = this.tokenService.referrer!.url || '/';
       if (url.includes('/passport')) {
         url = '/';

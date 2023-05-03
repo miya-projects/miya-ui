@@ -26,8 +26,8 @@
           </nz-tag>
         </ng-template>
         <ng-template st-row="accountStatus" let-item let-index="index">
-          <nz-tag nzColor="{{item.accountStatus.value === 'NORMAL'?'#108ee9': '#ed5f5f'}}">
-            {{ item.accountStatus.value }}
+          <nz-tag nzColor="{{item.accountStatus.value === 'NORMAL'?'success': 'error'}}">
+            {{ item.accountStatus.label }}
           </nz-tag>
         </ng-template>
       </st>

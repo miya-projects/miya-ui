@@ -10,6 +10,9 @@ import Menus from '../../routes/menu';
 import { environment } from '@env/environment';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
 import {PreferencesService} from "../preferences/preferences.service";
+import {Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
+import {useStorage} from "../../shared/utils";
 
 /**
  * Used for application startup
@@ -41,55 +44,49 @@ export class StartupService implements Resolve<any>{
     }
   }
 
-  private viaHttp(resolve: any, reject: any): void {
-    this.httpClient.get('/sys/user/current').subscribe({
-      next: (res: any) => {
-          //清除权限
-          this.aclService.set([]);
-          this.aclService.setFull(false);
-          this.menuService.clear();
+  private isInit = useStorage('isInit', false);
 
-          const appData = res.systemMeta;
-          const user: any = (res as any).user;
-          user.avatar = user?.avatar?.url;
-          user.email = '891841484@qq.com';
-          this.settingService.setApp(appData as App);
-          this.settingService.setData('unreadNoticeAmount', res.unreadNoticeAmount);
-          this.settingService.setUser(user);
-          if (user.superAdmin) {
-            this.aclService.setFull(true);
-          }
+  load(noCache: boolean = false): Observable<any> {
+    if (this.isInit.value && !noCache) {
+      // 只加载一次，个别场景需要重新加载，如退出登录，重新登录等
+      return of({});
+    }
+    return this.httpClient.get('/sys/user/current').pipe(map((res: any) => {
+      //清除权限
+      this.aclService.set([]);
+      this.aclService.setFull(false);
+      this.menuService.clear();
 
-          // 节点拆分和平铺，用来控制父节点显隐
-          let flatFun = (business: string): string[] => {
-            let split: string[] = business.split(":");
-            if (split.length === 1){
-              return split;
-            }
-            split.pop();
-            return flatFun(split.join(":")).concat([business]);
-          }
-          let businesses = user.business.map((i: string):string[] => flatFun(i)).reduce((acc: string[], business: string[]) => acc.concat(business), [])
-          businesses = Array.from(new Set(businesses));
-          this.aclService.attachAbility(businesses);
-          this.menuService.add(Menus);
-          this.titleService.suffix = appData.name;
-
-          this.preferencesService.init(res.user.preferences?.front || "{}");
-      },
-      error: err => {
-        resolve({});
-      },
-      complete: () => {
-        resolve({});
+      const appData = res.systemMeta;
+      const user: any = (res as any).user;
+      user.avatar = user?.avatar?.url;
+      user.email = '891841484@qq.com';
+      this.settingService.setApp(appData as App);
+      this.settingService.setData('unreadNoticeAmount', res.unreadNoticeAmount);
+      this.settingService.setUser(user);
+      if (user.superAdmin) {
+        this.aclService.setFull(true);
       }
-    });
-  }
 
-  load(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.viaHttp(resolve, reject);
-    });
+      // 节点拆分和平铺，用来控制父节点显隐
+      let flatFun = (business: string): string[] => {
+        let split: string[] = business.split(":");
+        if (split.length === 1){
+          return split;
+        }
+        split.pop();
+        return flatFun(split.join(":")).concat([business]);
+      }
+      let businesses = user.business.map((i: string):string[] => flatFun(i)).reduce((acc: string[], business: string[]) => acc.concat(business), [])
+      businesses = Array.from(new Set(businesses));
+      this.aclService.attachAbility(businesses);
+      this.menuService.add(Menus);
+      this.titleService.suffix = appData.name;
+
+      this.preferencesService.init(res.user.preferences?.front || "{}");
+      this.isInit.value = true;
+      return {};
+    }));
   }
 
   /**
