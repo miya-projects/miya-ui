@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {_HttpClient} from '@delon/theme';
 
 export interface TreeNodeInterface {
@@ -25,6 +25,9 @@ export interface TreeNodeInterface {
 })
 export class TreetableComponent implements OnInit {
 
+  // 数据加载完成
+  @Output()
+  readonly dataReady = new EventEmitter<TreeNodeInterface[]>();
   @Input('data')
   data!: TreeNodeInterface[] | string;
   @Input('columns')
@@ -80,7 +83,7 @@ export class TreetableComponent implements OnInit {
   }
 
   reload(): void{
-    if (typeof this.data === 'string' ){
+    if (typeof this.data === 'string' ) {
       this.http.get(this.data as string, {
         ...this.page,
         page: this.page.page - 1
@@ -92,8 +95,9 @@ export class TreetableComponent implements OnInit {
           pageSize: res.pageSize
         };
         this.expandedData = this.convertTreeToList(this.nzData);
+        this.dataReady.emit(this.expandedData);
       })
-    }else {
+    } else {
       this.nzFrontPagination = true;
       this.nzData = this.data;
       this.expandedData = this.convertTreeToList(this.nzData);
