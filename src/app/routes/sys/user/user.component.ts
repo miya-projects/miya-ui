@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {STColumn, STComponent, STData, STRes} from '@delon/abc/st';
+import {STColumn, STComponent} from '@delon/abc/st';
 import {CacheService} from '@delon/cache';
 import {SFComponent, SFSchema, SFSelectWidgetSchema} from '@delon/form';
 import {ModalHelper, _HttpClient, SettingsService, App} from '@delon/theme';

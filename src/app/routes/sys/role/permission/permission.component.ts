@@ -104,7 +104,10 @@ export class SysRolePermissionComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.showCode = config.getValue();
     })
-    this.switchComponent.registerOnChange(config.saveValue)
+    this.switchComponent.registerOnChange(e => {
+      this.showCode = e;
+      config.saveValue(e);
+    })
   }
 
   reload(): void {
