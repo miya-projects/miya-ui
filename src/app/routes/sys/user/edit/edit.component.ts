@@ -48,16 +48,14 @@ export class SysUserEditComponent implements OnInit {
     $roles: {
       widget: 'api-select',
       mode: 'multiple',
-      grid: {span: 24},
-      width: 876,
+      grid: {span: 18},
       asyncData: () => this.http.get('/sys/dp/role', null, CACHE_ENABLE),
     } as SFSelectWidgetSchema,
     $departments: {
       widget: 'api-tree-select',
       multiple: true,
       showSearch: true,
-      grid: {span: 24},
-      width: 876,
+      grid: {span: 18},
       asyncData: () => this.http.get('/sys/department?noPage', null, CACHE_ENABLE).pipe(map((items: any) => {
         browseTree(items, (item: any) => {
           item.title = item.name;
@@ -69,11 +67,9 @@ export class SysUserEditComponent implements OnInit {
         return items;
       })),
     } as unknown as SFTreeSelectWidgetSchema,
-    // departments
     '*': {
-      width: 300,
       spanLabelFixed: 100,
-      grid: {span: 12},
+      grid: {span: 9, gutter: 16 + 10*8},
     },
   };
 
@@ -100,7 +96,7 @@ export class SysUserEditComponent implements OnInit {
       url = `/sys/user/${this.record.id}`;
       method = 'put';
     }
-    this.http.request(method, url, {body: value}).subscribe((res) => {
+    this.http.request(method, url, {body: value}).subscribe(() => {
       this.msgSrv.success('保存成功');
       this.modal.close(true);
     });
