@@ -59,7 +59,7 @@ const headersTmpl = requestContentKind ? "'content-type': `" + requestContentKin
 
  */
 <%~ clientMethod %>(<%~ wrapperArgs %>): Observable<<%~ res %>> {
-  return this.request('<%~ _.upperCase(method) %>', `<%~ path %>`, {
+  return this.request('<%~ _.upperCase(method) %>', `<%~ path.replace(/^\/api(.*)$/, '$1') %>`, {
     <%~ query ? `params: req,` : '' %>
     <%~ payload ? `body: req,` : '' %>
     <%~ headersTmpl ? `headers: { ${headersTmpl} },` : '' %>

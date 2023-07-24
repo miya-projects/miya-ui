@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/ng-alain/sta/schema.json",
-  "url": "http://localhost:8083/v2/api-docs?group=%E7%B3%BB%E7%BB%9F",
+  "url": "http://localhost:8083/v3/api-docs?group=%E7%B3%BB%E7%BB%9F",
   "output": "src/app/api/sys",
   "name": "sys",
   "generateApiOptions": {

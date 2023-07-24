@@ -20,7 +20,6 @@ import {AlainConfig, ALAIN_CONFIG} from '@delon/util';
 import {AlainACLType} from '@delon/util/config/acl/acl.type';
 
 // Please refer to: https://ng-alain.com/docs/global-config
-// #region NG-ALAIN Config
 
 import {DelonACLModule} from '@delon/acl';
 
