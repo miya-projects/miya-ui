@@ -3,8 +3,7 @@ import {STChange, STColumn, STComponent, STData} from '@delon/abc/st';
 import {SFComponent, SFSchema, SFTreeSelectWidgetSchema, SFUISchema} from '@delon/form';
 import {_HttpClient} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {NzModalRef} from 'ng-zorro-antd/modal/modal-ref';
+import {NzModalService, NzModalRef, NZ_MODAL_DATA} from 'ng-zorro-antd/modal';
 import {of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {CACHE_ENABLE} from '../../../core/net/cache.interceptors';
@@ -91,7 +90,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
   addDepartment(item?: any) {
     const modal: NzModalRef = this.modalService.create({
       nzContent: this.addDepartmentTemplate,
-      nzComponentParams: {parent: item?.id},
+      nzData: { parent: item?.id },
       nzOkLoading: false,
       nzStyle: {top: '30%'},
       nzOnOk: () => {
@@ -133,7 +132,7 @@ export class SysDepartmentComponent implements OnInit, AfterViewInit {
   modify(item: any) {
     const modal: NzModalRef = this.modalService.create({
       nzContent: this.addDepartmentTemplate,
-      nzComponentParams: item,
+      nzData: item,
       nzOkLoading: false,
       nzStyle: {top: '30%'},
       nzOnOk: () => {

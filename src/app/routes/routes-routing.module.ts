@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {SimpleGuard} from '@delon/auth';
+import {authSimpleCanActivate} from '@delon/auth';
 import {environment} from '@env/environment';
 // layout
 import {LayoutBasicComponent} from '../layout/basic/basic.component';
@@ -15,7 +15,7 @@ import {UserLoginComponent} from './passport/login/login.component';
 import {UserRegisterResultComponent} from './passport/register-result/register-result.component';
 import {UserRegisterComponent} from './passport/register/register.component';
 import {StartupService} from "@core";
-import {AclGuard} from "../core/guard/acl.guard";
+import {aclCanActivate} from "../core/guard/acl.guard";
 
 // 解析器resolve优先于守卫执行
 // https://angular.cn/api/router/Resolve#usage-notes
@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutBasicComponent,
-    canActivate: [SimpleGuard, AclGuard],
+    canActivate: [authSimpleCanActivate, aclCanActivate],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, resolve: {startup: StartupService}},

@@ -18,7 +18,7 @@ module.exports = {
         'plugin:@angular-eslint/template/process-inline-templates',
       ],
       rules: {
-        'jsdoc/newline-after-description': 1,
+        'jsdoc/newline-after-description': 'off',
         '@angular-eslint/component-class-suffix': [
           'error',
           {

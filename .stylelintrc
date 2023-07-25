@@ -1,8 +1,7 @@
 {
   "extends": [
     "stylelint-config-standard",
-    "stylelint-config-rational-order",
-    "stylelint-config-prettier"
+    "stylelint-config-rational-order"
   ],
   "plugins": [
     "stylelint-declaration-block-no-ignored-properties"
@@ -28,7 +27,8 @@
         ]
       }
     ],
-    "import-notation": "string"
+    "import-notation": "string",
+    "media-feature-range-notation": "prefix"
   },
   "ignoreFiles": [
     "src/assets/**/*"

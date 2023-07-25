@@ -8,7 +8,7 @@ import { ICONS } from '../../../style-icons';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 import Menus from '../../routes/menu';
 import { environment } from '@env/environment';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import {PreferencesService} from "../preferences/preferences.service";
 import {Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
@@ -21,7 +21,7 @@ import {useStorage} from "../../shared/utils";
 @Injectable({
   providedIn: 'root',
 })
-export class StartupService implements Resolve<any>{
+export class StartupService {
   constructor(
     iconSrv: NzIconService,
     private menuService: MenuService,

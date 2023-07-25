@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 import { SysDictComponent } from './dict/dict.component';
 // import { GuardComponent } from './guard.component';
 
 @Injectable()
-export class CanLeaveProvide implements CanDeactivate<SysDictComponent> {
+export class CanLeaveProvide  {
   constructor(private confirmSrv: NzModalService) {}
 
   canDeactivate(
