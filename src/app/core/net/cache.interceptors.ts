@@ -55,7 +55,7 @@ export class CacheInterceptor implements HttpInterceptor {
           return subject;
         }
         // 第一次请求，写入subject，后续进行复用请求响应
-        this.progressRequestMap[CacheInterceptor.getKey(req)] = new Subject<any>();
+        subject = this.progressRequestMap[CacheInterceptor.getKey(req)] = new Subject<any>();
       }
     }
     return next.handle(req).pipe(tap(res => {
