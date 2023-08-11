@@ -5,7 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'app-sys-dict-edit',
+  selector: 'app-sys-role-edit',
   templateUrl: './edit.component.html',
 })
 export class SysRoleEditComponent implements OnInit {
