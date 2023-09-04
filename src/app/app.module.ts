@@ -28,7 +28,7 @@ const LANG_PROVIDES = [
   { provide: NZ_I18N, useValue: LANG.zorro },
   { provide: NZ_DATE_LOCALE, useValue: LANG.date },
   { provide: DELON_LOCALE, useValue: LANG.delon },
-  { provide: LocationStrategy, useClass: PathLocationStrategy}
+  // { provide: LocationStrategy, useClass: PathLocationStrategy}
 ];
 // #endregion
 
