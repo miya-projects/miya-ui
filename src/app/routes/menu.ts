@@ -38,7 +38,7 @@ const data: Menu[] = [
             acl: 'sys:department:view',
           },
           {
-            text: '参数',
+            text: '配置',
             link: '/sys/config',
             icon: {type: 'icon', value: 'setting'},
             acl: 'sys:config:view',

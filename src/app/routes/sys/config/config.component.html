@@ -12,42 +12,24 @@
   [rowClassName]="rowClassName"
   [widthMode]="{ type: 'strict', strictBehavior: 'truncate' }"
 >
-  <ng-template st-row="name" let-item let-index="index">
+  <ng-template st-row="group" let-item let-index="index">
     <div nz-col [nzSpan]="6">
-      {{ item.name }}
+      {{ item.group }}
     </div>
   </ng-template>
-  <ng-template st-row="code" let-item let-index="index">
+  <ng-template st-row="key" let-item let-index="index">
     <div nz-col [nzSpan]="6">
-      {{ item.code }}
+      {{ item.key }}
     </div>
   </ng-template>
-  <ng-template st-row="value" let-item let-index="index">
-    <div nz-col [nzSpan]="12">
+  <ng-template st-row="val" let-item let-index="index">
+    <div nz-col [nzSpan]="24">
       <div nz-row nzAlign="middle">
         <div nz-col [nzSpan]="20">
           <input
             nz-input
-            [(ngModel)]="item.value"
+            [(ngModel)]="item.val"
           />
-        </div>
-        <div nz-col [nzSpan]="3" [nzOffset]="0.5">
-          <a
-            nz-button
-            nzType="link"
-            (click)="saveValue(item.code, item.value)"
-          >保存</a
-          >
-          <a
-            nz-button
-            nzDanger
-            nzType="link"
-            nz-popconfirm
-            nzPopconfirmTitle="确认将该参数置空?"
-            nzPopconfirmPlacement="bottom"
-            (nzOnConfirm)="saveValue(item.code, null)"
-            >置空</a
-          >
         </div>
       </div>
 <!--      <ng-container>-->
@@ -57,4 +39,31 @@
 <!--      </ng-container>-->
     </div>
   </ng-template>
+  <ng-template st-row="desc" let-item let-index="index">
+    <div nz-col [nzSpan]="6">
+      {{ item.desc }}
+    </div>
+  </ng-template>
+
+  <ng-template st-row="action" let-item let-index="index">
+    <div nz-col [nzSpan]="3" [nzOffset]="0.5">
+      <a
+        nz-button
+        nzType="link"
+        (click)="saveValue(item.group, item.key, item.val)"
+      >保存</a
+      >
+      <a
+        nz-button
+        nzDanger
+        nzType="link"
+        nz-popconfirm
+        nzPopconfirmTitle="确认将该参数置空?"
+        nzPopconfirmPlacement="bottom"
+        (nzOnConfirm)="saveValue(item.group, item.key, null)"
+      >置空</a
+      >
+    </div>
+  </ng-template>
+
 </st>

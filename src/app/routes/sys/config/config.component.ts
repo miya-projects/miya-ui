@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { STColumn, STComponent, STData, STPage, STReq, STRes } from '@delon/abc/st';
-import { STRowClassName } from '@delon/abc/st/st.interfaces';
-import { ModalHelper, _HttpClient } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {STColumn, STComponent, STData} from '@delon/abc/st';
+import {STRowClassName} from '@delon/abc/st/st.interfaces';
+import {_HttpClient, ModalHelper} from '@delon/theme';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-sys-config',
@@ -15,9 +15,12 @@ export class SysConfigComponent implements OnInit {
 
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
-    { title: '参数名', index: 'name', render: 'name', width: 300 },
-    { title: '参数key', index: 'code', render: 'code', width: 300 },
-    { title: '参数值', index: 'value', render: 'value', width: 600 },
+    { title: '分组', index: 'group', render: 'group', width: 100 },
+    { title: '配置项', index: 'key', render: 'key', width: 200 },
+    { title: '配置值', index: 'val', render: 'val', width: 400 },
+    { title: '描述', index: 'desc', render: 'desc', width: 300 },
+    { title: '操作', render: 'action', width: 300 },
+
   ];
   rowClassName: STRowClassName = () => 'st-row-text';
 
@@ -43,10 +46,11 @@ export class SysConfigComponent implements OnInit {
     });
   }
 
-  saveValue(code: string, value: string | null): void {
-    let body: { configKey: string; value: any } = {
+  saveValue(group: string, code: string, value: string | null): void {
+    let body: { configKey: string; value: any, group: string } = {
       configKey: code,
       value: undefined,
+      group: group
     };
     if (value !== null) {
       body.value = value;
