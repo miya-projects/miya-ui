@@ -18,7 +18,7 @@ export class SysLogComponent implements OnInit, AfterViewInit {
     properties: {
       createdTime: {
         type: 'string',
-        title: '创建日期',
+        title: '日期',
         ui: {
           widget: 'date',
           format: 'yyyy-MM-dd',
