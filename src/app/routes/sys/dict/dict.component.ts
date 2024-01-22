@@ -28,8 +28,8 @@ export class SysDictComponent implements OnInit {
    * @private
    */
   reload(): void {
-    this.http.get('/sys/dict', {noPage: ''}).subscribe((list) => {
-      this.dicts = list;
+    this.http.get('/sys/dict', {page: 0, size: 200}).subscribe((list) => {
+      this.dicts = list.rows;
     });
   }
 

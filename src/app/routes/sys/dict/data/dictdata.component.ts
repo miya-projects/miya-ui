@@ -82,7 +82,7 @@ export class SysDictDataComponent implements OnInit {
   }
 
   reload(): void {
-    this.http.get(`/sys/dict/${this.code}/item`, {page: this.pi - 1, size: this.ps}).subscribe((res) => {
+    this.http.get(`/sys/dict/${this.id}/item`, {page: this.pi - 1, size: this.ps}).subscribe((res) => {
       this.data = res.rows;
       this.total = res.total;
     });
