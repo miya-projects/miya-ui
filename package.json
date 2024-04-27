@@ -30,7 +30,7 @@
     "@angular/platform-browser": "^16.1.6",
     "@angular/platform-browser-dynamic": "^16.1.6",
     "@angular/router": "^16.1.6",
-    "@ant-design/icons-angular": "^15.0.0",
+    "@ant-design/icons-angular": "^16.0.0",
     "@delon/abc": "^16.2.0",
     "@delon/acl": "^16.2.0",
     "@delon/auth": "^16.2.0",
