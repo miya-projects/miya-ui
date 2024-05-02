@@ -1,16 +1,17 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {STColumn, STComponent} from '@delon/abc/st';
 import {CacheService} from '@delon/cache';
 import {SFComponent, SFSchema, SFSelectWidgetSchema} from '@delon/form';
-import {ModalHelper, _HttpClient, SettingsService, App} from '@delon/theme';
+import {_HttpClient, App, ModalHelper, SettingsService} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {debounceTime, map} from 'rxjs/operators';
 import {CACHE_ENABLE} from '../../../core/net/cache.interceptors';
 import {SysDepartmentSelectComponent} from '../department/select/select.component';
 import {SysUserEditComponent} from './edit/edit.component';
 import {SysLogModalComponent} from "../log/modal/log-modal.component";
-import {download} from "../../../shared/utils";
+import {downloadUrl} from "../../../shared/utils";
 import {NzNotificationService} from "ng-zorro-antd/notification";
+import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 
 @Component({
   selector: 'app-sys-user',
@@ -146,7 +147,8 @@ export class SysUserComponent implements OnInit, AfterViewInit {
   constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService,
               private cacheSrv: CacheService,
               private settingsService: SettingsService,
-              private notificationService: NzNotificationService
+              private notificationService: NzNotificationService,
+              @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {
   }
 
@@ -168,21 +170,18 @@ export class SysUserComponent implements OnInit, AfterViewInit {
    * 导出用户
    */
   down() {
-    this.http.get("/sys/user/export", this.sf.value,{responseType: 'blob', observe: 'response'})
-      .subscribe(res => {
-        let app = this.settingsService.getApp() as App
-        console.log(app.exportWay);
-        if (app.exportWay === 'async') {
+    let app = this.settingsService.getApp() as App
+    if (app.exportWay === 'async') {
+      this.http.get("/sys/user/export", this.sf.value, {responseType: 'blob', observe: 'response'})
+        .subscribe(res => {
           this.notificationService.success('任务提交成功', '请在下载中心查看');
-        }else if (app.exportWay === 'sync'){
-          let reg = new RegExp('filename=(.+)');
-          let exec = reg.exec(res.headers.get('content-disposition') as string);
-          let filename = 'export.xlsx';
-          if (exec != null && exec.length >= 2){
-            filename = decodeURI(exec[1]);
-          }
-          download(filename, res.body as Blob);
-        }
-    });
+        });
+    } else if (app.exportWay === 'sync') {
+      let tokenModel = this.tokenService.get();
+      downloadUrl("/sys/user/export", {
+        ...this.sf.value,
+        token: tokenModel?.token
+      });
+    }
   }
 }

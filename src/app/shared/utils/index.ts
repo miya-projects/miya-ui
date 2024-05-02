@@ -1,4 +1,6 @@
 import {addDays} from 'date-fns';
+import * as qs from "qs";
+import {environment} from "@env/environment";
 
 /**
  * 遍历一颗树
@@ -38,7 +40,7 @@ export const DATE_RANGES = {
 }
 
 /**
- * 调用下载文件
+ * 调用下载文件 先将文件全部下载完毕之后再弹出下载框
  * @param filename  弹出下载框默认的文件名
  * @param byte  文件二进制流
  */
@@ -46,6 +48,26 @@ export function download(filename: string, byte: Blob): void {
   const a = document.createElement("a");
   a.download = filename;
   a.href = window.URL.createObjectURL(byte as Blob);
+  a.click();
+}
+
+/**
+ * 调用下载文件 流式下载
+ * @param url  下载url
+ * @param params  url参数，会拼接到url后面
+ * @param fileName  弹出下载框的文件名，如果不传，则使用响应头中的文件名
+ */
+export function downloadUrl(url: string, params: Object, fileName?: string): void {
+  if (!url.startsWith('https://') && !url.startsWith('http://')) {
+    url = environment.SERVER_URL + url;
+  }
+  let p = qs.stringify(params, { arrayFormat: 'repeat', allowDots: true })
+  url = `${url}?${p}`;
+  const a = document.createElement("a");
+  if (fileName) {
+    a.download = fileName;
+  }
+  a.href = url;
   a.click();
 }
 
