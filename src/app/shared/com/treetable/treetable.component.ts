@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {_HttpClient} from '@delon/theme';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
 
 export interface TreeNodeInterface {
   id: string;
@@ -21,10 +21,9 @@ export interface TreeNodeInterface {
         cursor: pointer;
       }
     `
-  ],
+  ]
 })
 export class TreetableComponent implements OnInit {
-
   // 数据加载完成
   @Output()
   readonly dataReady = new EventEmitter<TreeNodeInterface[]>();
@@ -40,8 +39,7 @@ export class TreetableComponent implements OnInit {
   };
   nzData!: TreeNodeInterface[];
   nzFrontPagination: boolean = false;
-  constructor(private http: _HttpClient) {
-  }
+  constructor(private http: _HttpClient) {}
 
   /**
    * 主要目的是当节点缩起来的时候将子节点也缩起来
@@ -65,38 +63,39 @@ export class TreetableComponent implements OnInit {
   }
   // expandedData
 
-  collapseAll(){
+  collapseAll() {
     for (let i = 0; i < this.expandedData.length; i++) {
       this.expandedData[i]._expand = false;
     }
   }
 
-  expandAll(){
+  expandAll() {
     for (let i = 0; i < this.expandedData.length; i++) {
       this.expandedData[i]._expand = true;
     }
   }
 
-
   ngOnInit(): void {
     this.reload();
   }
 
-  reload(): void{
-    if (typeof this.data === 'string' ) {
-      this.http.get(this.data as string, {
-        ...this.page,
-        page: this.page.page - 1
-      }).subscribe(res => {
-        this.nzData = res.rows;
-        this.page = {
-          total: res.total,
-          page: res.currentPage + 1,
-          pageSize: res.pageSize
-        };
-        this.expandedData = this.convertTreeToList(this.nzData);
-        this.dataReady.emit(this.expandedData);
-      })
+  reload(): void {
+    if (typeof this.data === 'string') {
+      this.http
+        .get(this.data as string, {
+          ...this.page,
+          page: this.page.page - 1
+        })
+        .subscribe(res => {
+          this.nzData = res.rows;
+          this.page = {
+            total: res.total,
+            page: res.currentPage + 1,
+            pageSize: res.pageSize
+          };
+          this.expandedData = this.convertTreeToList(this.nzData);
+          this.dataReady.emit(this.expandedData);
+        });
     } else {
       this.nzFrontPagination = true;
       this.nzData = this.data;
@@ -114,11 +113,11 @@ export class TreetableComponent implements OnInit {
     // 最终生成的数组
     const array: TreeNodeInterface[] = [];
     const hashMap: { [key: string]: boolean } = {};
-    if (!root || root.length === 0){
+    if (!root || root.length === 0) {
       return array;
     }
     for (let i = root.length - 1; i >= 0; i--) {
-      stack.push({...root[i], level: 0, _expand: false});
+      stack.push({ ...root[i], level: 0, _expand: false });
     }
     while (stack.length !== 0) {
       const node = stack.pop()!;
@@ -128,11 +127,10 @@ export class TreetableComponent implements OnInit {
       }
       if (node.children) {
         for (let i = node.children.length - 1; i >= 0; i--) {
-          stack.push({...node.children[i], level: node.level! + 1, _expand: false, parent: node});
+          stack.push({ ...node.children[i], level: node.level! + 1, _expand: false, parent: node });
         }
       }
     }
     return array;
   }
-
 }

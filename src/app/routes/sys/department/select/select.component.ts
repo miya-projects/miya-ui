@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {_HttpClient} from '@delon/theme';
-import {NzTreeNode, NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzFormatEmitEvent, NzTreeComponent} from 'ng-zorro-antd/tree';
-import {browseTree} from '../../../../shared/utils';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
+import { NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree/nz-tree-base-node';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzFormatEmitEvent, NzTreeComponent } from 'ng-zorro-antd/tree';
+import { browseTree } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-sys-department-select',
@@ -21,15 +21,13 @@ export class SysDepartmentSelectComponent implements OnInit, AfterViewInit {
   constructor(
     private msgSrv: NzMessageService,
     private http: _HttpClient
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.reload();
   }
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void {}
 
   reload(): void {
     this.http.get('/sys/department?noPage').subscribe(res => {
@@ -38,7 +36,7 @@ export class SysDepartmentSelectComponent implements OnInit, AfterViewInit {
     });
   }
 
-  convertData(treeList: any){
+  convertData(treeList: any) {
     browseTree(treeList, (item: any) => {
       item.title = item.name;
       item.key = item.id;
@@ -56,6 +54,4 @@ export class SysDepartmentSelectComponent implements OnInit, AfterViewInit {
       this.onSelect.next('');
     }
   }
-
-
 }

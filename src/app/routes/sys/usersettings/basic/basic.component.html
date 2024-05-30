@@ -2,13 +2,13 @@
   <div class="left">
     <form nz-form nzLayout="vertical" #f="ngForm" (submit)="save()" se-container="1">
       <se label="用户名">
-        <span style="margin-left: 8px;">{{user.username}}</span>
+        <span style="margin-left: 8px">{{ user.username }}</span>
       </se>
       <se label="角色">
-        <nz-tag nzColor="blue" *ngFor="let role of user.roles"> {{role.name}}</nz-tag>
+        <nz-tag nzColor="blue" *ngFor="let role of user.roles"> {{ role.name }}</nz-tag>
       </se>
       <se label="姓名" error="请输入您的姓名!">
-        <input nz-input [(ngModel)]="user.name" name="name" required/>
+        <input nz-input [(ngModel)]="user.name" name="name" required />
       </se>
       <se label="性别">
         <nz-select nzShowSearch nzAllowClear [(ngModel)]="user.sex" name="sex">
@@ -16,7 +16,7 @@
         </nz-select>
       </se>
       <se label="手机号" error="请输入您的手机号!">
-        <input nz-input [(ngModel)]="user.phone" name="phone" required/>
+        <input nz-input [(ngModel)]="user.phone" name="phone" required />
       </se>
       <se>
         <button nz-button nzType="primary" [disabled]="f.invalid">更新基本信息</button>
@@ -25,9 +25,14 @@
   </div>
   <div class="right">
     <div class="avatar_title">头像</div>
-    <div class="avatar"><img src="{{ user.avatar }}" alt="Avatar"/></div>
-    <nz-upload nzAction="/sys/file/upload" [nzShowUploadList]="false" [(nzFileList)]="avatar" [nzData]="{formatType: 'Object'}"
-               (nzChange)="avatarChange($event)">
+    <div class="avatar"><img src="{{ user.avatar }}" alt="Avatar" /></div>
+    <nz-upload
+      nzAction="/sys/file/upload"
+      [nzShowUploadList]="false"
+      [(nzFileList)]="avatar"
+      [nzData]="{ formatType: 'Object' }"
+      (nzChange)="avatarChange($event)"
+    >
       <button nz-button class="button_view">
         <i nz-icon nzType="upload"></i>
         <span>更换头像</span>

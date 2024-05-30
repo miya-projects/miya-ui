@@ -1,13 +1,18 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {STColumn, STComponent} from '@delon/abc/st';
-import {STRowClassName} from '@delon/abc/st/st.interfaces';
-import {SFComponent, SFDateWidgetSchema, SFSchema} from "@delon/form";
-import {DATE_RANGES} from "../../../../shared/utils";
-import {debounceTime, map} from "rxjs/operators";
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { STColumn, STComponent, STModule } from '@delon/abc/st';
+import { STRowClassName } from '@delon/abc/st/st.interfaces';
+import { DelonFormModule, SFComponent, SFDateWidgetSchema, SFSchema } from '@delon/form';
+import { DATE_RANGES } from '../../../../shared/utils';
+import { debounceTime, map } from 'rxjs/operators';
+import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sys-log-modal',
   templateUrl: './log-modal.component.html',
+  standalone: true,
+  imports: [STModule, DelonFormModule, NzTooltipDirective, JsonPipe]
 })
 export class SysLogModalComponent implements OnInit, AfterViewInit {
   url = `/sys/log`;
@@ -23,18 +28,18 @@ export class SysLogModalComponent implements OnInit, AfterViewInit {
           widget: 'date',
           format: 'yyyy-MM-dd',
           mode: 'range',
-          ranges: {...DATE_RANGES.TODAY, ...DATE_RANGES.YESTERDAY, ...DATE_RANGES.DAYS7, ...DATE_RANGES.DAYS30},
-        } as SFDateWidgetSchema,
+          ranges: { ...DATE_RANGES.TODAY, ...DATE_RANGES.YESTERDAY, ...DATE_RANGES.DAYS7, ...DATE_RANGES.DAYS30 }
+        } as SFDateWidgetSchema
       },
       operatorName: {
         type: 'string',
-        title: '操作人',
+        title: '操作人'
       },
       business: {
         type: 'string',
-        title: '所属模块',
-      },
-    },
+        title: '所属模块'
+      }
+    }
   };
 
   @ViewChild('sf') private readonly sf!: SFComponent;
@@ -45,22 +50,30 @@ export class SysLogModalComponent implements OnInit, AfterViewInit {
     { title: '业务模块', index: 'business', width: 130, sort: { reName: { ascend: 'asc', descend: 'desc' } } },
     { title: '操作类型', index: 'operationType', width: 130, sort: { reName: { ascend: 'asc', descend: 'desc' } } },
     { title: '日志', index: 'content', width: 200 },
-    { title: '其他信息', index: 'extra', width: 200, render: 'extra' },
+    { title: '其他信息', index: 'extra', width: 200, render: 'extra' }
   ];
   rowClassName: STRowClassName = () => 'st-row-text';
 
-  constructor() {}
+  constructor(private modal: NzModalRef) {}
 
   ngAfterViewInit(): void {
-    this.sf.formValueChange.pipe(debounceTime(500), map(i => i.value))
-      .subscribe((value) => this.st.reset({
-        ...value,
-        businessId: this.businessId
-      }));
+    this.sf.formValueChange
+      .pipe(
+        debounceTime(500),
+        map(i => i.value)
+      )
+      .subscribe(value =>
+        this.st.reset({
+          ...value,
+          businessId: this.businessId
+        })
+      );
     this.sf.reset(true);
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  close(): void {
+    this.modal.destroy();
+  }
 }

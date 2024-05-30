@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy } from '@angular/core';
-import { ActivationEnd, Router } from '@angular/router';
+import { ActivationEnd, Router, RouterModule } from '@angular/router';
 import { NzMenuModeType } from 'ng-zorro-antd/menu';
 import { fromEvent, Subscription } from 'rxjs';
-import {debounceTime, filter, tap} from 'rxjs/operators';
+import { debounceTime, filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-settings',
@@ -25,10 +25,13 @@ export class UserSettingsComponent implements AfterViewInit, OnDestroy {
       title: '修改密码'
     }
   ];
-  constructor(private router: Router, private cdr: ChangeDetectorRef, private el: ElementRef<HTMLElement>) {
-    this.router$ = this.router.events
-      .pipe(filter(e => e instanceof ActivationEnd)).subscribe(() => this.setActive());
-    this.setActive()
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private el: ElementRef<HTMLElement>
+  ) {
+    this.router$ = this.router.events.pipe(filter(e => e instanceof ActivationEnd)).subscribe(() => this.setActive());
+    this.setActive();
   }
 
   private setActive(): void {

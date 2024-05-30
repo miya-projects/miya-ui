@@ -9,7 +9,7 @@ import { SysNoticeEditComponent } from './edit/edit.component';
 
 @Component({
   selector: 'app-sys-notice',
-  templateUrl: './notice.component.html',
+  templateUrl: './notice.component.html'
 })
 export class SysNoticeComponent implements OnInit, AfterViewInit {
   url = `/sysNotice/list`;
@@ -19,7 +19,7 @@ export class SysNoticeComponent implements OnInit, AfterViewInit {
     { title: '标题', index: 'title', width: 300 },
     { title: '内容', index: 'content', width: 300 },
     { title: '发布时间', index: 'createdTime', width: 600 },
-    { title: '是否启用', index: 'enable', width: 600 },
+    { title: '是否启用', index: 'enable', width: 600 }
   ];
   rowClassName: STRowClassName = () => 'st-row-text';
 
@@ -27,7 +27,7 @@ export class SysNoticeComponent implements OnInit, AfterViewInit {
     private http: _HttpClient,
     private modal: ModalHelper,
     private messageSrc: NzMessageService,
-    private modalSrc: NzModalService,
+    private modalSrc: NzModalService
   ) {}
 
   ngAfterViewInit(): void {

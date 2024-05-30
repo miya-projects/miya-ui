@@ -7,9 +7,8 @@ describe('SysDepartmentComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SysDepartmentSelectComponent ]
-    })
-    .compileComponents();
+      declarations: [SysDepartmentSelectComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

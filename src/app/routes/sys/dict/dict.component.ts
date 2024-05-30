@@ -6,7 +6,7 @@ import { DictEditComponent } from './edit/edit.component';
 
 @Component({
   selector: 'app-sys-dict',
-  templateUrl: './dict.component.html',
+  templateUrl: './dict.component.html'
 })
 export class SysDictComponent implements OnInit {
   dicts: any;
@@ -15,7 +15,7 @@ export class SysDictComponent implements OnInit {
     private http: _HttpClient,
     private modal: ModalHelper,
     private messageSrc: NzMessageService,
-    private modalSrv: NzModalService,
+    private modalSrv: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export class SysDictComponent implements OnInit {
    * @private
    */
   reload(): void {
-    this.http.get('/sys/dict', {page: 0, size: 200}).subscribe((list) => {
+    this.http.get('/sys/dict', { page: 0, size: 200 }).subscribe(list => {
       this.dicts = list.rows;
     });
   }
@@ -50,11 +50,11 @@ export class SysDictComponent implements OnInit {
       nzTitle: '提示',
       nzContent: '是否要删除?',
       nzOnOk: () => {
-        this.http.delete(`/sys/dict/${  id}`).subscribe(() => {
+        this.http.delete(`/sys/dict/${id}`).subscribe(() => {
           this.messageSrc.success('删除成功');
           this.reload();
         });
-      },
+      }
     });
   }
 }

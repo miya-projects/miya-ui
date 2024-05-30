@@ -1,26 +1,26 @@
-import { NgModule, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule, Type } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AlainThemeModule } from '@delon/theme';
 import { DelonACLModule } from '@delon/acl';
 import { DelonFormModule } from '@delon/form';
-import { UEditorModule } from 'ngx-ueditor';
+import { AlainThemeModule } from '@delon/theme';
 
 import { SHARED_DELON_MODULES } from './shared-delon.module';
 import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
-import {PipeModule} from "./pipe/pipe.module";
+import { PipeModule } from './pipe/pipe.module';
+import { ComModule } from './com/com.module';
 
 // #region third libs
 
-const THIRDMODULES: Array<Type<any>> = [UEditorModule];
+const THIRDMODULES: Array<Type<void>> = [];
 
 // #endregion
 
 // #region your componets & directives
 
-const COMPONENTS: Array<Type<any>> = [];
-const DIRECTIVES: Array<Type<any>> = [];
+const COMPONENTS: Array<Type<void>> = [];
+const DIRECTIVES: Array<Type<void>> = [];
 
 // #endregion
 
@@ -30,19 +30,20 @@ const DIRECTIVES: Array<Type<any>> = [];
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    AlainThemeModule.forChild(),
+    AlainThemeModule,
     DelonACLModule,
     DelonFormModule,
-    PipeModule,
     ...SHARED_DELON_MODULES,
     ...SHARED_ZORRO_MODULES,
     // third libs
     ...THIRDMODULES,
+    PipeModule,
+    ComModule
   ],
   declarations: [
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES,
+    ...DIRECTIVES
   ],
   exports: [
     CommonModule,
@@ -52,14 +53,13 @@ const DIRECTIVES: Array<Type<any>> = [];
     AlainThemeModule,
     DelonACLModule,
     DelonFormModule,
-    PipeModule,
     ...SHARED_DELON_MODULES,
     ...SHARED_ZORRO_MODULES,
     // third libs
     ...THIRDMODULES,
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES,
-  ],
+    ...DIRECTIVES
+  ]
 })
 export class SharedModule {}

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, HostListener, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { ChangeDetectionStrategy, Component, HostListener, inject } from '@angular/core';
+import { I18nPipe } from '@delon/theme';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
@@ -10,31 +10,25 @@ import { NzModalService } from 'ng-zorro-antd/modal';
     <i nz-icon nzType="tool"></i>
     清理本地缓存
   `,
-  // tslint:disable-next-line: no-host-metadata-property
   host: {
-    '[class.d-block]': 'true',
+    '[class.flex-1]': 'true'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NzIconModule, I18nPipe]
 })
 export class HeaderClearStorageComponent {
-  constructor(
-    private modalSrv: NzModalService,
-    private messageSrv: NzMessageService,
-    @Inject(DA_SERVICE_TOKEN) private srv: ITokenService,
-    private router: Router,
-  ) {}
+  private readonly modalSrv = inject(NzModalService);
+  private readonly messageSrv = inject(NzMessageService);
 
   @HostListener('click')
   _click(): void {
     this.modalSrv.confirm({
-      nzTitle: '确认要清除所有的local storage?',
+      nzTitle: 'Make sure clear all local storage?',
       nzOnOk: () => {
         localStorage.clear();
-        this.messageSrv.success('清理成功，即将返回重新登录!');
-        setTimeout(() => {
-          this.router.navigateByUrl(this.srv.login_url as string);
-        }, 2000);
-      },
+        this.messageSrv.success('Clear Finished!');
+      }
     });
   }
 }

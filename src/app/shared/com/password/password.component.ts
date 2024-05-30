@@ -1,6 +1,6 @@
-import {Component, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NzInputDirective} from 'ng-zorro-antd/input/input.directive';
+import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NzInputDirective } from 'ng-zorro-antd/input/input.directive';
 
 export const EXE_COUNTER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -23,10 +23,10 @@ export const EXE_COUNTER_VALUE_ACCESSOR: any = {
 export class PasswordComponent implements OnInit, ControlValueAccessor {
   passwordVisible = false;
 
-  @Input("value")
+  @Input('value')
   public value?: string;
 
-  @Input("placeholder")
+  @Input('placeholder')
   placeholder: any = '';
 
   @ViewChild('inputElement')
@@ -36,18 +36,15 @@ export class PasswordComponent implements OnInit, ControlValueAccessor {
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
-  }
+  registerOnTouched(fn: any): void {}
 
   writeValue(obj: any): void {
     this.value = obj;
   }
-
 }

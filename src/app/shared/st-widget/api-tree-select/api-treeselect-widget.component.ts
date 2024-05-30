@@ -1,29 +1,32 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {SelectWidget, SFValue, TreeSelectWidget} from '@delon/form';
-import {_HttpClient} from '@delon/theme';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DelonFormModule, SelectWidget, SFValue } from '@delon/form';
+import { _HttpClient } from '@delon/theme';
+import { TreeSelectWidget } from '@delon/form/widgets/tree-select';
+import { NzTreeSelectComponent } from 'ng-zorro-antd/tree-select';
+import { FormsModule } from '@angular/forms';
 
 /**
  * 支持对象形式的treeselect
  */
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'sf-tree-select',
   templateUrl: './treeselect.widget.html',
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
+  imports: [DelonFormModule, NzTreeSelectComponent, FormsModule],
+  standalone: true
 })
-// tslint:disable-next-line:component-class-suffix
 export class ApiTreeSelectWidget extends TreeSelectWidget implements OnInit {
-  static readonly KEY = 'api-tree-select';
+  static readonly KEY1 = 'api-tree-select';
 
   /**
    * 给sf值的时候调用该方法
    *
    * @param value 组件值
    */
-  reset(value: SFValue): void {
+  override reset(value: SFValue): void {
     if (value instanceof Array) {
-      value = value.map((i) => this.normalize(i));
+      value = value.map(i => this.normalize(i));
     } else {
       value = this.normalize(value);
     }
@@ -47,12 +50,11 @@ export class ApiTreeSelectWidget extends TreeSelectWidget implements OnInit {
     return value;
   }
 
-  ngOnInit() {
+  override ngOnInit() {
     super.ngOnInit();
   }
 
   private get http(): _HttpClient {
     return this.injector.get(_HttpClient);
   }
-
 }

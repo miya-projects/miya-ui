@@ -1,11 +1,11 @@
-<div nz-row style="margin-bottom: 15px;">
+<div nz-row style="margin-bottom: 15px">
   <div nz-col [nzSpan]="6">
     <div>
       <button (click)="add()" nz-button nzType="default" [acl]="'sys:dict:edit'">新建数据项</button>
     </div>
   </div>
   <div nz-col [nzSpan]="2" [nzOffset]="4">
-    <nz-tag style="cursor: pointer;" (click)="copy(code)" title="点击复制">
+    <nz-tag style="cursor: pointer" (click)="copy(code)" title="点击复制">
       {{ code }}
     </nz-tag>
   </div>
@@ -16,17 +16,16 @@
   </div>
 </div>
 
-<st #st [data]="data" [columns]="columns"
-    [pi]="pi" [ps]="ps" [total]="total" (change)="change($event)" [page]="{front: false}">
+<st #st [data]="data" [columns]="columns" [pi]="pi" [ps]="ps" [total]="total" (change)="change($event)" [page]="{ front: false }">
   <ng-template st-row="nameTpl" let-item let-index="index">
     <div style="overflow: hidden">
-      <input *ngIf="item._edit" nz-input [(ngModel)]="item.label" required placeholder="描述"/>
+      <input *ngIf="item._edit" nz-input [(ngModel)]="item.label" required placeholder="描述" />
       <span *ngIf="!item._edit">{{ item.label }}</span>
     </div>
   </ng-template>
   <ng-template st-row="valueTpl" let-item let-index="index" let-column="valueTpl">
     <div style="overflow: hidden">
-      <input *ngIf="item._edit" nz-input [(ngModel)]="item.value" required placeholder="code"/>
+      <input *ngIf="item._edit" nz-input [(ngModel)]="item.value" required placeholder="code" />
       <span *ngIf="!item._edit">{{ item.value }}</span>
     </div>
   </ng-template>

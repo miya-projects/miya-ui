@@ -1,13 +1,12 @@
 <page-header [action]="phActionTpl">
-  <ng-template #phActionTpl>
-  </ng-template>
+  <ng-template #phActionTpl> </ng-template>
 </page-header>
 
 <st
   #st
   [columns]="columns"
   [data]="data"
-  [page]="{show: false, front: false}"
+  [page]="{ show: false, front: false }"
   [res]="{ process: undefined }"
   [rowClassName]="rowClassName"
   [widthMode]="{ type: 'strict', strictBehavior: 'truncate' }"
@@ -26,17 +25,14 @@
     <div nz-col [nzSpan]="24">
       <div nz-row nzAlign="middle">
         <div nz-col [nzSpan]="20">
-          <input
-            nz-input
-            [(ngModel)]="item.val"
-          />
+          <input nz-input [(ngModel)]="item.val" />
         </div>
       </div>
-<!--      <ng-container>-->
-<!--        <span class="hide-hover">-->
-<!--          {{ item.value }}-->
-<!--        </span>-->
-<!--      </ng-container>-->
+      <!--      <ng-container>-->
+      <!--        <span class="hide-hover">-->
+      <!--          {{ item.value }}-->
+      <!--        </span>-->
+      <!--      </ng-container>-->
     </div>
   </ng-template>
   <ng-template st-row="desc" let-item let-index="index">
@@ -47,12 +43,7 @@
 
   <ng-template st-row="action" let-item let-index="index">
     <div nz-col [nzSpan]="3" [nzOffset]="0.5">
-      <a
-        nz-button
-        nzType="link"
-        (click)="saveValue(item.group, item.key, item.val)"
-      >保存</a
-      >
+      <a nz-button nzType="link" (click)="saveValue(item.group, item.key, item.val)">保存</a>
       <a
         nz-button
         nzDanger
@@ -61,9 +52,8 @@
         nzPopconfirmTitle="确认将该参数置空?"
         nzPopconfirmPlacement="bottom"
         (nzOnConfirm)="saveValue(item.group, item.key, null)"
-      >置空</a
+        >置空</a
       >
     </div>
   </ng-template>
-
 </st>

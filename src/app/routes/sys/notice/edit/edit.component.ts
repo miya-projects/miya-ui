@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SFComponent, SFSchema, SFUISchema, SFUploadWidgetSchema, UploadWidget } from '@delon/form';
+import { SFComponent, SFSchema, SFUISchema } from '@delon/form';
 import { SFSelectWidgetSchema } from '@delon/form/src/widgets/select/schema';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -8,7 +8,7 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
   selector: 'app-sys-notice-edit',
-  templateUrl: './edit.component.html',
+  templateUrl: './edit.component.html'
 })
 export class SysNoticeEditComponent implements OnInit {
   // 传过来的参数
@@ -24,8 +24,8 @@ export class SysNoticeEditComponent implements OnInit {
         ui: {
           width: 1000,
           widget: 'ueditor',
-          config: {},
-        },
+          config: {}
+        }
       },
       userIds: {
         type: 'string',
@@ -34,33 +34,37 @@ export class SysNoticeEditComponent implements OnInit {
           width: 1000,
           widget: 'select',
           mode: 'multiple',
-          asyncData: () => this.http.post('/sys/dp/users'),
-        } as SFSelectWidgetSchema,
-      },
+          asyncData: () => this.http.post('/sys/dp/users')
+        } as SFSelectWidgetSchema
+      }
     },
-    required: ['title', 'content', 'userIds'],
+    required: ['title', 'content', 'userIds']
   };
   ui: SFUISchema = {
     '*': {
       spanLabelFixed: 100,
-      grid: { span: 20, gutter: 4 },
-    },
+      grid: { span: 20, gutter: 4 }
+    }
   };
 
   @ViewChild('sf') private readonly sf!: SFComponent;
 
-  constructor(private modal: NzModalRef, private msgSrv: NzMessageService, public http: _HttpClient) {}
+  constructor(
+    private modal: NzModalRef,
+    private msgSrv: NzMessageService,
+    public http: _HttpClient
+  ) {}
 
   ngOnInit(): void {
     if (this.record) {
-      this.http.get(`/sys/user/detail${  this.record.id}`).subscribe((res) => {
+      this.http.get(`/sys/user/detail${this.record.id}`).subscribe(res => {
         if (res.avatar) {
           res.avatar = [res.avatar];
         }
         // @ts-ignore
         let keys = Object.keys(this.schema.properties);
         let fd: any = {};
-        keys.forEach((k) => {
+        keys.forEach(k => {
           fd[k] = res[k];
         });
         this.formData = fd;
@@ -72,7 +76,7 @@ export class SysNoticeEditComponent implements OnInit {
 
   save(value: any): void {
     let url = '/sysNotice/sendNotices';
-    this.http.post(url, value).subscribe((res) => {
+    this.http.post(url, value).subscribe(res => {
       this.msgSrv.success('保存成功');
       this.modal.close(true);
     });

@@ -1,6 +1,6 @@
-import {addDays} from 'date-fns';
-import * as qs from "qs";
-import {environment} from "@env/environment";
+import { addDays } from 'date-fns';
+import * as qs from 'qs';
+import { environment } from '@env/environment';
 
 /**
  * 遍历一颗树
@@ -9,7 +9,7 @@ import {environment} from "@env/environment";
  * @param callback  遍历每个数据执行的回调
  */
 export function browseTree(data: any[], callback: Function): void {
-  data.forEach((r) => {
+  data.forEach(r => {
     callback(r);
     if (r.children) {
       browseTree(r.children, callback);
@@ -17,27 +17,26 @@ export function browseTree(data: any[], callback: Function): void {
   });
 }
 
-
 const of = (label: string, range: Date[]) => {
   let o: { [key: string]: Date[] } = {};
   o[label] = range;
   return o;
-}
+};
 /**
  * 日期范围快捷方式定义
  */
 export const DATE_RANGES = {
-  TODAY: of("今天", [new Date(), new Date()]),
-  YESTERDAY: of("昨天", [addDays(new Date(), -1), addDays(new Date(), -1)]),
+  TODAY: of('今天', [new Date(), new Date()]),
+  YESTERDAY: of('昨天', [addDays(new Date(), -1), addDays(new Date(), -1)]),
   /**
    * 近7天
    */
-  DAYS7: of("近7天", [addDays(new Date(), -7), new Date()]),
+  DAYS7: of('近7天', [addDays(new Date(), -7), new Date()]),
   /**
    * 近30天
    */
-  DAYS30: of("近30天", [addDays(new Date(), -30), new Date()]),
-}
+  DAYS30: of('近30天', [addDays(new Date(), -30), new Date()])
+};
 
 /**
  * 调用下载文件 先将文件全部下载完毕之后再弹出下载框
@@ -45,7 +44,7 @@ export const DATE_RANGES = {
  * @param byte  文件二进制流
  */
 export function download(filename: string, byte: Blob): void {
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.download = filename;
   a.href = window.URL.createObjectURL(byte as Blob);
   a.click();
@@ -59,11 +58,11 @@ export function download(filename: string, byte: Blob): void {
  */
 export function downloadUrl(url: string, params: Object, fileName?: string): void {
   if (!url.startsWith('https://') && !url.startsWith('http://')) {
-    url = environment.SERVER_URL + url;
+    url = environment.api.baseUrl + url;
   }
-  let p = qs.stringify(params, { arrayFormat: 'repeat', allowDots: true })
+  let p = qs.stringify(params, { arrayFormat: 'repeat', allowDots: true });
   url = `${url}?${p}`;
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   if (fileName) {
     a.download = fileName;
   }
@@ -77,11 +76,14 @@ export function downloadUrl(url: string, params: Object, fileName?: string): voi
  * @param ignoreKys 忽略的key
  * @return 一个新对象
  */
-export function omit(obj: {
-  [key: string]: any
-}, ignoreKys: string[]): object {
+export function omit(
+  obj: {
+    [key: string]: any;
+  },
+  ignoreKys: string[]
+): object {
   let result: {
-    [key: string]: any
+    [key: string]: any;
   } = {};
   for (let i = 0; i < ignoreKys.length; i++) {
     result[ignoreKys[i]] = obj[ignoreKys[i]];
@@ -103,12 +105,12 @@ export function useStorage(key: string, defaultValue: any = {}): { value: any } 
     if (Object.prototype.toString.call(value) !== '[object Object]') {
       return value;
     }
-    let keys = Object.keys(value)
-    keys.forEach((key) => {
+    let keys = Object.keys(value);
+    keys.forEach(key => {
       if (Object.prototype.toString.call(value[key]) === '[object Object]') {
-        value[key] = defineReactive(value[key])
+        value[key] = defineReactive(value[key]);
       }
-    })
+    });
     return new Proxy(value, {
       set: (target: any, property, value, receiver): boolean => {
         if (Object.prototype.toString.call(value) === '[object Object]') {
@@ -125,9 +127,14 @@ export function useStorage(key: string, defaultValue: any = {}): { value: any } 
         return target[p];
       }
     });
-  }
+  };
 
-  proxy = defineReactive({value: undefined});
-  proxy.value = defaultValue;
+  proxy = defineReactive({ value: undefined });
+  let item = localStorage.getItem(key);
+  if (item != undefined) {
+    proxy.value = JSON.parse(item);
+  } else {
+    proxy.value = defaultValue;
+  }
   return proxy;
 }

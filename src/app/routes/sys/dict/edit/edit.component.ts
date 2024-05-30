@@ -6,29 +6,33 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-sys-dict-edit',
-  templateUrl: './edit.component.html',
+  templateUrl: './edit.component.html'
 })
 export class DictEditComponent implements OnInit {
   schema: SFSchema = {
     properties: {
       name: { type: 'string', title: '名称' },
-      code: { type: 'string', title: 'Code' },
+      code: { type: 'string', title: 'Code' }
     },
-    required: ['name', 'code'],
+    required: ['name', 'code']
   };
   ui: SFUISchema = {
     '*': {
       spanLabelFixed: 100,
-      grid: { span: 16 },
-    },
+      grid: { span: 16 }
+    }
   };
 
-  constructor(private modal: NzModalRef, private msgSrv: NzMessageService, public http: _HttpClient) {}
+  constructor(
+    private modal: NzModalRef,
+    private msgSrv: NzMessageService,
+    public http: _HttpClient
+  ) {}
 
   ngOnInit(): void {}
 
   save(value: any): void {
-    this.http.post(`/sys/dict`, value).subscribe((res) => {
+    this.http.post(`/sys/dict`, value).subscribe(res => {
       this.msgSrv.success('保存成功');
       this.modal.close(true);
     });

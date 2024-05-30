@@ -6,16 +6,16 @@ import { SysDictComponent } from './dict/dict.component';
 // import { GuardComponent } from './guard.component';
 
 @Injectable()
-export class CanLeaveProvide  {
+export class CanLeaveProvide {
   constructor(private confirmSrv: NzModalService) {}
 
   canDeactivate(
     component: SysDictComponent,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
   ): boolean | Observable<boolean> | Promise<boolean> {
-    return new Observable((observer) => {
+    return new Observable(observer => {
       this.confirmSrv.confirm({
         nzTitle: '确认要离开吗？',
         nzContent: '你已经填写了部分表单离开会放弃已经填写的内容。',
@@ -28,7 +28,7 @@ export class CanLeaveProvide  {
         nzOnCancel: () => {
           observer.next(false);
           observer.complete();
-        },
+        }
       });
     });
   }

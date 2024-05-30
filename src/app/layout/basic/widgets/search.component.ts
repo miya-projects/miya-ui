@@ -1,15 +1,23 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   HostBinding,
   Input,
   OnDestroy,
+  Output,
+  inject
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { FormsModule } from '@angular/forms';
+import { I18nPipe } from '@delon/theme';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 
 @Component({
   selector: 'header-search',
@@ -19,7 +27,9 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
         <i nz-icon [nzType]="focus ? 'arrow-down' : 'search'"></i>
       </ng-template>
       <ng-template #loadingTpl>
-        <i *ngIf="loading" nz-icon nzType="loading"></i>
+        @if (loading) {
+          <i nz-icon nzType="loading"></i>
+        }
       </ng-template>
       <input
         type="text"
@@ -29,16 +39,23 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
         (input)="search($event)"
         (focus)="qFocus()"
         (blur)="qBlur()"
-        [attr.placeholder]="'搜索：员工、文件、照片等'"
+        hotkey="F1"
+        [attr.placeholder]="'搜索：员工、文件、照片等，按 F1 可触发'"
       />
     </nz-input-group>
     <nz-autocomplete nzBackfill #auto>
-      <nz-auto-option *ngFor="let i of options" [nzValue]="i">{{ i }}</nz-auto-option>
+      @for (i of options; track $index) {
+        <nz-auto-option [nzValue]="i">{{ i }}</nz-auto-option>
+      }
     </nz-autocomplete>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FormsModule, I18nPipe, NgTemplateOutlet, NzInputModule, NzIconModule, NzAutocompleteModule]
 })
 export class HeaderSearchComponent implements AfterViewInit, OnDestroy {
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly cdr = inject(ChangeDetectorRef);
   q = '';
   qIpt: HTMLInputElement | null = null;
   options: string[] = [];
@@ -58,14 +75,13 @@ export class HeaderSearchComponent implements AfterViewInit, OnDestroy {
     this.searchToggled = value;
     this.focus = value;
     if (value) {
-      setTimeout(() => this.qIpt!.focus(), 300);
+      setTimeout(() => this.qIpt!.focus());
     }
   }
-
-  constructor(private el: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef) {}
+  @Output() readonly toggleChangeChange = new EventEmitter<boolean>();
 
   ngAfterViewInit(): void {
-    this.qIpt = this.el.nativeElement.querySelector('.ant-input') as HTMLInputElement;
+    this.qIpt = this.el.querySelector('.ant-input') as HTMLInputElement;
     this.search$
       .pipe(
         debounceTime(500),
@@ -73,10 +89,10 @@ export class HeaderSearchComponent implements AfterViewInit, OnDestroy {
         tap({
           complete: () => {
             this.loading = true;
-          },
-        }),
+          }
+        })
       )
-      .subscribe((value) => {
+      .subscribe(value => {
         this.options = value ? [value, value + value, value + value + value] : [];
         this.loading = false;
         this.cdr.detectChanges();
@@ -90,6 +106,8 @@ export class HeaderSearchComponent implements AfterViewInit, OnDestroy {
   qBlur(): void {
     this.focus = false;
     this.searchToggled = false;
+    this.options.length = 0;
+    this.toggleChangeChange.emit(false);
   }
 
   search(ev: Event): void {

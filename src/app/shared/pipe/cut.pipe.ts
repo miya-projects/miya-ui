@@ -1,12 +1,10 @@
-import { Pipe ,PipeTransform} from "@angular/core";
-
+import { Pipe, PipeTransform } from '@angular/core';
 
 /**
  * 数据截断
  */
 @Pipe({ name: 'cut' })
 export class CutPipe implements PipeTransform {
-
   /**
    * 数据截断函数
    *
@@ -16,6 +14,5 @@ export class CutPipe implements PipeTransform {
   transform(value: string, length: number): string {
     value = value || '';
     return value.substr(0, length);
-  };
-
+  }
 }

@@ -3,33 +3,33 @@
     <button (click)="add()" nz-button nzType="primary" [acl]="'sys:user:add'">新建</button>
   </ng-template>
 </page-header>
-  <div nz-row>
-    <div nz-col nzSpan="4" style="height: 76vh;">
-      <app-sys-department-select #sysDepartmentSelectComponent></app-sys-department-select>
-    </div>
-    <div nz-col nzSpan="20">
-      <sf #sf mode="search" [schema]="searchSchema" [button]="'none'">
-        <div class="small-tool">
-          <button type="button" nz-button class="" (click)="down()"><i nz-icon nzType="download" title="导出"></i></button>
-          <app-custom-col #cc key="sys:user" [originColumns]="columns" [alwaysShow]="['登录名', '']"></app-custom-col>
-        </div>
-      </sf>
-      <st #st [data]="'/sys/user'" [columns]="cc.columns" [scroll]="{y: '70vh'}">
-        <ng-template st-row="roles" let-item let-index="index">
-          <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.roles">
-            {{ i.name }}
-          </nz-tag>
-        </ng-template>
-        <ng-template st-row="departments" let-item let-index="index">
-          <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.departments">
-            {{ i.name }}
-          </nz-tag>
-        </ng-template>
-        <ng-template st-row="accountStatus" let-item let-index="index">
-          <nz-tag nzColor="{{item.accountStatus.value === 'NORMAL'?'success': 'error'}}">
-            {{ item.accountStatus.label }}
-          </nz-tag>
-        </ng-template>
-      </st>
-    </div>
+<div nz-row>
+  <div nz-col nzSpan="4" style="height: 76vh">
+    <app-sys-department-select #sysDepartmentSelectComponent></app-sys-department-select>
   </div>
+  <div nz-col nzSpan="20">
+    <sf #sf mode="search" [schema]="searchSchema" [button]="'none'">
+      <div class="small-tool">
+        <button type="button" nz-button class="" (click)="down()"><i nz-icon nzType="download" title="导出"></i></button>
+        <app-custom-col #cc key="sys:user" [originColumns]="columns" [alwaysShow]="['登录名', '']"></app-custom-col>
+      </div>
+    </sf>
+    <st #st [data]="'/sys/user'" [columns]="cc.columns" [scroll]="{ y: '70vh' }">
+      <ng-template st-row="roles" let-item let-index="index">
+        <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.roles">
+          {{ i.name }}
+        </nz-tag>
+      </ng-template>
+      <ng-template st-row="departments" let-item let-index="index">
+        <nz-tag [nzColor]="'#108ee9'" *ngFor="let i of item.departments">
+          {{ i.name }}
+        </nz-tag>
+      </ng-template>
+      <ng-template st-row="accountStatus" let-item let-index="index">
+        <nz-tag nzColor="{{ item.accountStatus.value === 'NORMAL' ? 'success' : 'error' }}">
+          {{ item.accountStatus.label }}
+        </nz-tag>
+      </ng-template>
+    </st>
+  </div>
+</div>

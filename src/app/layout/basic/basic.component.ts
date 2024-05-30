@@ -1,21 +1,46 @@
-import {Component, OnInit} from '@angular/core';
-import { SettingsService, User } from '@delon/theme';
-import { LayoutDefaultOptions } from '@delon/theme/layout-default';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { I18nPipe, SettingsService, User } from '@delon/theme';
+import { LayoutDefaultModule, LayoutDefaultOptions } from '@delon/theme/layout-default';
+import { SettingDrawerModule } from '@delon/theme/setting-drawer';
+import { ThemeBtnComponent } from '@delon/theme/theme-btn';
 import { environment } from '@env/environment';
-import {Router} from "@angular/router";
-import { ThemeBtnType } from '@delon/theme/theme-btn';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+
+import { HeaderClearStorageComponent } from './widgets/clear-storage.component';
+import { HeaderFullScreenComponent } from './widgets/fullscreen.component';
+import { HeaderSearchComponent } from './widgets/search.component';
+import { HeaderUserComponent } from './widgets/user.component';
 
 @Component({
   selector: 'layout-basic',
   template: `
-    <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl" [nav]="navTpl">
+    <layout-default [options]="options" [asideUser]="asideUserTpl" [content]="contentTpl" [customError]="null">
+      <!--<layout-default-header-item direction="left">-->
+      <!--  <a layout-default-header-item-trigger href="//github.com/ng-alain/ng-alain" target="_blank">-->
+      <!--    <i nz-icon nzType="github"></i>-->
+      <!--  </a>-->
+      <!--</layout-default-header-item>-->
+      <!--<layout-default-header-item direction="left" hidden="mobile">-->
+      <!--  <a layout-default-header-item-trigger routerLink="/passport/lock">-->
+      <!--    <i nz-icon nzType="lock"></i>-->
+      <!--  </a>-->
+      <!--</layout-default-header-item>-->
       <layout-default-header-item direction="left" hidden="pc">
         <div layout-default-header-item-trigger (click)="searchToggleStatus = !searchToggleStatus">
           <i nz-icon nzType="search"></i>
         </div>
       </layout-default-header-item>
       <layout-default-header-item direction="middle">
-        <header-search class="alain-default__search" [toggleChange]="searchToggleStatus"></header-search>
+        <header-search class="alain-default__search" [toggleChange]="searchToggleStatus" />
+      </layout-default-header-item>
+      <layout-default-header-item direction="right" hidden="mobile" style="display: flex;">
+        <div layout-default-header-item-trigger (click)="toDown()" title="下载中心">
+          <i nz-icon nzType="download" nzTheme="outline"></i>
+        </div>
       </layout-default-header-item>
       <layout-default-header-item direction="right" hidden="mobile">
         <div layout-default-header-item-trigger nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
@@ -24,31 +49,20 @@ import { ThemeBtnType } from '@delon/theme/theme-btn';
         <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
           <div nz-menu style="width: 200px;">
             <div nz-menu-item>
-              <header-fullscreen></header-fullscreen>
+              <header-fullscreen />
             </div>
-            <div nz-menu-item>
-              <header-clear-storage></header-clear-storage>
-            </div>
+            <!--<div nz-menu-item>-->
+            <!--  <header-clear-storage />-->
+            <!--</div>-->
           </div>
         </nz-dropdown-menu>
       </layout-default-header-item>
-
-      <layout-default-header-item direction="right" hidden="mobile">
-        <div layout-default-header-item-trigger (click)="toDown()" title="下载中心">
-          <i nz-icon nzType="download" nzTheme="outline"></i>
-        </div>
-      </layout-default-header-item>
-
       <layout-default-header-item direction="right">
-        <header-notify></header-notify>
+        <header-user />
       </layout-default-header-item>
-      <layout-default-header-item direction="right">
-        <header-user></header-user>
-      </layout-default-header-item>
-      <!--        左边-->
       <ng-template #asideUserTpl>
         <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
-          <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar"></nz-avatar>
+          <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar" />
           <div class="alain-default__aside-user-info">
             <strong>{{ user.name }}</strong>
             <p class="mb0">{{ user.email }}</p>
@@ -56,69 +70,60 @@ import { ThemeBtnType } from '@delon/theme/theme-btn';
         </div>
         <nz-dropdown-menu #userMenu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item routerLink="/pro/account/center">个人中心</li>
+            <!--<li nz-menu-item routerLink="/pro/account/center">个人中心</li>-->
             <li nz-menu-item routerLink="/sys/user-settings">个人设置</li>
           </ul>
         </nz-dropdown-menu>
       </ng-template>
-      <ng-template #navTpl>
-        <layout-default-nav class="d-block py-lg" [openStrictly]="openStrictly" [maxLevelIcon]="4"></layout-default-nav>
-      </ng-template>
       <ng-template #contentTpl>
-        <router-outlet></router-outlet>
-
-        <global-footer style="position: absolute;bottom: 0px;left: 50%;">
-<!--          <global-footer-item href="https://ng-alain.com/" blankTarget>帮助</global-footer-item>-->
-<!--          <global-footer-item href="https://github.com/ng-alain" blankTarget>-->
-<!--            <i nz-icon nzType="github"></i>-->
-<!--          </global-footer-item>-->
-<!--          <global-footer-item href="https://ng-alain.surge.sh/" blankTarget>预览</global-footer-item>-->
-          Copyright<i nz-icon nzType="copyright" class="mx-sm"></i>2021 版本:<a href="javascript:void()" class="mx-sm">{{version}}</a>
-        </global-footer>
-
+        <router-outlet />
       </ng-template>
     </layout-default>
-
-    <setting-drawer *ngIf="showSettingDrawer"></setting-drawer>
-    <theme-btn [types]="themeBtnTypes" devTips=""></theme-btn>
+    @if (showSettingDrawer) {
+      <setting-drawer />
+    }
+    <theme-btn />
   `,
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    I18nPipe,
+    LayoutDefaultModule,
+    SettingDrawerModule,
+    ThemeBtnComponent,
+    NzIconModule,
+    NzMenuModule,
+    NzDropDownModule,
+    NzAvatarModule,
+    HeaderSearchComponent,
+    HeaderClearStorageComponent,
+    HeaderFullScreenComponent,
+    HeaderUserComponent
+  ]
 })
-export class LayoutBasicComponent implements OnInit{
+export class LayoutBasicComponent implements OnInit {
+  private readonly settings = inject(SettingsService);
+  private router: Router = inject(Router);
+  private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+
   options: LayoutDefaultOptions = {
     logoExpanded: `./assets/logo-full.svg`,
-    logoCollapsed: `./assets/logo.svg`,
+    logoCollapsed: `./assets/logo.svg`
   };
-  themeBtnTypes: ThemeBtnType[] = [
-    {
-      key: 'default',
-      text: '默认主题'
-    },{
-      key: 'dark',
-      text: '暗黑主题'
-    },{
-      key: 'compact',
-      text: '紧凑主题'
-    }
-  ]
-  // 改为true后不自动跟随url自动展开菜单
-  openStrictly = false;
   searchToggleStatus = false;
-  showSettingDrawer = !environment.production;
+  showSettingDrawer = !environment.production && false;
   get user(): User {
     return this.settings.user;
   }
 
-  get version(): string{
-    return this.settings.app.version;
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ startup }) => {
+
+    });
   }
 
-  constructor(private settings: SettingsService, private router: Router) {}
-
-  toDown(){
+  toDown() {
     this.router.navigateByUrl('/sys/down');
   }
-
-  ngOnInit(): void {
-  }
-
 }

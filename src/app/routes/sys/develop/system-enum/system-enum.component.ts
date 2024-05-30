@@ -1,13 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {_HttpClient} from "@delon/theme";
-import {STColumn} from "@delon/abc/st";
-import {CACHE_ENABLE} from "../../../../core/net/cache.interceptors";
+import { Component, Input, OnInit } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
+import { STColumn } from '@delon/abc/st';
+import { CACHE_ENABLE } from '../../../../core/net/cache.interceptors';
 
 @Component({
   selector: 'app-system-enum-data',
   // templateUrl: './system-enum.component.html',
   template: `
-    <st #st [data]="data" [columns]="columns" [page]="{show: false}">
+    <st #st [data]="data" [columns]="columns" [page]="{ show: false }">
       <ng-template st-row="nameTpl" let-item let-index="index">
         <div nz-col [nzSpan]="6">
           <input *ngIf="item._edit" nz-input [(ngModel)]="item._label" />
@@ -22,22 +22,19 @@ import {CACHE_ENABLE} from "../../../../core/net/cache.interceptors";
       </ng-template>
     </st>
   `,
-  styles: [
-  ]
+  styles: []
 })
-export class SystemEnumDataComponent implements OnInit{
+export class SystemEnumDataComponent implements OnInit {
   data: any;
-  @Input("key")
+  @Input('key')
   key!: string;
 
   columns: STColumn[] = [
     { title: '枚举描述', index: 'label', render: 'nameTpl' },
-    { title: '枚举值', index: 'value', render: 'valueTpl' },
+    { title: '枚举值', index: 'value', render: 'valueTpl' }
   ];
 
-  constructor(
-    private http: _HttpClient,
-  ) { }
+  constructor(private http: _HttpClient) {}
 
   ngOnInit(): void {
     this.reload();
@@ -47,7 +44,7 @@ export class SystemEnumDataComponent implements OnInit{
    * 加载数据
    */
   reload(): void {
-    this.http.get(`/sys/dp/enums`, {key: this.key}, CACHE_ENABLE).subscribe((list) => {
+    this.http.get(`/sys/dp/enums`, { key: this.key }, CACHE_ENABLE).subscribe(list => {
       this.data = list;
     });
   }
@@ -56,15 +53,12 @@ export class SystemEnumDataComponent implements OnInit{
 @Component({
   selector: 'app-system-enum',
   templateUrl: './system-enum.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class SystemEnumComponent implements OnInit {
   data: any;
 
-  constructor(
-    private http: _HttpClient,
-  ) { }
+  constructor(private http: _HttpClient) {}
 
   ngOnInit(): void {
     this.reload();
@@ -75,10 +69,8 @@ export class SystemEnumComponent implements OnInit {
    * @private
    */
   reload(): void {
-    this.http.get('/sys/dp/enumsKey').subscribe((list) => {
+    this.http.get('/sys/dp/enumsKey').subscribe(list => {
       this.data = list;
     });
   }
-
-
 }

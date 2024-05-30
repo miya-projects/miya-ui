@@ -1,8 +1,8 @@
 <div class="modal-header">
   <div class="modal-title">{{ formData?.id ? '编辑' : '新增' }}通知</div>
 </div>
-<nz-spin [ngClass]="{'d-none': formData}" class="modal-spin"></nz-spin>
-<sf [ngClass]="{'d-none' : !formData}" #sf mode="default" [schema]="schema" [formData]="formData" [ui]="ui" button="none">
+<nz-spin [ngClass]="{ 'd-none': formData }" class="modal-spin"></nz-spin>
+<sf [ngClass]="{ 'd-none': !formData }" #sf mode="default" [schema]="schema" [formData]="formData" [ui]="ui" button="none">
   <div class="modal-footer">
     <button nz-button type="button" (click)="close()">关闭</button>
     <button nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">

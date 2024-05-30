@@ -1,7 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {SelectWidget, SFValue} from '@delon/form';
-import {_HttpClient} from '@delon/theme';
-import {CACHE_ENABLE} from '../../../core/net/cache.interceptors';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { DelonFormModule, SelectWidget, SFValue } from '@delon/form';
+import { _HttpClient } from '@delon/theme';
+import { CACHE_ENABLE } from '../../../core/net/cache.interceptors';
+import { NzOptionComponent, NzOptionGroupComponent, NzSelectComponent } from 'ng-zorro-antd/select';
+import { FormsModule } from '@angular/forms';
+import { NgForOf, NgIf } from '@angular/common';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 /**
  * 支持对象形式的select
@@ -11,6 +15,8 @@ import {CACHE_ENABLE} from '../../../core/net/cache.interceptors';
   templateUrl: './select.widget.html',
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
+  imports: [DelonFormModule, NzSelectComponent, FormsModule, NzOptionComponent, NzOptionGroupComponent, NgIf, NgForOf, NzIconDirective],
+  standalone: true
 })
 export class ApiSelectWidget extends SelectWidget implements OnInit {
   static readonly KEY = 'api-select';
@@ -20,9 +26,9 @@ export class ApiSelectWidget extends SelectWidget implements OnInit {
    *
    * @param value 组件值
    */
-  reset(value: SFValue): void {
+  override reset(value: SFValue): void {
     if (value instanceof Array) {
-      value = value.map((i) => this.normalize(i));
+      value = value.map(i => this.normalize(i));
     } else {
       value = this.normalize(value);
     }
@@ -44,23 +50,26 @@ export class ApiSelectWidget extends SelectWidget implements OnInit {
     return value;
   }
 
-  ngOnInit() {
+  override ngOnInit() {
     super.ngOnInit();
-    if(this.ui.enumKey && this.ui.asyncData){
-      console.warn("enum和asyncData不可同时使用");
+    if (this.ui['enumKey'] && this.ui.asyncData) {
+      console.warn('enum和asyncData不可同时使用');
       return;
     }
-    if(this.ui.enumKey){
+    if (this.ui['enumKey']) {
       this.ui.asyncData = () => {
-        return this.http.get('/sys/dp/enums', {
-          key: this.ui.enumKey
-        }, CACHE_ENABLE)
-      }
+        return this.http.get(
+          '/sys/dp/enums',
+          {
+            key: this.ui['enumKey']
+          },
+          CACHE_ENABLE
+        );
+      };
     }
   }
 
   private get http(): _HttpClient {
     return this.injector.get(_HttpClient);
   }
-
 }

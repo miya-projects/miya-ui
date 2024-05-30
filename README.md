@@ -1,7 +1,12 @@
+<h1 align="center">MIYA UI</h1>
+
+<div align="center">
+  MIYA项目前端脚手架
+</div>
 
 ### 安装依赖
 ```shell
-pnpm install
+npm install
 ```
 
 ### 新增模块
@@ -28,3 +33,4 @@ ng g ng-alain:curd article -m=cms
 swagger-typescript-api -p http://localhost:8083/v3/api-docs?group=%E7%B3%BB%E7%BB%9F --module-name-index 2 -o src/app/api --modular
 ng g ng-alain:sta 
 ```
+

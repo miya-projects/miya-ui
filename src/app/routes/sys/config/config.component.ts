@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {STColumn, STComponent, STData} from '@delon/abc/st';
-import {STRowClassName} from '@delon/abc/st/st.interfaces';
-import {_HttpClient, ModalHelper} from '@delon/theme';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzModalService} from 'ng-zorro-antd/modal';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { STColumn, STComponent, STData } from '@delon/abc/st';
+import { STRowClassName } from '@delon/abc/st/st.interfaces';
+import { _HttpClient, ModalHelper } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-sys-config',
-  templateUrl: './config.component.html',
+  templateUrl: './config.component.html'
 })
 export class SysConfigComponent implements OnInit {
   url = `/sys/dict/item/list`;
@@ -19,8 +19,7 @@ export class SysConfigComponent implements OnInit {
     { title: '配置项', index: 'key', render: 'key', width: 200 },
     { title: '配置值', index: 'val', render: 'val', width: 400 },
     { title: '描述', index: 'desc', render: 'desc', width: 300 },
-    { title: '操作', render: 'action', width: 300 },
-
+    { title: '操作', render: 'action', width: 300 }
   ];
   rowClassName: STRowClassName = () => 'st-row-text';
 
@@ -28,7 +27,7 @@ export class SysConfigComponent implements OnInit {
     private http: _HttpClient,
     private modal: ModalHelper,
     private messageSrc: NzMessageService,
-    private modalSrc: NzModalService,
+    private modalSrc: NzModalService
   ) {}
 
   ngOnInit(): void {
@@ -41,13 +40,13 @@ export class SysConfigComponent implements OnInit {
    * @private
    */
   reload(): void {
-    this.http.get('/sys/config/internal').subscribe((list) => {
+    this.http.get('/sys/config/internal').subscribe(list => {
       this.data = list;
     });
   }
 
   saveValue(group: string, code: string, value: string | null): void {
-    let body: { configKey: string; value: any, group: string } = {
+    let body: { configKey: string; value: any; group: string } = {
       configKey: code,
       value: undefined,
       group: group

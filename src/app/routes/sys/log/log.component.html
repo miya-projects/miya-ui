@@ -6,47 +6,51 @@
   [columns]="columns"
   [data]="url"
   [page]="{}"
-  [scroll]="{y: '70vh'}"
+  [scroll]="{ y: '70vh' }"
   [rowClassName]="rowClassName"
   [widthMode]="{ type: 'strict', strictBehavior: 'truncate' }"
 >
   <ng-template #extra st-row="extra" let-item let-index="index">
-    <span nz-tooltip nzTooltipTitle="{{ item.extra | json }}" title="点击查看详情"
-          (click)="openDetail(item.extra)" style="cursor: pointer;">
-      <p *ngFor="let extraItem of (item.extra | keyvalue | slice:0:3)">
-        <nz-tag [nzColor]="color(extraItem.key)">{{extraItem.key}}</nz-tag>{{extraItem.value}}
+    <span nz-tooltip nzTooltipTitle="{{ item.extra | json }}" title="点击查看详情" (click)="openDetail(item.extra)" style="cursor: pointer">
+      <p *ngFor="let extraItem of item.extra | keyvalue | slice: 0 : 3">
+        <nz-tag [nzColor]="color(extraItem.key)">{{ extraItem.key }}</nz-tag
+        >{{ extraItem.value }}
       </p>
     </span>
   </ng-template>
 
-
-  <nz-modal #detailModalComponent nzTitle="日志详情" [nzFooter]="null" (nzOnCancel)="closeDetail()"
-            [nzStyle]="{ top: '23%' }" nzWidth="70%">
+  <nz-modal
+    #detailModalComponent
+    nzTitle="日志详情"
+    [nzFooter]="null"
+    (nzOnCancel)="closeDetail()"
+    [nzStyle]="{ top: '23%' }"
+    nzWidth="70%"
+  >
     <ng-container *nzModalContent>
       <nz-table nzTemplateMode>
         <thead>
-        <tr>
-          <th>数据项</th>
-          <th>数据值</th>
-        </tr>
+          <tr>
+            <th>数据项</th>
+            <th>数据值</th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of logDetail | keyvalue">
-          <td>
-            <!--{{ item.key }}-->
-            <nz-tag [nzColor]="color(item.key)">{{item.key}}</nz-tag>
-          </td>
-          <td>{{ item.value }}</td>
-        </tr>
+          <tr *ngFor="let item of logDetail | keyvalue">
+            <td>
+              <!--{{ item.key }}-->
+              <nz-tag [nzColor]="color(item.key)">{{ item.key }}</nz-tag>
+            </td>
+            <td>{{ item.value }}</td>
+          </tr>
         </tbody>
       </nz-table>
     </ng-container>
   </nz-modal>
-
 </st>
 
 <style>
-  p{
+  p {
     margin-bottom: 7px;
   }
 </style>

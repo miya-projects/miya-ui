@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
-import * as screenfull from 'screenfull';
+import { I18nPipe } from '@delon/theme';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import screenfull from 'screenfull';
 
 @Component({
   selector: 'header-fullscreen',
@@ -7,27 +9,25 @@ import * as screenfull from 'screenfull';
     <i nz-icon [nzType]="status ? 'fullscreen-exit' : 'fullscreen'"></i>
     {{ status ? '退出全屏' : '全屏' }}
   `,
-  // tslint:disable-next-line: no-host-metadata-property
   host: {
-    '[class.d-block]': 'true',
+    '[class.flex-1]': 'true'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NzIconModule, I18nPipe]
 })
 export class HeaderFullScreenComponent {
   status = false;
-  private get sf(): screenfull.Screenfull {
-    return screenfull as screenfull.Screenfull;
-  }
 
   @HostListener('window:resize')
   _resize(): void {
-    this.status = this.sf.isFullscreen;
+    this.status = screenfull.isFullscreen;
   }
 
   @HostListener('click')
   _click(): void {
-    if (this.sf.isEnabled) {
-      this.sf.toggle();
+    if (screenfull.isEnabled) {
+      screenfull.toggle();
     }
   }
 }

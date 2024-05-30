@@ -1,14 +1,14 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {STData} from '@delon/abc/st';
-import {_HttpClient, ModalHelper} from '@delon/theme';
-import {copy} from '@delon/util';
-import {NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {NzTreeComponent} from 'ng-zorro-antd/tree';
-import {PreferencesService} from "@core";
-import {NzSwitchComponent} from "ng-zorro-antd/switch";
-import {ConfigAble} from "../../../../core/preferences/configable";
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { STData } from '@delon/abc/st';
+import { _HttpClient, ModalHelper } from '@delon/theme';
+import { copy } from '@delon/util';
+import { NzTreeNodeOptions } from 'ng-zorro-antd/core/tree/nz-tree-base-node';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzTreeComponent } from 'ng-zorro-antd/tree';
+import { NzSwitchComponent } from 'ng-zorro-antd/switch';
+import { ConfigAble } from '../../../../core/preferences/configable';
+import { PreferencesService } from '../../../../core/preferences/preferences.service';
 
 @Component({
   selector: 'app-sys-role-permission',
@@ -19,13 +19,10 @@ import {ConfigAble} from "../../../../core/preferences/configable";
         <nz-switch #switchComponent [(ngModel)]="showCode"></nz-switch>
       </div>
       <div nz-col nzOffset="6">
-        <nz-tag [nzColor]="'#108ee9'" *ngIf="role?.isSystem">
-          系统角色
-        </nz-tag>
+        <nz-tag [nzColor]="'#108ee9'" *ngIf="role?.isSystem"> 系统角色 </nz-tag>
       </div>
       <div nz-col [nzSpan]="2" [nzOffset]="9">
-        <button (click)="onDelete.emit(this.id)" nz-button nzType="primary" nzDanger [acl]="'sys:role:delete'">删除
-        </button>
+        <button (click)="onDelete.emit(this.id)" nz-button nzType="primary" nzDanger [acl]="'sys:role:delete'">删除 </button>
       </div>
     </div>
 
@@ -43,8 +40,8 @@ import {ConfigAble} from "../../../../core/preferences/configable";
             <span class="folder-name">
               {{ node.title }}
               <ng-container *ngIf="showCode">
-                {{node.key}}
-                <i nz-icon nzType="copy" nzTheme="outline" (click)="copy(node.key);"></i>
+                {{ node.key }}
+                <i nz-icon nzType="copy" nzTheme="outline" (click)="copy(node.key)"></i>
               </ng-container>
             </span>
           </span>
@@ -56,7 +53,7 @@ import {ConfigAble} from "../../../../core/preferences/configable";
         <button (click)="save(this.id)" nz-button nzType="primary" [acl]="'sys:role:edit'">保存</button>
       </div>
     </div>
-  `,
+  `
 })
 
 //   [nzSelectedKeys]="defaultSelectedKeys"
@@ -76,7 +73,7 @@ export class SysRolePermissionComponent implements OnInit, AfterViewInit {
    */
   @Input() business: any[] = [];
   role: any;
-  @ViewChild('tree', {static: false}) tree!: NzTreeComponent;
+  @ViewChild('tree', { static: false }) tree!: NzTreeComponent;
   @ViewChild('switchComponent') switchComponent!: NzSwitchComponent;
 
   showCode: boolean = false;
@@ -86,8 +83,7 @@ export class SysRolePermissionComponent implements OnInit, AfterViewInit {
     private messageSrv: NzMessageService,
     private modalSrv: NzModalService,
     private preferencesService: PreferencesService
-  ) {
-  }
+  ) {}
 
   copy(content: string): void {
     copy(content).then(() => {
@@ -100,14 +96,14 @@ export class SysRolePermissionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    let config: ConfigAble = this.preferencesService.getPreferences('sys:role:show-code')
+    let config: ConfigAble = this.preferencesService.getPreferences('sys:role:show-code');
     setTimeout(() => {
       this.showCode = config.getValue();
-    })
+    });
     this.switchComponent.registerOnChange(e => {
       this.showCode = e;
       config.saveValue(e);
-    })
+    });
   }
 
   reload(): void {
@@ -158,10 +154,12 @@ export class SysRolePermissionComponent implements OnInit, AfterViewInit {
         codes.push(checkedNodeListFlat[i][j]);
       }
     }
-    this.http.put(`/sys/role/${this.id}/business`, {
-      codes: codes.map(i => i.key)
-    }).subscribe(res => {
-      this.messageSrv.success('操作成功');
-    });
+    this.http
+      .put(`/sys/role/${this.id}/business`, {
+        codes: codes.map(i => i.key)
+      })
+      .subscribe(res => {
+        this.messageSrv.success('操作成功');
+      });
   }
 }

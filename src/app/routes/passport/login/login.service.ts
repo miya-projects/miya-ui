@@ -6,5 +6,5 @@ export enum LoginType {
   /**
    * 手机号+验证码登录
    */
-  PHONE_AND_VERIFY_CODE = 1,
+  PHONE_AND_VERIFY_CODE = 1
 }
