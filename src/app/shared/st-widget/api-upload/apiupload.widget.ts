@@ -3,7 +3,7 @@ import { DelonFormModule, SFValue } from '@delon/form';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadChangeParam, NzUploadComponent, NzUploadFile } from 'ng-zorro-antd/upload';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Observable, of } from 'rxjs';
+import {EMPTY, Observable, of} from 'rxjs';
 import { UploadWidget } from '@delon/form/widgets/upload';
 
 import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
@@ -87,10 +87,27 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
 
   override change(args: NzUploadChangeParam) {
     super.change(args);
+    const {file, fileList, type} = args;
+    if (type === 'error') {
+      this.formProperty.setErrors({
+        keyword: "上传失败",
+        // message: "上传失败提示信息"
+      })
+      return;
+    }
+    if (fileList.length === 0) {
+      if (this.i.multiple) {
+        this.formProperty.setValue([], false);
+      } else {
+        this.formProperty.setValue(null, false);
+      }
+      return;
+    }
+
     let data = this.ui.data;
     let dataObservable: Observable<any>;
     if (typeof data === 'function') {
-      let dataResult = (data as (file: NzUploadFile) => {} | Observable<{}>)(this.fileList[0]);
+      let dataResult = (data as (file: NzUploadFile) => {} | Observable<{}>)(fileList[0]);
       if (dataResult instanceof Observable) {
         dataObservable = dataResult;
       } else {
@@ -101,10 +118,10 @@ export class ApiuploadWidget extends UploadWidget implements OnInit {
     }
     dataObservable.subscribe(i => {
       if (i?.formatType === 'Object') {
-        this.formProperty.setValue(this.fileList[0].response?.id, false);
+        this.formProperty.setValue(fileList[0]?.response?.id, false);
       } else {
         this.formProperty.setValue(
-          this.fileList.map(f => f.response?.id),
+          fileList.map(f => f.response?.id),
           false
         );
       }
