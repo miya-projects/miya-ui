@@ -34,3 +34,8 @@ swagger-typescript-api -p http://localhost:8083/v3/api-docs?group=%E7%B3%BB%E7%B
 ng g ng-alain:sta 
 ```
 
+```shell
+ng g ng-alain:tpl swagger-list user1 -m=sys -t=user1 --swaggerPath=http://localhost:8083/v3/api-docs/%E7%B3%BB%E7%BB%9F
+```
+
+[//]: # (ng g ng-alain:list user1 -m=sys -t=user1)

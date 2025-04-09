@@ -141,6 +141,10 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@schematics/angular", "ng-alain"]
+    "schematicCollections": [
+      "@schematics/angular",
+      "ng-alain"
+    ],
+    "analytics": false
   }
 }

@@ -4,6 +4,10 @@
   </ng-template>
 </page-header>
 <nz-card>
-  <sf #sf mode="search" [schema]="searchSchema" (formValueChange)="searchValueChange($event)"></sf>
+  <sf #sf mode="search" [schema]="searchSchema" [button]="'none'">
+      <div class="small-tool">
+        <app-custom-col #cc key="<%= path %>" [originColumns]="columns" [alwaysShow]="['']"></app-custom-col>
+      </div>
+  </sf>
   <st #st [data]="url" [columns]="columns"></st>
 </nz-card>

@@ -3,9 +3,8 @@ import { STColumn, STComponent } from '@delon/abc/st';
 import { SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
 import { ModalHelper, _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subject } from 'rxjs';
-import { debounceTime} from 'rxjs/operators';
-// import { SysUserEditComponent } from './edit/edit.component';
+import { debounceTime, map } from 'rxjs/operators';
+
 
 @Component({
   selector: '<%= selector %>',
@@ -63,20 +62,18 @@ export class <%= componentName %> implements OnInit, AfterViewInit {
 
   constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService) {}
 
-  subject: Subject<any> = new Subject<any>();
   ngOnInit(): void {
-    this.subject.pipe(debounceTime(500)).subscribe((value) => this.st.reset(value));
   }
 
   add(): void {
     // this.modal.createStatic(SysUserEditComponent, {}, { size: 'xl' }).subscribe(() => this.st.reload());
   }
 
-  searchValueChange(e: any): void {
-    this.subject.next(e.value);
-  }
-
   ngAfterViewInit(): void {
-    this.sf.reset(true);
+      this.sf.formValueChange.pipe(
+          debounceTime(500),
+          map(i => i.value)
+        ).subscribe(value => this.st.reset(value));
+      this.sf.reset(true);
   }
 }

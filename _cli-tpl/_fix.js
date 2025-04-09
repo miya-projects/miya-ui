@@ -1,6 +1,6 @@
 /**
  * Convert Swagger API to sf Schema & st columns
- * 
+ *
  * - Generation list by swagger api:
  *   `ng g ng-alain:tpl swagger-list list -m=trade -t=trade --swaggerPath=/pet/findByStatus`
  * - Generation edit by swagger api:
@@ -9,7 +9,8 @@
 
 const sts = require('ng-alain-sts/src/generator');
 const cog = {
-  swaggerUrl: 'https://petstore.swagger.io/v2/swagger.json',
+  // swaggerUrl: 'https://petstore.swagger.io/v2/swagger.json',
+  swaggerUrl: 'http://localhost:8083/v3/api-docs/%E7%B3%BB%E7%BB%9F',
   st: null,
   sf: null,
 }
@@ -22,6 +23,11 @@ async function fix(options) {
 
 async function genSTS(options) {
   try {
+    if (!options.extraArgs) {
+      options.extraArgs = {}
+    }
+    // options.extraArgs.swaggerPath = "/api/sys/user"
+    // options.extraArgs.swaggerMethod = "get"
     switch (options.tplName) {
       case 'swagger-list':
         const st = await genSTBySTS(options);
