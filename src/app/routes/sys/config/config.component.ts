@@ -6,8 +6,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'app-sys-config',
-  templateUrl: './config.component.html'
+    selector: 'app-sys-config',
+    templateUrl: './config.component.html',
+    standalone: false
 })
 export class SysConfigComponent implements OnInit {
   url = `/sys/dict/item/list`;

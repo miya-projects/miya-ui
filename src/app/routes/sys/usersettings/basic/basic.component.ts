@@ -7,9 +7,10 @@ import { NzUploadChangeParam } from 'ng-zorro-antd/upload/interface';
 import { CACHE_ENABLE } from '../../../../core/net/cache.interceptors';
 
 @Component({
-  styleUrls: ['./basic.component.less'],
-  selector: 'app-basic-user-settings',
-  templateUrl: './basic.component.html'
+    styleUrls: ['./basic.component.less'],
+    selector: 'app-basic-user-settings',
+    templateUrl: './basic.component.html',
+    standalone: false
 })
 export class BasicSettingsComponent implements OnInit, AfterViewInit {
   url = `/sys/user/list`;

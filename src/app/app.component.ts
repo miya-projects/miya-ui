@@ -7,10 +7,9 @@ import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 import { SysModule } from './routes/sys/sys.module';
 
 @Component({
-  selector: 'app-root',
-  template: ` <router-outlet />`,
-  standalone: true,
-  imports: [RouterOutlet, SysModule]
+    selector: 'app-root',
+    template: ` <router-outlet />`,
+    imports: [RouterOutlet, SysModule]
 })
 export class AppComponent implements OnInit {
   private readonly router = inject(Router);

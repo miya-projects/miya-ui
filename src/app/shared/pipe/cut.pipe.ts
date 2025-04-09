@@ -3,7 +3,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 /**
  * 数据截断
  */
-@Pipe({ name: 'cut' })
+@Pipe({
+    name: 'cut',
+    standalone: false
+})
 export class CutPipe implements PipeTransform {
   /**
    * 数据截断函数

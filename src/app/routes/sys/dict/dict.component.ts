@@ -5,8 +5,9 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { DictEditComponent } from './edit/edit.component';
 
 @Component({
-  selector: 'app-sys-dict',
-  templateUrl: './dict.component.html'
+    selector: 'app-sys-dict',
+    templateUrl: './dict.component.html',
+    standalone: false
 })
 export class SysDictComponent implements OnInit {
   dicts: any;

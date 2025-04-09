@@ -12,9 +12,10 @@ import { browseTree } from '../../../shared/utils';
 import { SFTreeSelectWidgetSchema } from '@delon/form/widgets/tree-select/schema';
 
 @Component({
-  selector: 'app-sys-department',
-  templateUrl: './department.component.html',
-  styleUrls: ['./department.component.less']
+    selector: 'app-sys-department',
+    templateUrl: './department.component.html',
+    styleUrls: ['./department.component.less'],
+    standalone: false
 })
 export class SysDepartmentComponent implements OnInit, AfterViewInit {
   constructor(

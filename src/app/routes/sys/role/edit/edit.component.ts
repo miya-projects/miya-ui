@@ -5,8 +5,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'app-sys-role-edit',
-  templateUrl: './edit.component.html'
+    selector: 'app-sys-role-edit',
+    templateUrl: './edit.component.html',
+    standalone: false
 })
 export class SysRoleEditComponent implements OnInit {
   schema: SFSchema = {

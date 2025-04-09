@@ -9,10 +9,9 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { JsonPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-sys-log-modal',
-  templateUrl: './log-modal.component.html',
-  standalone: true,
-  imports: [STModule, DelonFormModule, NzTooltipDirective, JsonPipe]
+    selector: 'app-sys-log-modal',
+    templateUrl: './log-modal.component.html',
+    imports: [STModule, DelonFormModule, NzTooltipDirective, JsonPipe]
 })
 export class SysLogModalComponent implements OnInit, AfterViewInit {
   url = `/sys/log`;

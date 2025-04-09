@@ -9,8 +9,9 @@ import { omit } from '../../../../shared/utils';
  * 字典数据
  */
 @Component({
-  selector: 'app-sys-dict-data',
-  templateUrl: './dictdata.component.html'
+    selector: 'app-sys-dict-data',
+    templateUrl: './dictdata.component.html',
+    standalone: false
 })
 export class SysDictDataComponent implements OnInit {
   data: STData[] = [];

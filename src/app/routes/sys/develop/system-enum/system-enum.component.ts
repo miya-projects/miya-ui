@@ -4,9 +4,9 @@ import { STColumn } from '@delon/abc/st';
 import { CACHE_ENABLE } from '../../../../core/net/cache.interceptors';
 
 @Component({
-  selector: 'app-system-enum-data',
-  // templateUrl: './system-enum.component.html',
-  template: `
+    selector: 'app-system-enum-data',
+    // templateUrl: './system-enum.component.html',
+    template: `
     <st #st [data]="data" [columns]="columns" [page]="{ show: false }">
       <ng-template st-row="nameTpl" let-item let-index="index">
         <div nz-col [nzSpan]="6">
@@ -22,7 +22,8 @@ import { CACHE_ENABLE } from '../../../../core/net/cache.interceptors';
       </ng-template>
     </st>
   `,
-  styles: []
+    styles: [],
+    standalone: false
 })
 export class SystemEnumDataComponent implements OnInit {
   data: any;
@@ -51,9 +52,10 @@ export class SystemEnumDataComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-system-enum',
-  templateUrl: './system-enum.component.html',
-  styles: []
+    selector: 'app-system-enum',
+    templateUrl: './system-enum.component.html',
+    styles: [],
+    standalone: false
 })
 export class SystemEnumComponent implements OnInit {
   data: any;

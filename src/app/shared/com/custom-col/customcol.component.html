@@ -8,7 +8,7 @@
   [nzStyle]="{ top: '22%', width: '40%' }"
 >
   <ng-container *nzModalContent>
-    <nz-checkbox-group [(ngModel)]="customColumns" (ngModelChange)="checkboxGroupChange($event)" name="customColumns"></nz-checkbox-group>
+    <nz-checkbox-group [nzOptions]="columnsOptions" [(ngModel)]="selectedColumns" (ngModelChange)="checkboxGroupChange($event)" name="customColumns"></nz-checkbox-group>
   </ng-container>
 
   <div *nzModalFooter>

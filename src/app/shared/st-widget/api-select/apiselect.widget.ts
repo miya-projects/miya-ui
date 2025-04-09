@@ -11,12 +11,11 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
  * 支持对象形式的select
  */
 @Component({
-  selector: 'sf-select',
-  templateUrl: './select.widget.html',
-  preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
-  imports: [DelonFormModule, NzSelectComponent, FormsModule, NzOptionComponent, NzOptionGroupComponent, NgIf, NgForOf, NzIconDirective],
-  standalone: true
+    selector: 'sf-select',
+    templateUrl: './select.widget.html',
+    preserveWhitespaces: false,
+    encapsulation: ViewEncapsulation.None,
+    imports: [DelonFormModule, NzSelectComponent, FormsModule, NzOptionComponent, NzOptionGroupComponent, NgIf, NgForOf, NzIconDirective]
 })
 export class ApiSelectWidget extends SelectWidget implements OnInit {
   static readonly KEY = 'api-select';

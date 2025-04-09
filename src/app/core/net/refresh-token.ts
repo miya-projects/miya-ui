@@ -1,5 +1,5 @@
 import { HttpClient, HttpHandlerFn, HttpRequest, HttpResponseBase } from '@angular/common/http';
-import { APP_INITIALIZER, Injector, Provider } from '@angular/core';
+import { Injector, Provider, inject, provideAppInitializer } from '@angular/core';
 import { DA_SERVICE_TOKEN } from '@delon/auth';
 import { BehaviorSubject, Observable, catchError, filter, switchMap, take, throwError } from 'rxjs';
 
@@ -86,18 +86,4 @@ function buildAuthRefresh(injector: Injector) {
       },
       error: () => toLogin(injector)
     });
-}
-
-/**
- * 刷新Token方式二：使用 `@delon/auth` 的 `refresh` 接口，需要在 `app.config.ts` 中注册 `provideBindAuthRefresh`
- */
-export function provideBindAuthRefresh(): Provider[] {
-  return [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (injector: Injector) => () => buildAuthRefresh(injector),
-      deps: [Injector],
-      multi: true
-    }
-  ];
 }

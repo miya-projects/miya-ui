@@ -11,8 +11,8 @@ import { ConfigAble } from '../../../../core/preferences/configable';
 import { PreferencesService } from '../../../../core/preferences/preferences.service';
 
 @Component({
-  selector: 'app-sys-role-permission',
-  template: `
+    selector: 'app-sys-role-permission',
+    template: `
     <div nz-row style="margin-bottom: 15px;">
       <div nz-col nzOffset="2">
         显示Code
@@ -53,7 +53,8 @@ import { PreferencesService } from '../../../../core/preferences/preferences.ser
         <button (click)="save(this.id)" nz-button nzType="primary" [acl]="'sys:role:edit'">保存</button>
       </div>
     </div>
-  `
+  `,
+    standalone: false
 })
 
 //   [nzSelectedKeys]="defaultSelectedKeys"

@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { ALLOW_ANONYMOUS, DA_SERVICE_TOKEN } from '@delon/auth';
-import { ThemeBtnComponent } from '@delon/theme/theme-btn';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { _HttpClient, SettingsService } from '@delon/theme';
 import { HttpContext } from '@angular/common/http';
@@ -17,12 +16,12 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
         <div class="wrap">
           <div class="top">
             <div class="head">
-              <img class="logo" src="./assets/logo-color.svg" />
+              <img class="logo" src="./assets/logo-color.svg"/>
               <span class="title">米娅</span>
             </div>
             <div class="desc">生活是一直这么艰辛，还是只有童年如此？——总是如此</div>
           </div>
-          <router-outlet />
+          <router-outlet/>
           <global-footer [links]="links">
             Copyright
             <i class="anticon anticon-copyright"></i> 2021 <a href="//github.com/rxxy" target="_blank">Rxxy</a>
@@ -34,7 +33,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
   `,
   styleUrls: ['./passport.component.less'],
   standalone: true,
-  imports: [RouterOutlet, GlobalFooterModule, NzIconModule, ThemeBtnComponent, NzButtonComponent]
+  imports: [RouterOutlet, GlobalFooterModule, NzIconModule, NzButtonComponent]
 })
 export class LayoutPassportComponent implements OnInit {
   private tokenService = inject(DA_SERVICE_TOKEN);

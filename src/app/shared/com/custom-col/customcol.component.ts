@@ -1,28 +1,31 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
-import { NzCheckBoxOptionInterface } from 'ng-zorro-antd/checkbox/checkbox-group.component';
-import { STColumnTitle } from '@delon/abc/st/st.interfaces';
-import { PreferencesService } from '../../../core/preferences/preferences.service';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {STColumn, STComponent} from '@delon/abc/st';
+import {NzCheckboxOption, NzCheckBoxOptionInterface} from 'ng-zorro-antd/checkbox/checkbox-group.component';
+import {STColumnTitle} from '@delon/abc/st/st.interfaces';
+import {PreferencesService} from '../../../core/preferences/preferences.service';
 
 // 自定义table显示列
 @Component({
   selector: 'app-custom-col',
-  templateUrl: './customcol.component.html'
+  templateUrl: './customcol.component.html',
+  standalone: false
 })
-export class CustomColComponent implements OnInit {
+export class CustomColComponent implements OnInit, AfterViewInit {
   // 是否显示模态框
   isVisibleModal: boolean = false;
   // 支持自定义是否展示的列
-  customColumns: NzCheckBoxOptionInterface[] = [];
+  selectedColumns: (string | number)[] = [];
+
+  // 表格字段可选项
+  columnsOptions: NzCheckboxOption[] = [];
 
   // 全选按钮ngModel
-  allChecked: boolean = this.customColumns.filter(col => col.checked).length === this.customColumns.length;
+  allChecked: boolean = this.selectedColumns.length === this.columnsOptions.length;
 
-  @Input()
-  originColumns: STColumn[] = [];
+  allColumns: STColumn[] = [];
   // 未设置时默认展示的字段，不传显示所有
   @Input()
-  defaultColumns: string[] = [];
+  defaultColumns: (string | number)[] = [];
   // 一直显示的，不参与自定义设置
   @Input()
   alwaysShow: string[] = [''];
@@ -30,56 +33,56 @@ export class CustomColComponent implements OnInit {
   @Input()
   key: string | undefined = undefined;
 
-  // 最终展示的
-  public columns: STColumn[] = [];
+  // 表格st的引用
+  @Input() st!: STComponent;
 
-  constructor(private preferencesService: PreferencesService) {}
+  constructor(private preferencesService: PreferencesService) {
+  }
 
+  ngAfterViewInit(): void {
+    this.allColumns = this.st!.columns as STColumn[];
+    this.columnsOptions = this.st!.columns!.map(col => {
+      let item: NzCheckboxOption = {
+        label: "", value: "", disabled: false
+      }
+      if (typeof col.title === 'string') {
+        item.label = col.title as string;
+        item.value = col.title as string;
+      } else {
+        item.label = (col.title as STColumnTitle).text as string;
+        item.value = (col.title as STColumnTitle).text as string;
+      }
+      if (this.alwaysShow.indexOf(item.value) !== -1) {
+        item.disabled = true;
+      }
+      return item;
+    })
+    this.resetSelected();
+    this.updateTableColumns()
+  }
+
+  // 是否是半选状态
   get indeterminate(): boolean {
-    return new Set(this.customColumns.map(col => col.checked)).size > 1;
+    return this.selectedColumns.length > 1 && this.selectedColumns.length !== this.columnsOptions.length;
   }
 
   ngOnInit(): void {
-    let customColumns = this.originColumns
-      .map(col => {
-        if (typeof col.title === 'string') {
-          return col.title as string;
-        }
-        return (col.title as STColumnTitle).text as string;
-      })
-      .filter(title => this.alwaysShow.indexOf(title) === -1);
 
-    this.customColumns = customColumns.map(title => {
-      return {
-        label: title,
-        value: title
-      };
-    });
-    this.resetSelected();
-    this.reCalcColumns();
   }
 
   // 重置选中的列
   resetSelected() {
     let checkedCols: string[];
-    let obj: { [key: string]: boolean } = {};
     if (this.key) {
       checkedCols = this.preferencesService.get(`customTableKey:${this.key}`);
-      if (checkedCols) {
-        checkedCols.forEach(col => {
-          obj[col] = true;
-        });
-        this.customColumns.forEach(col => {
-          col.checked = !!obj[col.label];
-        });
+      if (checkedCols && checkedCols.length > 0) {
+        this.selectedColumns = checkedCols;
       } else {
         // 没设置首选项，用默认的
         this.resetDefault();
       }
     } else {
-      this.customColumns.forEach(col => {
-        col.checked = true;
-      });
+      this.resetDefault();
     }
   }
 
@@ -89,41 +92,50 @@ export class CustomColComponent implements OnInit {
   }
 
   handleOk() {
-    this.reCalcColumns();
     if (this.key) {
-      let checkedCols = this.customColumns.filter(col => col.checked).map(col => col.value);
-      this.preferencesService.save(`customTableKey:${this.key}`, checkedCols);
+      this.preferencesService.save(`customTableKey:${this.key}`, this.selectedColumns);
     }
     this.isVisibleModal = false;
+    this.updateTableColumns()
   }
 
   // 恢复默认设置
   resetDefault() {
     if (this.defaultColumns.length === 0) {
-      for (let i = 0; i < this.customColumns.length; i++) {
-        this.customColumns[i].checked = true;
-      }
+      this.selectedColumns = this.columnsOptions.map(item => item.value)
       return;
     }
-    for (let i = 0; i < this.customColumns.length; i++) {
-      this.customColumns[i].checked = this.defaultColumns.indexOf(this.customColumns[i].value) !== -1;
-    }
-  }
-
-  reCalcColumns(): void {
-    let checkedCols = this.customColumns.filter(col => col.checked).map(col => col.value);
-    // 选中的 + 一直显示
-    this.columns = this.originColumns.filter(
-      col => checkedCols.indexOf(col.title as string) != -1 || this.alwaysShow.indexOf(col.title as string) != -1
-    );
+    this.selectedColumns = this.columnsOptions.map(item => item.value).filter(item => this.defaultColumns.indexOf(item) !== -1)
   }
 
   // 点击全选按钮回调
   updateAllChecked(checked: boolean) {
-    this.customColumns.forEach(col => (col.checked = checked));
+    if (checked) {
+      this.selectedColumns = this.columnsOptions.map(item => item.value);
+    } else {
+      this.selectedColumns = [...this.alwaysShow]
+    }
   }
 
   checkboxGroupChange($event: any) {
-    this.allChecked = this.customColumns.filter(col => col.checked).length === this.customColumns.length;
+    this.allChecked = this.columnsOptions.length === this.selectedColumns.length;
+  }
+
+  /**
+   * 更新表格最终显示的字段
+   */
+  updateTableColumns() {
+    let columns = this.allColumns!.filter(col => {
+      if (typeof col.title === 'string') {
+        return this.selectedColumns.indexOf(col.title) !== -1
+      } else {
+        return this.selectedColumns.indexOf((col.title as STColumnTitle).text as string) !== -1
+      }
+    })
+    console.log(columns)
+    this.st.resetColumns({
+      columns: columns,
+      emitReload: true
+    }).then(() => {})
   }
 }

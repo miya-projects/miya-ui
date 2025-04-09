@@ -7,8 +7,9 @@ import { SysRoleEditComponent } from './edit/edit.component';
 import { browseTree } from '../../../shared/utils';
 
 @Component({
-  selector: 'app-sys-role',
-  templateUrl: './role.component.html'
+    selector: 'app-sys-role',
+    templateUrl: './role.component.html',
+    standalone: false
 })
 export class SysRoleComponent implements OnInit {
   roles: any;

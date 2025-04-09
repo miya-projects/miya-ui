@@ -9,8 +9,9 @@ import { debounceTime, map } from 'rxjs/operators';
 import { DATE_RANGES } from '../../../shared/utils';
 
 @Component({
-  selector: 'app-sys-log',
-  templateUrl: './log.component.html'
+    selector: 'app-sys-log',
+    templateUrl: './log.component.html',
+    standalone: false
 })
 export class SysLogComponent implements OnInit, AfterViewInit {
   url = `/sys/log`;

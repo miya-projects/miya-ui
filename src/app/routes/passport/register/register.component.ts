@@ -24,7 +24,6 @@ import { finalize } from 'rxjs';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    I18nPipe,
     RouterLink,
     NzAlertModule,
     NzFormModule,

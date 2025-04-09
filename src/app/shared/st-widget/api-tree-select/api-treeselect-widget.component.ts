@@ -9,12 +9,11 @@ import { FormsModule } from '@angular/forms';
  * 支持对象形式的treeselect
  */
 @Component({
-  selector: 'sf-tree-select',
-  templateUrl: './treeselect.widget.html',
-  preserveWhitespaces: false,
-  encapsulation: ViewEncapsulation.None,
-  imports: [DelonFormModule, NzTreeSelectComponent, FormsModule],
-  standalone: true
+    selector: 'sf-tree-select',
+    templateUrl: './treeselect.widget.html',
+    preserveWhitespaces: false,
+    encapsulation: ViewEncapsulation.None,
+    imports: [DelonFormModule, NzTreeSelectComponent, FormsModule]
 })
 export class ApiTreeSelectWidget extends TreeSelectWidget implements OnInit {
   static readonly KEY1 = 'api-tree-select';

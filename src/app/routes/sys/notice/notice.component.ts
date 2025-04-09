@@ -8,8 +8,9 @@ import { SysUserEditComponent } from '../user/edit/edit.component';
 import { SysNoticeEditComponent } from './edit/edit.component';
 
 @Component({
-  selector: 'app-sys-notice',
-  templateUrl: './notice.component.html'
+    selector: 'app-sys-notice',
+    templateUrl: './notice.component.html',
+    standalone: false
 })
 export class SysNoticeComponent implements OnInit, AfterViewInit {
   url = `/sysNotice/list`;

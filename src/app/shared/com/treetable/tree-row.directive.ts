@@ -2,7 +2,8 @@ import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angula
 import { TreetableComponent } from './treetable.component';
 
 @Directive({
-  selector: '[tree-row]'
+    selector: '[tree-row]',
+    standalone: false
 })
 export class TreeRowDirective implements OnInit {
   @Input('tree-row') id!: string;

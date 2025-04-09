@@ -5,10 +5,11 @@ import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-user-settings',
-  templateUrl: './usersettings.component.html',
-  styleUrls: ['./usersettings.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-user-settings',
+    templateUrl: './usersettings.component.html',
+    styleUrls: ['./usersettings.component.less'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class UserSettingsComponent implements AfterViewInit, OnDestroy {
   private resize$!: Subscription;

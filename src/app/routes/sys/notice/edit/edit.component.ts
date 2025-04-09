@@ -7,8 +7,9 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'app-sys-notice-edit',
-  templateUrl: './edit.component.html'
+    selector: 'app-sys-notice-edit',
+    templateUrl: './edit.component.html',
+    standalone: false
 })
 export class SysNoticeEditComponent implements OnInit {
   // 传过来的参数

@@ -10,8 +10,9 @@ import { DATE_RANGES } from '../../../shared/utils';
 import { CACHE_ENABLE } from '../../../core/net/cache.interceptors';
 
 @Component({
-  selector: 'app-sys-down',
-  templateUrl: './down.component.html'
+    selector: 'app-sys-down',
+    templateUrl: './down.component.html',
+    standalone: false
 })
 export class SysDownComponent implements OnInit, AfterViewInit {
   url = `/sys/download`;

@@ -4,9 +4,10 @@ import { _HttpClient, SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  styleUrls: ['./security.component.less'],
-  selector: 'app-security-user-settings',
-  templateUrl: './security.component.html'
+    styleUrls: ['./security.component.less'],
+    selector: 'app-security-user-settings',
+    templateUrl: './security.component.html',
+    standalone: false
 })
 export class SecuritySettingsComponent implements OnInit, AfterViewInit {
   constructor(

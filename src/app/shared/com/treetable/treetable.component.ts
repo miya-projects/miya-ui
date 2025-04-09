@@ -13,15 +13,16 @@ export interface TreeNodeInterface {
 }
 
 @Component({
-  selector: 'app-treetable',
-  templateUrl: './treetable.component.html',
-  styles: [
-    `
+    selector: 'app-treetable',
+    templateUrl: './treetable.component.html',
+    styles: [
+        `
       i {
         cursor: pointer;
       }
     `
-  ]
+    ],
+    standalone: false
 })
 export class TreetableComponent implements OnInit {
   // 数据加载完成

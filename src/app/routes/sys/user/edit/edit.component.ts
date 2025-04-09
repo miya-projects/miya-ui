@@ -12,8 +12,9 @@ import { SFTreeSelectWidgetSchema } from '@delon/form/widgets/tree-select/schema
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 
 @Component({
-  selector: 'app-sys-user-edit',
-  templateUrl: './edit.component.html'
+    selector: 'app-sys-user-edit',
+    templateUrl: './edit.component.html',
+    standalone: false
 })
 export class SysUserEditComponent implements OnInit {
   // 传过来的参数

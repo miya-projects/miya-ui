@@ -9,16 +9,17 @@ export const EXE_COUNTER_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'app-com-password',
-  templateUrl: './password.component.html',
-  styles: [
-    `
+    selector: 'app-com-password',
+    templateUrl: './password.component.html',
+    styles: [
+        `
       i {
         cursor: pointer;
       }
     `
-  ],
-  providers: [EXE_COUNTER_VALUE_ACCESSOR]
+    ],
+    providers: [EXE_COUNTER_VALUE_ACCESSOR],
+    standalone: false
 })
 export class PasswordComponent implements OnInit, ControlValueAccessor {
   passwordVisible = false;

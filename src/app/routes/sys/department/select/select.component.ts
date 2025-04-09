@@ -6,9 +6,10 @@ import { NzFormatEmitEvent, NzTreeComponent } from 'ng-zorro-antd/tree';
 import { browseTree } from '../../../../shared/utils';
 
 @Component({
-  selector: 'app-sys-department-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.less']
+    selector: 'app-sys-department-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.less'],
+    standalone: false
 })
 export class SysDepartmentSelectComponent implements OnInit, AfterViewInit {
   searchValue = '';

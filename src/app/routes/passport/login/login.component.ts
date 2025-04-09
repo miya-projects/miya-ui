@@ -28,9 +28,7 @@ import { HotkeyDirective } from '@delon/abc/hotkey';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    RouterLink,
     ReactiveFormsModule,
-    I18nPipe,
     NzCheckboxModule,
     NzTabsModule,
     NzAlertModule,

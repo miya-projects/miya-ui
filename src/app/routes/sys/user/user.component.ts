@@ -14,8 +14,9 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 
 @Component({
-  selector: 'app-sys-user',
-  templateUrl: './user.component.html'
+    selector: 'app-sys-user',
+    templateUrl: './user.component.html',
+    standalone: false
 })
 export class SysUserComponent implements OnInit, AfterViewInit {
   searchSchema: SFSchema = {
@@ -74,7 +75,7 @@ export class SysUserComponent implements OnInit, AfterViewInit {
     { title: '备注', index: 'remark' },
     { title: '创建时间', index: 'createdTime', sort: { reName: { ascend: 'asc', descend: 'desc' } } },
     {
-      title: '',
+      title: '操作',
       buttons: [
         // {text: '查看', click: (item: any) => `/form/${item.id}`},
         {

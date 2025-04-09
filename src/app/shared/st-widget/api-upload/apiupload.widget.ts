@@ -19,8 +19,8 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
   templateUrl: './upload.widget.html',
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
-  imports: [DelonFormModule, NzUploadComponent, NgSwitch, NgSwitchDefault, NgSwitchCase, NzIconDirective, NzButtonComponent],
-  standalone: true
+  standalone: true,
+  imports: [DelonFormModule, NzUploadComponent, NzIconDirective, NzButtonComponent]
 })
 export class ApiuploadWidget extends UploadWidget implements OnInit {
   static readonly KEY1 = 'api-upload';

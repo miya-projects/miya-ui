@@ -4,8 +4,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
-  selector: 'app-sys-user-view',
-  templateUrl: './view.component.html'
+    selector: 'app-sys-user-view',
+    templateUrl: './view.component.html',
+    standalone: false
 })
 export class SysUserViewComponent implements OnInit {
   record: any = {};

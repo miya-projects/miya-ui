@@ -9,7 +9,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   selector: 'passport-register-result',
   templateUrl: './register-result.component.html',
   standalone: true,
-  imports: [RouterLink, I18nPipe, NzButtonModule, ResultModule]
+  imports: [RouterLink, NzButtonModule, ResultModule]
 })
 export class UserRegisterResultComponent {
   readonly msg = inject(NzMessageService);
